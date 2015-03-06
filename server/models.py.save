@@ -1,0 +1,41 @@
+from django.db import models
+from django_countries.fields import CountryField
+
+class Server(models.Model):
+	name = models.CharFields(max_length=200)
+	description = models.TextField()
+	howto = models.TextField()
+	rules = models.TextField()
+	
+	image = models.ImageField(max_length=500, width_field='image_width', height_field='image_height')
+	image_height = models.IntegerField()
+	image_width = models.IntegerField()
+
+
+class Member(models.Model):
+	firstname = models.CharFields(max_length=200)
+	surname = models.CharFields(max_length=200)
+	nick = models.CharFields(max_length=200)
+	birthdate = models.CharFields(max_length=200)
+	
+	phone = models.CharFields(max_length=200)
+	mobile = models.CharFields(max_length=200)
+	
+	street = models.CharFields(max_length=200)
+	city = models.CharFields(max_length=200)
+	country_id = CountryField()
+	zip = models.CharFields(max_length=200)
+	careof = models.CharFields(max_length=200)	
+	socialsecuritynumber = models.CharFields(max_length=200)
+	email = models.EmailField(max_length=254)
+	
+	joinedon = models.DateTimeField('Joined on', auto_now_add=True)
+	refreshedon = models.DateTimeField('Refreshed on')
+	
+	image = models.ImageField(max_length=500, width_field='image_width', height_field='image_height')
+	image_height = models.IntegerField()
+	image_width = models.IntegerField()
+
+class Volunteer(models.Model)
+	member = models.ForeignKey('Member')
+	server = models.ForeignKey(Server)

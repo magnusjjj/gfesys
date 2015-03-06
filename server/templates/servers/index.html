@@ -1,0 +1,20 @@
+{% extends "servers/base.html" %}
+{% block content %}
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <h1 class="page-header">Servers</h1>
+		  <div class="row placeholders">
+			{% if servers %}
+				{% for server in servers %}
+					<a class="col-xs-6 col-sm-3" href="/servers/{{ server.id }}/">
+					  <img src="{{server.image.url}}" class="img-responsive" alt="{{ server.name}}">
+					  <h4>{{ server.name}}</h4>
+					  <span class="text-muted">{{server.description}}</span>
+					</a>
+				{% endfor %}
+			{% else %}
+				<p>No servers are available.</p>
+			{% endif %}
+		  </div>
+	  </div>
+	</div>
+{% endblock %}

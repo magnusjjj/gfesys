@@ -1,0 +1,51 @@
+{% extends "servers/base.html" %}
+{% block content %}
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  {% if server %}
+		<h1 class="page-header">{{ server.name}}
+			{% if volunteer and volunteer.sec_accept %}<a href="{% url "editserver" server.id %}" class="btn btn-default">Edit</a>{% endif %}
+			{% if volunteer and volunteer.sec_accept %}<a href="{% url "managevolunteers" server.id %}" class="btn btn-default">Manage Volunteers</a>{% endif %}
+			<a href="{% url "volunteer" server.id%}" class="btn btn-default">Volunteer for this Server</a>
+		</h1>
+		<div class="row placeholders">
+			<div class="col-sm-2" href="/servers/{{ server.id }}/">
+			  <img src="{{server.image.url}}" class="img-responsive" alt="{{ server.name}}">
+			</div>
+			<div class="col-sm-2" href="/servers/{{ server.id }}/">
+			  <span class="text-muted">{{server.description}}</span>
+			</div>
+		</div>
+		<div class="row">
+			<div role="tabpanel">
+
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#howto" aria-controls="howto" role="tab" data-toggle="tab">Howto</a></li>
+				<li role="presentation"><a href="#rules" aria-controls="rules" role="tab" data-toggle="tab">Rules</a></li>
+				<li role="presentation"><a href="#volunteers" aria-controls="volunteers" role="tab" data-toggle="tab">Volunteers</a></li>
+			  </ul>
+
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="howto">{{server.howto|safe}}</div>
+				<div role="tabpanel" class="tab-pane" id="rules">{{server.rules|safe}}</div>
+				<div role="tabpanel" class="tab-pane" id="volunteers"></div>
+			  </div>
+
+			</div>
+		</div>
+		<style type="text/css">
+			.tab-content {
+				border-left: 1px solid #ddd;
+				border-right: 1px solid #ddd;
+				border-bottom: 1px solid #ddd;
+				padding: 2em;
+				min-height: 5em;
+			}
+		</style>
+		
+	  {% else %}
+		<p>Whoops! This server does not exist.</p>
+	  {% endif %}
+	</div>
+{% endblock %}
