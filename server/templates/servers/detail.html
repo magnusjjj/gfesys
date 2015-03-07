@@ -5,7 +5,7 @@
 		<h1 class="page-header">{{ server.name}}
 			{% if volunteer and volunteer.sec_accept %}<a href="{% url "editserver" server.id %}" class="btn btn-default">Edit</a>{% endif %}
 			{% if volunteer and volunteer.sec_accept %}<a href="{% url "managevolunteers" server.id %}" class="btn btn-default">Manage Volunteers</a>{% endif %}
-			<a href="{% url "volunteer" server.id%}" class="btn btn-default">Volunteer for this Server</a>
+			{% if volunteer %}<a href="{% url "volunteer" server.id%}" class="btn btn-default">Volunteer for this Server</a>{% endif %}
 		</h1>
 		<div class="row placeholders">
 			<div class="col-sm-2" href="/servers/{{ server.id }}/">
