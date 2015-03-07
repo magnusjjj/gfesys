@@ -66,3 +66,5 @@ class Volunteer(models.Model):
 	
 	createdon = models.DateTimeField('Created on', auto_now_add=True)
 	
+	class Meta:
+		ordering = ["-sec_accept", "-sec_edit", "role"]

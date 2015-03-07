@@ -29,7 +29,21 @@
 			  <div class="tab-content">
 				<div role="tabpanel" class="tab-pane active" id="howto">{{server.howto|safe}}</div>
 				<div role="tabpanel" class="tab-pane" id="rules">{{server.rules|safe}}</div>
-				<div role="tabpanel" class="tab-pane" id="volunteers"></div>
+				<div role="tabpanel" class="tab-pane" id="volunteers">
+					<table class="table">
+						<thead>
+							<th>Role</th><th>Name</th>
+						</thead>
+						<tbody>
+							{% for volunteer in volunteers %}
+							<tr>
+								<td>{{volunteer.role}}</td><td>{{volunteer.member.firstname}} {{volunteer.member.surname}}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				
+				</div>
 			  </div>
 
 			</div>
