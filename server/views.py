@@ -152,4 +152,6 @@ class UploadServerImage(DefaultView):
 		self.context["server"] = Server.objects.get(pk=server_id)
 		self.setrights_server(request, server_id)
 		if self.context["volunteer"].sec_edit:
+			self.context["server"].image = request.FILES['image']
+			self.context["server"].save()
 			return redirect("editserver", server_id)
