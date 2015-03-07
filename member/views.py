@@ -33,7 +33,36 @@ def login_post(request):
 		request.session['member_id'] = themember.id
 	else:
 		errors.append("Could not log in. Wrong username or password.")
+	 
+	context["errors"] = errors
+	return JsonResponse(context)
+
+@require_http_methods(["POST"])
+def forgot_post(request):
+	# Make a variable to hold all the errors in...
+	errors = []
+	context = {}
+	login = request.POST["login"]
+	themember = {}
+	try:
+		themember = Member.objects.get(email__iexact=login)
+	except:
+		errors.append("Could not find a user with that email.")
+		context["errors"] = errors
+		return JsonResponse(context)
 	
+	salt = ''.join(random.SystemRandom().choice(string.uppercase + string.digits) for _ in xrange(20))
+	newpassword = ''.join(random.SystemRandom().choice(string.uppercase + string.digits) for _ in xrange(10)) 
+	newhash = hashlib.sha512(newpassword + salt).hexdigest()
+	
+	themember.password_salt = salt
+	themember.password_hash = newhash
+	themember.save()
+	
+	
+	send_mail('Password reset', "Your new password is: \n\n" + newpassword, settings.EMAILFROM,
+	[request.POST["login"].lower()], fail_silently=True)	
+
 	context["errors"] = errors
 	return JsonResponse(context)
 
