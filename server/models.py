@@ -30,7 +30,7 @@ class Member(models.Model):
 	zip = models.CharField(max_length=200)
 	careof = models.CharField(max_length=200)	
 	socialsecuritynumber = models.CharField(max_length=200)
-	email = models.EmailField(max_length=254)
+	email = models.EmailField(max_length=254, unique=True)
 	
 	joinedon = models.DateTimeField('Joined on', auto_now_add=True)
 	refreshedon = models.DateTimeField('Refreshed on')
@@ -65,12 +65,4 @@ class Volunteer(models.Model):
 	sec_accept = models.BooleanField(default=False)
 	
 	createdon = models.DateTimeField('Created on', auto_now_add=True)
-
-class ForumThread(models.Model):
-	createdby = models.ForeignKey(Member)
-	createdon = models.DateTimeField('Created on', auto_now_add=True)
-	extid = models.IntegerField()
-	modelname = models.CharField(max_length=200)
-	name = models.CharField(max_length=200)
-	content = models.TextField()
 	

@@ -67,6 +67,16 @@ def register_post(request):
 	emailcheck = re.compile("^[^@]*@(.*)$")
 	if "login" in request.POST and emailcheck.match(request.POST["login"]) is None:
 		errors.append("Check the Email field, that does not look like an Email adress.")
+	else:
+		# Also check that its unique:
+		doesnotexist = False
+		try:
+			Member.objects.get(email=request.POST["login"])
+		except Member.DoesNotExist:
+			doesnotexist = True
+			
+		if doesnotexist == False:
+			errors.append("This Email is already taken. Contact support.")
 	
 	# Check the birthdate...
 	datecheck = re.compile("^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$")
@@ -78,7 +88,6 @@ def register_post(request):
 		errors.append("Your password needs to be at least 8 characters long.")
 	
 	# If its a swedish personnummer, check that its valid:
-	
 	
 	if "socialsecuritynumber" in request.POST and "country" in request.POST:
 		personnummer = request.POST["socialsecuritynumber"]
@@ -107,6 +116,15 @@ def register_post(request):
 					pass
 			else:
 				errors.append("Your Swedish social security number is specified in the wrong format. The correct format is YYMMDD-XXXX")
+		# Also check that its unique:
+		doesnotexist = False
+		try:
+			Member.objects.get(socialsecuritynumber=request.POST["socialsecuritynumber"])
+		except Member.DoesNotExist:
+			doesnotexist = True
+			
+		if doesnotexist == False:
+			errors.append("This SSID is already taken. Contact support.")
 	
 	# Now, we need to make a member
 	
