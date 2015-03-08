@@ -2,6 +2,8 @@ from django.db import models
 from django_countries.fields import CountryField
 
 class Server(models.Model):
+	def __str__(self):
+		return self.name
 	name = models.CharField(max_length=200)
 	
 	description = models.TextField()
@@ -16,6 +18,10 @@ class Server(models.Model):
 
 
 class Member(models.Model):
+	def __str__(self):
+		nicky = " " if self.nick == "" else " \"" + self.nick +  "\" "
+		return self.firstname + nicky + self.surname
+	
 	firstname = models.CharField(max_length=200)
 	surname = models.CharField(max_length=200)
 	nick = models.CharField(max_length=200)
