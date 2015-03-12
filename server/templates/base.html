@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	{% load spirit_tags i18n %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ config.site_description }}">
+    <meta name="author" content="">
+
+    <title>{% block title %}{% endblock %} - {{ config.site_name }}</title>
+	{% load staticfiles %}
+	
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'servers/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'servers/css/dashboard.css' %}" rel="stylesheet">
+	
+	<link rel="stylesheet" href="{{ STATIC_URL }}spirit/stylesheets/vendors/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}spirit/stylesheets/vendors/github.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}spirit/stylesheets/vendors/jquery.atwho.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}spirit/stylesheets/styles.css">
+	
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="{% static 'js/html5shiv.min.js' %}"></script>
+      <script src="{% static 'js/respond.min.js' %}"></script>
+    <![endif]-->
+	
+	{% block help %}{% endblock %}
+    <script src="{% static 'servers/js/jquery.min.js' %}"></script>
+    <script src="{% static 'servers/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'servers/js/jquery.cookie.js' %}"></script>
+	
+    <script src="{{ STATIC_URL }}spirit/scripts/vendors/highlightjs/highlight.min.js"></script>
+    <script src="{{ STATIC_URL }}spirit/scripts/util.js"></script>
+    <script src="{{ STATIC_URL }}spirit/scripts/tab.js"></script>
+    <script src="{{ STATIC_URL }}spirit/scripts/postify.js"></script>
+    <script src="{{ STATIC_URL }}spirit/scripts/social_share.js"></script>
+	{% if user.is_authenticated %}
+        <script src="{{ STATIC_URL }}spirit/scripts/vendors/atwho/jquery.caret.min.js"></script>
+        <script src="{{ STATIC_URL }}spirit/scripts/vendors/atwho/jquery.atwho.min.js"></script>
+        <script src="{{ STATIC_URL }}spirit/scripts/vendors/marked/marked.min.js"></script>
+        <script src="{{ STATIC_URL }}spirit/scripts/vendors/waypoints/waypoints.min.js"></script>
+        <script src="{{ STATIC_URL }}spirit/scripts/store.js"></script>
+        <script src="{{ STATIC_URL }}spirit/scripts/editor_image_upload.js"></script>
+	    <script src="{{ STATIC_URL }}spirit/scripts/editor.js"></script>
+        <script src="{{ STATIC_URL }}spirit/scripts/emoji_list.js"></script>
+        <script src="{{ STATIC_URL }}spirit/scripts/like.js"></script>
+        <script src="{{ STATIC_URL }}spirit/scripts/bookmark.js"></script>
+        <script src="{{ STATIC_URL }}spirit/scripts/notification.js"></script>
+    {% endif %}
+	
+	{% if user.is_moderator %}
+        <script src="{{ STATIC_URL }}spirit/scripts/move_comments.js"></script>
+    {% endif %}
+	
+	<script type="text/javascript">
+		$(function() {
+
+			$.tab();
+
+			$( 'a.js-post' ).postify( {
+				csrfToken: "{{ csrf_token }}",
+			} );
+
+			{% if user.is_authenticated %}
+				$.notification( {
+					notificationUrl: "{% url "spirit:topic-notification-ajax" %}",
+					notificationListUrl: "{% url "spirit:topic-notification-list-unread" %}",
+					mentionTxt: "{% trans "{user} has mention you on {topic}" %}",
+					commentTxt: "{% trans "{user} has commented on {topic}" %}",
+					showAll: "{% trans "Show all" %}",
+					empty: "{% trans "No new notifications, yet" %}",
+					unread: "{% trans "unread" %}",
+				} );
+			{% endif %}
+
+		});
+	</script>
+	{% block extrahead %}{% endblock %}
+	{% block extra_script %}{% endblock %}
+	{% block head-extra %}{% endblock %}
+	<!--[if (lt IE 9) & (!IEMobile)]>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Gaming For Everyone</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+		{% if not member %}
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#" id="register">Become a Member</a></li>
+				<li><a href="#" id="login">Login</a></li>
+			</ul>
+		{% else %}
+			<ul class="nav navbar-nav navbar-right">
+				<li><a class="header-tab-link js-tab-notification{% if has_notifications %} is-highlighted{% endif %}" href="{% url "spirit:topic-notification-list" %}" data-related=".js-notifications-content"><i class="fa fa-bell"></i></a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Logged in as {{ member }} <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a class="menu-link" href="{% url "spirit:profile-detail" pk=user.pk slug=user.slug %}">{% trans "Profile" %}</a></li>
+						<li><a class="menu-link" href="{% url "spirit:topic-active" %}">{% trans "Topics" %}</a></li>
+						<li><a class="menu-link" href="{% url "spirit:topic-unread-list" %}">{% trans "Unread topics" %}</a></li>
+						<li><a class="menu-link" href="{% url "spirit:private-list" %}">{% trans "Private topics" %}</a></li>
+						{% if user.is_administrator %}
+							<li><a class="menu-link" href="{% url "spirit:admin" %}">{% trans "Admin" %}</a></li>
+						{% endif %}
+					</ul>
+					<li><a href="#" id="logout" class="btn">Log out</a></li>
+				</li>
+			</ul>
+		{% endif %}
+			
+
+		  <!--
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+		  -->
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li{% if not section or section == "servers" %} class="active"{% endif %}><a href="{% url "index" %}">Servers <span class="sr-only">(current)</span></a></li>
+            <li{% if section == "members"%} class="active"{% endif %}><a href="{% url "members_index" %}">Members</a></li>
+            <li{% if section == "forums"%} class="active"{% endif %}><a href="{% url "spirit:index" %}">Forums</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Page 1</a></li>
+            <li><a href="">Page 2</a></li>
+          </ul>
+        </div>
+		
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			{% block containertop %}{% endblock %}
+			{% block content %}{% endblock %}
+			{% block containerbottom %}{% endblock %}
+		</div>
+      </div>
+    </div>
+
+	<div id="modal" class="modal fade">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+
+		</div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="{% static 'servers/js/docs.min.js' %}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static 'servers/js/ie10-viewport-bug-workaround.js' %}"></script>
+	<script type="text/javascript">
+
+	
+		$(function(){
+			$("#modal").on('show.bs.modal', function (event) {
+				var modal = $(this);
+				modal.find('.modal-content').load(modal.data("url"));
+			});
+		
+
+		
+			$("#register").click(function(){
+				$("#modal").data("url", "{% url 'register' %}").modal();
+			});
+			
+			$("#login").click(function(){
+				$("#modal").data("url", "{% url 'login' %}").modal();
+			});
+			
+			$("#logout").click(function(){
+				$.get("{% url 'logout' %}", function(){
+					document.location = "{% url 'index' %}"
+				});
+			});
+			
+		});
+	</script>
+  </body>
+</html>

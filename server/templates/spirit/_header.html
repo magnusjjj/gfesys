@@ -1,0 +1,21 @@
+{% load spirit_tags i18n %}
+    <header class="header js-tabs-container">
+
+        {% if user.is_authenticated %}
+            {% has_topic_notifications user as has_notifications %}
+
+            <ul class="header-tabs">
+                <li><a class="header-tab-link js-tab" href="{% url "spirit:search" %}" data-related=".js-search-content"><i class="fa fa-search"></i></a></li>
+            </ul>
+
+            <div class="header-tabs-content">
+
+                <div class="header-tab-content js-tab-content js-notifications-content"></div>
+
+                <div class="header-tab-content js-tab-content js-search-content">
+                    {% render_search_form %}
+                </div>
+
+            </div>
+        {% endif %}
+	</header>

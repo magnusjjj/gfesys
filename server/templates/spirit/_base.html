@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load spirit_tags i18n %}
+{% block containertop %}
+	<div class="suchaspirit">
+	{% include 'spirit/_header.html' %}
+	{% render_messages messages %}
+{% endblock %}
+{% block container %}
+	{{ block.super }}
+{% endblock %}
+{% block containerbottom %}
+	<div class="clearfix"></div>
+		<div style="display: none">
+		{% include 'spirit/_footer.html' %}
+			
+		</div>
+	</div>
+{% endblock %}

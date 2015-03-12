@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="page-header">Members</h1>
+  <div class="row placeholders">
+	{% if members %}
+		{% for member in members %}
+			<a class="col-xs-6 col-sm-3" href="{% url "member" member.id %}">
+				{% if member.image %}
+				<img src="{{member.image.url}}" class="img-responsive" alt="{{ member }}"/>
+				{% endif %}
+				<h4>{{ member }}</h4>
+				<span class="text-muted"></span>
+			</a>
+		{% endfor %}
+	{% else %}
+		<p>No members are visible.</p>
+	{% endif %}
+  </div>
+</div>
+{% endblock %}

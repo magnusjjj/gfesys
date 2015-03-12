@@ -5,8 +5,7 @@ from models import Member, Server, Volunteer
 class DefaultView(View):
 	context = {}
 	def get(self, request):
-		if "member_id" in request.session:
-			self.context["member"] = Member.objects.get(pk=request.session["member_id"])
+		return
 	
 	def setrights_server(self, request, server_id):
 		if 'member' in self.context:

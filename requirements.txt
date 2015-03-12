@@ -1,0 +1,1 @@
+django_messaging==0.5.1

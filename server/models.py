@@ -1,5 +1,7 @@
 from django.db import models
 from django_countries.fields import CountryField
+from django.contrib.auth.models import AbstractBaseUser
+import spirit.models.user
 
 class Server(models.Model):
 	def __str__(self):
@@ -17,10 +19,13 @@ class Server(models.Model):
 	image_width = models.IntegerField()
 
 
-class Member(models.Model):
+class Member(spirit.models.user.AbstractUser):
 	def __str__(self):
 		nicky = " " if self.nick == "" else " \"" + self.nick +  "\" "
 		return self.firstname + nicky + self.surname
+		
+	USERNAME_FIELD = 'email'
+	REQUIRED_FIELDS = []
 	
 	firstname = models.CharField(max_length=200)
 	surname = models.CharField(max_length=200)
@@ -36,7 +41,6 @@ class Member(models.Model):
 	zip = models.CharField(max_length=200)
 	careof = models.CharField(max_length=200)	
 	socialsecuritynumber = models.CharField(max_length=200)
-	email = models.EmailField(max_length=254, unique=True)
 	
 	joinedon = models.DateTimeField('Joined on', auto_now_add=True)
 	refreshedon = models.DateTimeField('Refreshed on')
@@ -44,9 +48,8 @@ class Member(models.Model):
 	image = models.ImageField(max_length=500, width_field='image_width', height_field='image_height', upload_to='members')
 	image_height = models.IntegerField()
 	image_width = models.IntegerField()
-	
-	password_hash = models.CharField(max_length=200)
-	password_salt = models.CharField(max_length=200) 
+
+	is_opt_in = models.BooleanField(default=False)
 
 class Volunteer(models.Model):
 	member = models.ForeignKey(Member)

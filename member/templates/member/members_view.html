@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+  {% if member %}
+	<h1 class="page-header">{{ member }}
+		{% if volunteer %}<a href="{% url "volunteer" server.id%}" class="btn btn-default">Volunteer for this Server</a>{% endif %}
+	</h1>
+	<div class="row placeholders">
+		<div class="col-sm-2">
+			{% if member.image %}
+				<img src="{{member.image.url}}" class="img-responsive" alt="{{ server.name}}">
+			{% endif %}
+		</div>
+	</div>
+	<div class="row">
+		<div role="tabpanel">
+
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#presentation" aria-controls="presentation" role="tab" data-toggle="tab">Presentation</a></li>
+			<li role="presentation"><a href="#servers" aria-controls="servers" role="tab" data-toggle="tab">Servers</a></li>
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="presentation">{{member.presentation|safe}}</div>
+			<div role="tabpanel" class="tab-pane" id="servers">
+				<table class="table">
+					<thead>
+						<th>Role</th><th>Name</th>
+					</thead>
+					<tbody>
+						{% for volunteer in volunteers %}
+						<tr>
+							<td>{{volunteer.role}}</td><td>{{volunteer.member.firstname}} {{volunteer.member.surname}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		  </div>
+
+		</div>
+	</div>
+	<style type="text/css">
+		.tab-content {
+			border-left: 1px solid #ddd;
+			border-right: 1px solid #ddd;
+			border-bottom: 1px solid #ddd;
+			padding: 2em;
+			min-height: 5em;
+		}
+	</style>
+	
+  {% else %}
+	<p>Whoops! This server does not exist.</p>
+  {% endif %}
+{% endblock %}

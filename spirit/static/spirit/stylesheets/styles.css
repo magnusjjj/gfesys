@@ -1,0 +1,1582 @@
+/* line 1, styles.scss */
+.suchaspirit {
+  /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
+  /**
+   * 1. Set default font family to sans-serif.
+   * 2. Prevent iOS text size adjust after orientation change, without disabling
+   *    user zoom.
+   */
+  /**
+   * Remove default margin.
+   */
+  /* HTML5 display definitions
+     ========================================================================== */
+  /**
+   * Correct `block` display not defined in IE 8/9.
+   */
+  /**
+   * 1. Correct `inline-block` display not defined in IE 8/9.
+   * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+   */
+  /**
+   * Prevent modern browsers from displaying `audio` without controls.
+   * Remove excess height in iOS 5 devices.
+   */
+  /**
+   * Address `[hidden]` styling not present in IE 8/9.
+   * Hide the `template` element in IE, Safari, and Firefox < 22.
+   */
+  /* Links
+     ========================================================================== */
+  /**
+   * Remove the gray background color from active links in IE 10.
+   */
+  /**
+   * Improve readability when focused and also mouse hovered in all browsers.
+   */
+  /* Text-level semantics
+     ========================================================================== */
+  /**
+   * Address styling not present in IE 8/9, Safari 5, and Chrome.
+   */
+  /**
+   * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
+   */
+  /**
+   * Address styling not present in Safari 5 and Chrome.
+   */
+  /**
+   * Address variable `h1` font-size and margin within `section` and `article`
+   * contexts in Firefox 4+, Safari 5, and Chrome.
+   */
+  /**
+   * Address styling not present in IE 8/9.
+   */
+  /**
+   * Address inconsistent and variable font size in all browsers.
+   */
+  /**
+   * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+   */
+  /* Embedded content
+     ========================================================================== */
+  /**
+   * Remove border when inside `a` element in IE 8/9.
+   */
+  /**
+   * Correct overflow displayed oddly in IE 9.
+   */
+  /* Grouping content
+     ========================================================================== */
+  /**
+   * Address margin not present in IE 8/9 and Safari 5.
+   */
+  /**
+   * Address differences between Firefox and other browsers.
+   */
+  /**
+   * Contain overflow in all browsers.
+   */
+  /**
+   * Address odd `em`-unit font size rendering in all browsers.
+   */
+  /* Forms
+     ========================================================================== */
+  /**
+   * Known limitation: by default, Chrome and Safari on OS X allow very limited
+   * styling of `select`, unless a `border` property is set.
+   */
+  /**
+   * 1. Correct color not being inherited.
+   *    Known issue: affects color of disabled elements.
+   * 2. Correct font properties not being inherited.
+   * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+   */
+  /**
+   * Address `overflow` set to `hidden` in IE 8/9/10.
+   */
+  /**
+   * Address inconsistent `text-transform` inheritance for `button` and `select`.
+   * All other form control elements do not inherit `text-transform` values.
+   * Correct `button` style inheritance in Firefox, IE 8+, and Opera
+   * Correct `select` style inheritance in Firefox.
+   */
+  /**
+   * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+   *    and `video` controls.
+   * 2. Correct inability to style clickable `input` types in iOS.
+   * 3. Improve usability and consistency of cursor style between image-type
+   *    `input` and others.
+   */
+  /**
+   * Re-set default cursor for disabled elements.
+   */
+  /**
+   * Remove inner padding and border in Firefox 4+.
+   */
+  /**
+   * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+   * the UA stylesheet.
+   */
+  /**
+   * It's recommended that you don't attempt to style these elements.
+   * Firefox's implementation doesn't respect box-sizing, padding, or width.
+   *
+   * 1. Address box sizing set to `content-box` in IE 8/9/10.
+   * 2. Remove excess padding in IE 8/9/10.
+   */
+  /**
+   * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+   * `font-size` values of the `input`, it causes the cursor style of the
+   * decrement button to change from `default` to `text`.
+   */
+  /**
+   * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+   * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+   *    (include `-moz` to future-proof).
+   */
+  /**
+   * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+   * Safari (but not Chrome) clips the cancel button when the search input has
+   * padding (and `textfield` appearance).
+   */
+  /**
+   * Define consistent border, margin, and padding.
+   */
+  /**
+   * 1. Correct `color` not being inherited in IE 8/9.
+   * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+   */
+  /**
+   * Remove default vertical scrollbar in IE 8/9.
+   */
+  /**
+   * Don't inherit the `font-weight` (applied by a rule above).
+   * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+   */
+  /* Tables
+     ========================================================================== */
+  /**
+   * Remove most spacing between table cells.
+   */
+  /* Fix for odd Mozilla border & padding issues */
+  /* IE9+ */
+  /*
+  div.container {
+    @include outer-container;
+    
+    div.element {
+      @include span-columns(4);
+  	//styles
+  
+  	@include media( $medium ) {
+        @include span-columns(4);
+  	  //styles
+      }
+  	
+  	@include media( $medium-only ) {
+  	  @include omega(2n);
+  	  //only for omega.
+      }
+  	
+  	@include media( $large ) {
+        @include span-columns(3);
+  	  //styles
+  	}
+    }
+    
+    
+  }
+  */
+}
+/* line 2, vendors/neat/grid/_grid.scss */
+.suchaspirit * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* line 9, elements/_normalize.scss */
+.suchaspirit html {
+  font-family: sans-serif;
+  /* 1 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+}
+/* line 19, elements/_normalize.scss */
+.suchaspirit body {
+  margin: 0;
+}
+/* line 30, elements/_normalize.scss */
+.suchaspirit article,
+.suchaspirit aside,
+.suchaspirit details,
+.suchaspirit figcaption,
+.suchaspirit figure,
+.suchaspirit footer,
+.suchaspirit header,
+.suchaspirit hgroup,
+.suchaspirit main,
+.suchaspirit nav,
+.suchaspirit section,
+.suchaspirit summary {
+  display: block;
+}
+/* line 50, elements/_normalize.scss */
+.suchaspirit audio,
+.suchaspirit canvas,
+.suchaspirit progress,
+.suchaspirit video {
+  display: inline-block;
+  /* 1 */
+  vertical-align: baseline;
+  /* 2 */
+}
+/* line 63, elements/_normalize.scss */
+.suchaspirit audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+/* line 73, elements/_normalize.scss */
+.suchaspirit [hidden],
+.suchaspirit template {
+  display: none;
+}
+/* line 85, elements/_normalize.scss */
+.suchaspirit a {
+  background: transparent;
+}
+/* line 93, elements/_normalize.scss */
+.suchaspirit a:active,
+.suchaspirit a:hover {
+  outline: 0;
+}
+/* line 105, elements/_normalize.scss */
+.suchaspirit abbr[title] {
+  border-bottom: 1px dotted;
+}
+/* line 113, elements/_normalize.scss */
+.suchaspirit b,
+.suchaspirit strong {
+  font-weight: bold;
+}
+/* line 122, elements/_normalize.scss */
+.suchaspirit dfn {
+  font-style: italic;
+}
+/* line 131, elements/_normalize.scss */
+.suchaspirit h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+/* line 140, elements/_normalize.scss */
+.suchaspirit mark {
+  background: #ff0;
+  color: #000;
+}
+/* line 149, elements/_normalize.scss */
+.suchaspirit small {
+  font-size: 80%;
+}
+/* line 157, elements/_normalize.scss */
+.suchaspirit sub,
+.suchaspirit sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+/* line 165, elements/_normalize.scss */
+.suchaspirit sup {
+  top: -0.5em;
+}
+/* line 169, elements/_normalize.scss */
+.suchaspirit sub {
+  bottom: -0.25em;
+}
+/* line 180, elements/_normalize.scss */
+.suchaspirit img {
+  border: 0;
+}
+/* line 188, elements/_normalize.scss */
+.suchaspirit svg:not(:root) {
+  overflow: hidden;
+}
+/* line 199, elements/_normalize.scss */
+.suchaspirit figure {
+  margin: 1em 40px;
+}
+/* line 207, elements/_normalize.scss */
+.suchaspirit hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+/* line 217, elements/_normalize.scss */
+.suchaspirit pre {
+  overflow: auto;
+}
+/* line 225, elements/_normalize.scss */
+.suchaspirit code,
+.suchaspirit kbd,
+.suchaspirit pre,
+.suchaspirit samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+/* line 248, elements/_normalize.scss */
+.suchaspirit button,
+.suchaspirit input,
+.suchaspirit optgroup,
+.suchaspirit select,
+.suchaspirit textarea {
+  color: inherit;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+  margin: 0;
+  /* 3 */
+}
+/* line 262, elements/_normalize.scss */
+.suchaspirit button {
+  overflow: visible;
+}
+/* line 273, elements/_normalize.scss */
+.suchaspirit button,
+.suchaspirit select {
+  text-transform: none;
+}
+/* line 286, elements/_normalize.scss */
+.suchaspirit button,
+.suchaspirit html input[type="button"],
+.suchaspirit input[type="reset"],
+.suchaspirit input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */
+}
+/* line 298, elements/_normalize.scss */
+.suchaspirit button[disabled],
+.suchaspirit html input[disabled] {
+  cursor: default;
+}
+/* line 307, elements/_normalize.scss */
+.suchaspirit button::-moz-focus-inner,
+.suchaspirit input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+/* line 318, elements/_normalize.scss */
+.suchaspirit input {
+  line-height: normal;
+}
+/* line 330, elements/_normalize.scss */
+.suchaspirit input[type="checkbox"],
+.suchaspirit input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+/* line 342, elements/_normalize.scss */
+.suchaspirit input[type="number"]::-webkit-inner-spin-button,
+.suchaspirit input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+/* line 353, elements/_normalize.scss */
+.suchaspirit input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  /* 2 */
+  box-sizing: content-box;
+}
+/* line 366, elements/_normalize.scss */
+.suchaspirit input[type="search"]::-webkit-search-cancel-button,
+.suchaspirit input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+/* line 375, elements/_normalize.scss */
+.suchaspirit fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+/* line 386, elements/_normalize.scss */
+.suchaspirit legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+/* line 395, elements/_normalize.scss */
+.suchaspirit textarea {
+  overflow: auto;
+}
+/* line 404, elements/_normalize.scss */
+.suchaspirit optgroup {
+  font-weight: bold;
+}
+/* line 415, elements/_normalize.scss */
+.suchaspirit table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* line 420, elements/_normalize.scss */
+.suchaspirit td,
+.suchaspirit th {
+  padding: 0;
+}
+/* line 3, elements/_reset.scss */
+.suchaspirit ::selection {
+  background: #cecece;
+  color: #fefefe;
+  text-shadow: none;
+}
+/* line 9, elements/_reset.scss */
+.suchaspirit ::-moz-selection {
+  background: #cecece;
+  color: #fefefe;
+  text-shadow: none;
+}
+/* line 15, elements/_reset.scss */
+.suchaspirit i {
+  color: inherit;
+}
+/* line 19, elements/_reset.scss */
+.suchaspirit p {
+  margin: 0;
+  margin-bottom: 24px;
+}
+/* line 24, elements/_reset.scss */
+.suchaspirit hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+/* line 33, elements/_reset.scss */
+.suchaspirit iframe {
+  border: 0;
+}
+/* line 37, elements/_reset.scss */
+.suchaspirit video {
+  width: 100%;
+  height: 100%;
+}
+/* line 42, elements/_reset.scss */
+.suchaspirit audio {
+  width: 100%;
+}
+/* line 46, elements/_reset.scss */
+.suchaspirit audio,
+.suchaspirit canvas,
+.suchaspirit img,
+.suchaspirit svg,
+.suchaspirit video {
+  vertical-align: middle;
+}
+/* line 54, elements/_reset.scss */
+.suchaspirit img {
+  max-width: 100%;
+  font-style: italic;
+}
+/* line 59, elements/_reset.scss */
+.suchaspirit button,
+.suchaspirit input[type="submit"],
+.suchaspirit input[type="reset"],
+.suchaspirit input[type="button"] {
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  line-height: normal;
+  padding: 0;
+}
+/* line 71, elements/_reset.scss */
+.suchaspirit button::-moz-focus-inner,
+.suchaspirit input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+/* line 77, elements/_reset.scss */
+.suchaspirit textarea {
+  border: none;
+  outline: none;
+  margin: 0;
+  width: 100%;
+  display: block;
+  background: #fff;
+}
+/* line 3, elements/_layout.scss */
+.suchaspirit html {
+  font-family: "ubuntu-light-webfont";
+  font-size: 16px;
+  line-height: 24px;
+  color: #444444;
+  background-color: #fefefe;
+  cursor: default;
+}
+/* line 12, elements/_layout.scss */
+.suchaspirit body {
+  *zoom: 1;
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 17, vendors/bourbon/addons/_clearfix.scss */
+.suchaspirit body:before, .suchaspirit body:after {
+  content: " ";
+  display: table;
+}
+/* line 23, vendors/bourbon/addons/_clearfix.scss */
+.suchaspirit body:after {
+  clear: both;
+}
+/* line 11, modules/_mixins.scss */
+.suchaspirit html {
+  position: relative;
+  min-height: 100%;
+}
+/* line 16, modules/_mixins.scss */
+.suchaspirit body {
+  margin-bottom: 100px;
+}
+/* line 20, modules/_mixins.scss */
+.suchaspirit .footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+}
+/* line 3, elements/_forms.scss */
+.suchaspirit fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+/* line 9, elements/_forms.scss */
+.suchaspirit textarea {
+  resize: vertical;
+}
+/* line 13, elements/_forms.scss */
+.suchaspirit input[type="text"],
+.suchaspirit input[type="password"],
+.suchaspirit input[type="email"],
+.suchaspirit select,
+.suchaspirit textarea {
+  width: 100%;
+  padding: 6px 12px;
+  border: 1px solid #cecece;
+}
+/* line 23, elements/_forms.scss */
+.suchaspirit input[type="text"]:focus,
+.suchaspirit input[type="password"]:focus,
+.suchaspirit input[type="email"]:focus,
+.suchaspirit select:focus,
+.suchaspirit textarea:focus {
+  border: 1px solid #c65555;
+}
+/* line 31, elements/_forms.scss */
+.suchaspirit input[type="checkbox"] {
+  display: block;
+  margin: 6px 12px;
+  margin-bottom: 24px;
+}
+/* line 37, elements/_forms.scss */
+.suchaspirit label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+/* line 42, elements/_forms.scss */
+.suchaspirit label input[type="checkbox"] {
+  display: inline;
+  margin: 6px 12px;
+  margin-bottom: 0;
+}
+@font-face {
+  /* line 1, styles.scss */
+  .suchaspirit {
+    font-family: ubuntu-light-webfont;
+    font-weight: normal;
+    font-style: normal;
+    src: url("vendors/fonts/ubuntu-light-webfont.eot");
+    src: url("vendors/fonts/ubuntu-light-webfont.eot?#iefix") format("embedded-opentype"), url("vendors/fonts/ubuntu-light-webfont.woff") format("woff"), url("vendors/fonts/ubuntu-light-webfont.ttf") format("truetype"), url("vendors/fonts/ubuntu-light-webfont.svg#ubuntu-light-webfont") format("svg");
+  }
+}
+/* line 3, elements/_links.scss */
+.suchaspirit a {
+  color: #979797;
+  text-decoration: none;
+  outline: 0;
+}
+/* line 8, elements/_links.scss */
+.suchaspirit a:hover, .suchaspirit a:focus {
+  color: #1c1c1c;
+}
+/* line 3, elements/_lists.scss */
+.suchaspirit ul, .suchaspirit ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+/* line 5, elements/_headings.scss */
+.suchaspirit h1 {
+  font-size: 25.88854px;
+  line-height: 38.83282px;
+}
+/* line 10, elements/_headings.scss */
+.suchaspirit h2 {
+  font-size: 21.33333px;
+  line-height: 32.0px;
+}
+/* line 5, objects/_patterns.scss */
+.suchaspirit .comment-media, .suchaspirit .container,
+.suchaspirit .header, .suchaspirit .row,
+.suchaspirit .comment, .suchaspirit .comment-info, .suchaspirit .menu-item {
+  *zoom: 1;
+}
+/* line 17, vendors/bourbon/addons/_clearfix.scss */
+.suchaspirit .comment-media:before, .suchaspirit .container:before,
+.suchaspirit .header:before, .suchaspirit .row:before,
+.suchaspirit .comment:before, .suchaspirit .comment-info:before, .suchaspirit .menu-item:before, .suchaspirit .comment-media:after, .suchaspirit .container:after,
+.suchaspirit .header:after, .suchaspirit .row:after,
+.suchaspirit .comment:after, .suchaspirit .comment-info:after, .suchaspirit .menu-item:after {
+  content: " ";
+  display: table;
+}
+/* line 23, vendors/bourbon/addons/_clearfix.scss */
+.suchaspirit .comment-media:after, .suchaspirit .container:after,
+.suchaspirit .header:after, .suchaspirit .row:after,
+.suchaspirit .comment:after, .suchaspirit .comment-info:after, .suchaspirit .menu-item:after {
+  clear: both;
+}
+/* line 9, objects/_patterns.scss */
+.suchaspirit .inline-list li,
+.suchaspirit .tabs li,
+.suchaspirit .admin-tabs li,
+.suchaspirit .header-tabs li,
+.suchaspirit .nav li,
+.suchaspirit .comment-date li,
+.suchaspirit .comment-actions li,
+.suchaspirit .paginator li,
+.suchaspirit .reply-markdown li,
+.suchaspirit .share-actions li,
+.suchaspirit .profile-track li, .suchaspirit .row-info div {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+}
+/* line 15, objects/_patterns.scss */
+.suchaspirit .inline-list li,
+.suchaspirit .tabs li,
+.suchaspirit .admin-tabs li,
+.suchaspirit .header-tabs li,
+.suchaspirit .nav li,
+.suchaspirit .comment-date li,
+.suchaspirit .comment-actions li,
+.suchaspirit .paginator li,
+.suchaspirit .reply-markdown li,
+.suchaspirit .share-actions li,
+.suchaspirit .profile-track li {
+  margin-left: 12px;
+}
+/* line 19, objects/_patterns.scss */
+.suchaspirit .inline-list li:first-child,
+.suchaspirit .tabs li:first-child,
+.suchaspirit .admin-tabs li:first-child,
+.suchaspirit .header-tabs li:first-child,
+.suchaspirit .nav li:first-child,
+.suchaspirit .comment-date li:first-child,
+.suchaspirit .comment-actions li:first-child,
+.suchaspirit .paginator li:first-child,
+.suchaspirit .reply-markdown li:first-child,
+.suchaspirit .share-actions li:first-child,
+.suchaspirit .profile-track li:first-child {
+  margin-left: 0;
+}
+/* line 3, objects/_buttons.scss */
+.suchaspirit input[type="submit"].button,
+.suchaspirit .button, .suchaspirit .dropdown-button {
+  line-height: 2;
+  height: 2em;
+  color: #444444;
+}
+/* line 10, objects/_buttons.scss */
+.suchaspirit input[type="submit"].button,
+.suchaspirit .button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: #cecece;
+}
+/* line 19, objects/_buttons.scss */
+.suchaspirit input[type="submit"].button.is-undo,
+.suchaspirit .button.is-undo {
+  background-color: #c65555;
+}
+@media screen and (min-width: 768px) {
+  /* line 10, objects/_buttons.scss */
+  .suchaspirit input[type="submit"].button,
+  .suchaspirit .button {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    width: auto;
+    padding: 0 12px;
+  }
+}
+/* line 7, objects/_media.scss */
+.suchaspirit .comment-img {
+  float: left;
+}
+/* line 11, objects/_media.scss */
+.suchaspirit .comment-body {
+  overflow: hidden;
+}
+/* line 8, objects/_tabs.scss */
+.suchaspirit .tab-link {
+  display: block;
+  font-size: 18px;
+  padding: 0 12px 6px 12px;
+}
+/* line 14, objects/_tabs.scss */
+.suchaspirit .tab-link.is-selected {
+  color: #1c1c1c;
+  border-bottom: #cecece 4px solid;
+}
+/* line 9, objects/_side-menu.scss */
+.suchaspirit .side-menu {
+  z-index: 9000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  /* hidden (for animation) */
+  max-width: 320px;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  background: #333333;
+  -webkit-box-shadow: inset -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: inset -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25);
+  box-shadow: inset -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25);
+  -webkit-transition: width 0.5s ease;
+  -moz-transition: width 0.5s ease;
+  -o-transition: width 0.5s ease;
+  transition: width 0.5s ease;
+}
+/* line 30, objects/_side-menu.scss */
+.suchaspirit .side-menu li {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+/* line 33, objects/_side-menu.scss */
+.suchaspirit .side-menu li:last-child {
+  border-bottom: rgba(255, 255, 255, 0.1) solid 1px;
+}
+/* line 40, objects/_side-menu.scss */
+.suchaspirit #side-menu:target,
+.suchaspirit .side-menu-show {
+  width: 70%;
+}
+/* line 45, objects/_side-menu.scss */
+.suchaspirit .side-menu-link {
+  display: block;
+  line-height: 42px;
+  white-space: nowrap;
+  color: #ccc;
+  padding-left: 15px;
+}
+/* line 52, objects/_side-menu.scss */
+.suchaspirit .side-menu-link:focus, .suchaspirit .side-menu-link:hover {
+  color: #fefefe;
+  background: rgba(255, 255, 255, 0.1);
+}
+/* line 58, objects/_side-menu.scss */
+.suchaspirit .side-menu-link.is-active {
+  color: #fefefe;
+}
+/* line 63, objects/_side-menu.scss */
+.suchaspirit .side-menu-close {
+  font-size: 35px;
+  line-height: 75px;
+  margin-left: 15px;
+  color: #ccc;
+}
+/* line 69, objects/_side-menu.scss */
+.suchaspirit .side-menu-close:focus, .suchaspirit .side-menu-close:hover {
+  color: #fefefe;
+}
+/* line 3, partials/_layout.scss */
+.suchaspirit .container,
+.suchaspirit .header {
+  margin-bottom: 24px;
+}
+/* line 7, partials/_header.scss */
+.suchaspirit .header-logo {
+  float: left;
+  font-size: 28px;
+  line-height: 48px;
+  color: #444444;
+}
+/* line 14, partials/_header.scss */
+.suchaspirit .header-link {
+  float: right;
+  line-height: 48px;
+}
+/* line 19, partials/_header.scss */
+.suchaspirit .header-tabs {
+  float: right;
+  line-height: 48px;
+}
+/* line 24, partials/_header.scss */
+.suchaspirit .header-tabs li {
+  margin-left: 24px;
+}
+/* line 30, partials/_header.scss */
+.suchaspirit .header-tab-link.is-selected {
+  color: #1c1c1c;
+}
+/* line 34, partials/_header.scss */
+.suchaspirit .header-tab-link.is-highlighted {
+  color: #c65555;
+}
+/* line 39, partials/_header.scss */
+.suchaspirit .header-tabs-content {
+  clear: both;
+}
+/* line 43, partials/_header.scss */
+.suchaspirit .header-tab-content {
+  display: none;
+  padding-bottom: 24px;
+  border-bottom: #cecece 1px solid;
+}
+@media screen and (min-width: 768px) {
+  /* line 49, partials/_header.scss */
+  .suchaspirit .header-nav {
+    text-align: right;
+  }
+}
+/* line 54, partials/_header.scss */
+.suchaspirit .header-nav .menu {
+  text-align: left;
+}
+/* line 3, partials/_footer.scss */
+.suchaspirit .footer-container {
+  *zoom: 1;
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 17, vendors/bourbon/addons/_clearfix.scss */
+.suchaspirit .footer-container:before, .suchaspirit .footer-container:after {
+  content: " ";
+  display: table;
+}
+/* line 23, vendors/bourbon/addons/_clearfix.scss */
+.suchaspirit .footer-container:after {
+  clear: both;
+}
+/* line 7, partials/_footer.scss */
+.suchaspirit .footer-logo {
+  float: right;
+  font-size: 14px;
+  margin-top: 50px;
+}
+/* line 3, partials/_headings.scss */
+.suchaspirit .headline {
+  font-weight: normal;
+}
+/* line 3, partials/_forms.scss */
+.suchaspirit .field {
+  margin-bottom: 24px;
+}
+/* line 7, partials/_forms.scss */
+.suchaspirit .checkboxes {
+  overflow: auto;
+  max-height: 144px;
+  margin-bottom: 24px;
+  background-color: #fefefe;
+  border: 1px solid #cecece;
+}
+/* line 15, partials/_forms.scss */
+.suchaspirit .errorlist {
+  color: #c65555;
+  margin-bottom: 12px;
+}
+/* line 3, partials/_video.scss */
+.suchaspirit .video {
+  display: block;
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+}
+/* line 10, partials/_video.scss */
+.suchaspirit .video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+/* line 40, styles.scss */
+.suchaspirit .rows {
+  margin-bottom: 24px;
+}
+/* line 44, styles.scss */
+.suchaspirit .row,
+.suchaspirit .comment {
+  padding: 12px;
+  border-top: #cecece 1px solid;
+}
+/* line 50, styles.scss */
+.suchaspirit .row:last-child,
+.suchaspirit .comment:last-child {
+  border-bottom: #cecece 1px solid;
+}
+/* line 55, styles.scss */
+.suchaspirit .row-title {
+  float: left;
+  display: block;
+  margin-right: 7.42297%;
+  width: 100%;
+  margin-bottom: 12px;
+}
+/* line 38, vendors/neat/grid/_span-columns.scss */
+.suchaspirit .row-title:last-child {
+  margin-right: 0;
+}
+@media screen and (min-width: 768px) {
+  /* line 55, styles.scss */
+  .suchaspirit .row-title {
+    float: left;
+    display: block;
+    margin-right: 3.57866%;
+    width: 48.21067%;
+    margin-bottom: 0;
+  }
+  /* line 38, vendors/neat/grid/_span-columns.scss */
+  .suchaspirit .row-title:last-child {
+    margin-right: 0;
+  }
+}
+/* line 65, styles.scss */
+.suchaspirit .row-link {
+  color: #444444;
+}
+/* line 68, styles.scss */
+.suchaspirit .row-link:visited {
+  color: #979797;
+}
+/* line 73, styles.scss */
+.suchaspirit .row-info {
+  float: left;
+  display: block;
+  margin-right: 7.42297%;
+  width: 100%;
+  color: #979797;
+}
+/* line 38, vendors/neat/grid/_span-columns.scss */
+.suchaspirit .row-info:last-child {
+  margin-right: 0;
+}
+/* line 77, styles.scss */
+.suchaspirit .row-info div {
+  margin-left: 24px;
+}
+/* line 81, styles.scss */
+.suchaspirit .row-info div:first-child {
+  margin-left: 0;
+}
+@media screen and (min-width: 768px) {
+  /* line 73, styles.scss */
+  .suchaspirit .row-info {
+    float: left;
+    display: block;
+    margin-right: 3.57866%;
+    width: 48.21067%;
+    text-align: right;
+  }
+  /* line 38, vendors/neat/grid/_span-columns.scss */
+  .suchaspirit .row-info:last-child {
+    margin-right: 0;
+  }
+}
+/* line 92, styles.scss */
+.suchaspirit .row-unread {
+  font-size: 9.88854px;
+  background-color: #e2f5fc;
+}
+/* line 97, styles.scss */
+.suchaspirit .row-edit {
+  float: right;
+}
+/* line 103, styles.scss */
+.suchaspirit .categories {
+  float: left;
+  display: block;
+  margin-right: 7.42297%;
+  width: 100%;
+  margin-bottom: 12px;
+}
+/* line 38, vendors/neat/grid/_span-columns.scss */
+.suchaspirit .categories:last-child {
+  margin-right: 0;
+}
+@media screen and (min-width: 768px) {
+  /* line 103, styles.scss */
+  .suchaspirit .categories {
+    float: left;
+    display: block;
+    margin-right: 3.57866%;
+    width: 48.21067%;
+  }
+  /* line 38, vendors/neat/grid/_span-columns.scss */
+  .suchaspirit .categories:last-child {
+    margin-right: 0;
+  }
+}
+/* line 112, styles.scss */
+.suchaspirit .tab-content {
+  display: none;
+}
+/* line 116, styles.scss */
+.suchaspirit .new-topic {
+  float: left;
+  display: block;
+  margin-right: 7.42297%;
+  width: 100%;
+}
+/* line 38, vendors/neat/grid/_span-columns.scss */
+.suchaspirit .new-topic:last-child {
+  margin-right: 0;
+}
+@media screen and (min-width: 768px) {
+  /* line 116, styles.scss */
+  .suchaspirit .new-topic {
+    float: left;
+    display: block;
+    margin-right: 3.57866%;
+    width: 48.21067%;
+    text-align: right;
+  }
+  /* line 38, vendors/neat/grid/_span-columns.scss */
+  .suchaspirit .new-topic:last-child {
+    margin-right: 0;
+  }
+}
+/* line 127, styles.scss */
+.suchaspirit .topic-moderation {
+  margin-bottom: 24px;
+}
+@media screen and (min-width: 768px) {
+  /* line 127, styles.scss */
+  .suchaspirit .topic-moderation {
+    text-align: right;
+  }
+  /* line 133, styles.scss */
+  .suchaspirit .topic-moderation .menu {
+    text-align: left;
+  }
+}
+/* line 139, styles.scss */
+.suchaspirit .head-edit-link {
+  font-size: 14px;
+}
+/* line 143, styles.scss */
+.suchaspirit .move-comments {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  background: #cecece;
+  padding: 6px 0;
+}
+/* line 154, styles.scss */
+.suchaspirit .move-container {
+  *zoom: 1;
+  max-width: 68em;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 17, vendors/bourbon/addons/_clearfix.scss */
+.suchaspirit .move-container:before, .suchaspirit .move-container:after {
+  content: " ";
+  display: table;
+}
+/* line 23, vendors/bourbon/addons/_clearfix.scss */
+.suchaspirit .move-container:after {
+  clear: both;
+}
+/* line 158, styles.scss */
+.suchaspirit .move-link,
+.suchaspirit .move-label,
+.suchaspirit .move-input {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  margin-left: 12px;
+}
+/* line 167, styles.scss */
+.suchaspirit .move-link {
+  padding: 6px;
+  background: #f6f6f6;
+}
+/* line 173, styles.scss */
+.suchaspirit .move-input input {
+  width: 100px;
+  margin: 0;
+}
+/* line 179, styles.scss */
+.suchaspirit input.move-comment-checkbox {
+  display: inline-block;
+  margin: 0;
+}
+/* line 186, styles.scss */
+.suchaspirit .nav {
+  font-size: 14px;
+}
+/* line 190, styles.scss */
+.suchaspirit .nav .fa {
+  margin-left: 12px;
+}
+/* line 195, styles.scss */
+.suchaspirit .comments {
+  margin-bottom: 24px;
+}
+/* line 202, styles.scss */
+.suchaspirit .comment.is-highlighted {
+  background: #ffffe9;
+}
+/* line 211, styles.scss */
+.suchaspirit .comment-img {
+  width: 50px;
+  margin-right: 24px;
+}
+/* line 221, styles.scss */
+.suchaspirit .comment-avatar {
+  border-radius: 25px;
+}
+/* line 225, styles.scss */
+.suchaspirit .comment-info {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+/* line 231, styles.scss */
+.suchaspirit .comment-username {
+  float: left;
+}
+/* line 235, styles.scss */
+.suchaspirit .comment-date {
+  float: right;
+}
+/* line 240, styles.scss */
+.suchaspirit .comment-realname {
+  display: none;
+}
+@media screen and (min-width: 768px) {
+  /* line 240, styles.scss */
+  .suchaspirit .comment-realname {
+    display: inline;
+    margin-left: 12px;
+  }
+}
+/* line 250, styles.scss */
+.suchaspirit .comment-text blockquote {
+  margin: 0;
+  border-left: #cecece 4px solid;
+  padding-left: 24px;
+}
+/* line 256, styles.scss */
+.suchaspirit .comment-text ul {
+  list-style-type: disc;
+  list-style-position: inside;
+  margin-left: 40px;
+  margin-bottom: 24px;
+}
+/* line 263, styles.scss */
+.suchaspirit .comment-text img {
+  vertical-align: text-bottom;
+}
+/* line 268, styles.scss */
+.suchaspirit .comment-actions {
+  font-size: 14px;
+  text-align: right;
+}
+/* line 274, styles.scss */
+.suchaspirit .comment-removed {
+  font-size: 14px;
+  word-wrap: break-word;
+}
+/* line 280, styles.scss */
+.suchaspirit .username.is-admin {
+  background: #ffffe9;
+}
+/* line 284, styles.scss */
+.suchaspirit .username.is-mod {
+  background: #e2f5fc;
+}
+/* line 289, styles.scss */
+.suchaspirit .paginator {
+  margin-bottom: 24px;
+}
+@media screen and (min-width: 768px) {
+  /* line 289, styles.scss */
+  .suchaspirit .paginator {
+    float: left;
+    display: block;
+    margin-right: 3.57866%;
+    width: 48.21067%;
+  }
+  /* line 38, vendors/neat/grid/_span-columns.scss */
+  .suchaspirit .paginator:last-child {
+    margin-right: 0;
+  }
+}
+/* line 298, styles.scss */
+.suchaspirit .paginator-button {
+  display: block;
+  padding: 4px 12px;
+  border: #cecece 1px solid;
+}
+/* line 304, styles.scss */
+.suchaspirit .notify {
+  margin-bottom: 48px;
+}
+@media screen and (min-width: 768px) {
+  /* line 304, styles.scss */
+  .suchaspirit .notify {
+    float: left;
+    display: block;
+    margin-right: 3.57866%;
+    width: 48.21067%;
+    text-align: right;
+  }
+  /* line 38, vendors/neat/grid/_span-columns.scss */
+  .suchaspirit .notify:last-child {
+    margin-right: 0;
+  }
+}
+/* line 313, styles.scss */
+.suchaspirit .reply {
+  padding: 12px;
+}
+/* line 316, styles.scss */
+.suchaspirit .reply textarea {
+  height: 96px;
+  margin-bottom: 12px;
+}
+/* line 322, styles.scss */
+.suchaspirit .reply-markdown {
+  margin-bottom: 24px;
+}
+@media screen and (min-width: 768px) {
+  /* line 322, styles.scss */
+  .suchaspirit .reply-markdown {
+    float: left;
+  }
+}
+/* line 330, styles.scss */
+.suchaspirit .reply-markdown li {
+  margin-left: 24px;
+}
+/* line 335, styles.scss */
+.suchaspirit ul.reply-markdown {
+  /* reset */
+  list-style: none;
+  margin-left: 0;
+}
+@media screen and (min-width: 768px) {
+  /* line 341, styles.scss */
+  .suchaspirit .reply-button {
+    float: right;
+  }
+}
+/* line 348, styles.scss */
+.suchaspirit .topic-publish-comment textarea {
+  height: 240px;
+}
+/* line 353, styles.scss */
+.suchaspirit .share {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9100;
+  display: table;
+  width: 100%;
+  height: 100%;
+  background: #fefefe;
+  background: rgba(254, 254, 254, 0.75);
+}
+@media screen and (min-width: 768px) {
+  /* line 353, styles.scss */
+  .suchaspirit .share {
+    width: 300px;
+    height: 150px;
+    top: 50%;
+    left: 50%;
+    margin-top: -75px;
+    margin-left: -150px;
+    padding: 24px;
+    border: #cecece 1px solid;
+  }
+}
+/* line 377, styles.scss */
+.suchaspirit .share-close {
+  float: right;
+  margin-bottom: 24px;
+}
+/* line 382, styles.scss */
+.suchaspirit .share-box {
+  display: table-cell;
+  vertical-align: middle;
+}
+/* line 387, styles.scss */
+.suchaspirit .share-url {
+  margin-bottom: 12px;
+}
+/* line 391, styles.scss */
+.suchaspirit .share-actions {
+  text-align: right;
+}
+/* line 395, styles.scss */
+.suchaspirit .share-actions li {
+  margin-left: 24px;
+}
+@media screen and (min-width: 768px) {
+  /* line 402, styles.scss */
+  .suchaspirit .menu,
+  .suchaspirit .participants-menu {
+    display: inline-block;
+  }
+}
+/* line 408, styles.scss */
+.suchaspirit .menu li,
+.suchaspirit .participants-menu li {
+  background-color: #f6f6f6;
+  margin-bottom: 6px;
+}
+/* line 412, styles.scss */
+.suchaspirit .menu li:last-child,
+.suchaspirit .participants-menu li:last-child {
+  margin-bottom: 0;
+}
+/* line 418, styles.scss */
+.suchaspirit .menu-link {
+  display: block;
+  padding: 0 12px;
+}
+/* line 423, styles.scss */
+.suchaspirit .menu-item {
+  padding: 0 12px;
+}
+/* line 428, styles.scss */
+.suchaspirit .menu-username {
+  float: left;
+}
+/* line 432, styles.scss */
+.suchaspirit .menu-icon {
+  float: right;
+}
+/* line 438, styles.scss */
+.suchaspirit .profile-img {
+  float: left;
+  display: block;
+  margin-right: 7.42297%;
+  width: 100%;
+  margin-bottom: 24px;
+  text-align: center;
+}
+/* line 38, vendors/neat/grid/_span-columns.scss */
+.suchaspirit .profile-img:last-child {
+  margin-right: 0;
+}
+/* line 444, styles.scss */
+.suchaspirit .profile-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+}
+/* line 450, styles.scss */
+.suchaspirit .profile-username {
+  font-size: 21px;
+}
+/* line 454, styles.scss */
+.suchaspirit .profile-info {
+  margin-bottom: 24px;
+  text-align: center;
+}
+/* line 463, styles.scss */
+.suchaspirit .profile-title {
+  text-align: left;
+}
+/* line 467, styles.scss */
+.suchaspirit .profile-date {
+  text-align: left;
+}
+/* line 471, styles.scss */
+.suchaspirit .private-message {
+  margin-bottom: 48px;
+  text-align: center;
+}
+/* line 476, styles.scss */
+.suchaspirit .profile-preferences {
+  margin-bottom: 48px;
+  text-align: center;
+}
+/* line 483, styles.scss */
+.suchaspirit .private-participants {
+  float: left;
+  display: block;
+  margin-right: 7.42297%;
+  width: 100%;
+  margin-bottom: 12px;
+}
+/* line 38, vendors/neat/grid/_span-columns.scss */
+.suchaspirit .private-participants:last-child {
+  margin-right: 0;
+}
+@media screen and (min-width: 768px) {
+  /* line 483, styles.scss */
+  .suchaspirit .private-participants {
+    float: left;
+    display: block;
+    margin-right: 3.57866%;
+    width: 48.21067%;
+  }
+  /* line 38, vendors/neat/grid/_span-columns.scss */
+  .suchaspirit .private-participants:last-child {
+    margin-right: 0;
+  }
+}
+/* line 492, styles.scss */
+.suchaspirit .private-leave {
+  float: left;
+  display: block;
+  margin-right: 7.42297%;
+  width: 100%;
+  margin-bottom: 24px;
+}
+/* line 38, vendors/neat/grid/_span-columns.scss */
+.suchaspirit .private-leave:last-child {
+  margin-right: 0;
+}
+@media screen and (min-width: 768px) {
+  /* line 492, styles.scss */
+  .suchaspirit .private-leave {
+    float: left;
+    display: block;
+    margin-right: 3.57866%;
+    width: 48.21067%;
+    text-align: right;
+  }
+  /* line 38, vendors/neat/grid/_span-columns.scss */
+  .suchaspirit .private-leave:last-child {
+    margin-right: 0;
+  }
+}
+/* line 502, styles.scss */
+.suchaspirit .participants-menu {
+  margin-bottom: 12px;
+}
+/* line 509, styles.scss */
+.suchaspirit .preference-label {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+/* line 514, styles.scss */
+.suchaspirit .preference-desc {
+  margin: 0;
+  margin-bottom: 24px;
+  padding: 0 12px;
+}
+/* line 522, styles.scss */
+.suchaspirit .login {
+  margin-bottom: 24px;
+}
+/* line 526, styles.scss */
+.suchaspirit .login-link {
+  display: block;
+  margin-bottom: 6px;
+}
+/* line 533, styles.scss */
+.suchaspirit .messages-info, .suchaspirit .messages-error {
+  margin-bottom: 24px;
+  padding: 12px;
+}
+/* line 538, styles.scss */
+.suchaspirit .messages-info {
+  background: #e2f5fc;
+}
+/* line 543, styles.scss */
+.suchaspirit .messages-error {
+  background: #fce2e2;
+}
+/* line 548, styles.scss */
+.suchaspirit .message-title {
+  margin-bottom: 12px;
+}
+/* line 551, styles.scss */
+.suchaspirit .message-title.is-info {
+  color: #95a2a7;
+}
+/* line 555, styles.scss */
+.suchaspirit .message-title.is-error {
+  color: #c65555;
+}
+/* line 562, styles.scss */
+.suchaspirit .admin-tabs {
+  margin-bottom: 24px;
+}
+/* line 567, styles.scss */
+.suchaspirit .statistics-box {
+  float: left;
+  display: block;
+  margin-right: 7.42297%;
+  width: 19.43277%;
+  word-wrap: break-word;
+  padding: 12px 0;
+  margin-bottom: 24px;
+  background: #f6f6f6;
+}
+/* line 38, vendors/neat/grid/_span-columns.scss */
+.suchaspirit .statistics-box:last-child {
+  margin-right: 0;
+}
+/* line 52, vendors/neat/grid/_omega.scss */
+.suchaspirit .statistics-box:nth-child(4n) {
+  margin-right: 0;
+}
+/* line 57, vendors/neat/grid/_omega.scss */
+.suchaspirit .statistics-box:nth-child(4n+1) {
+  clear: left;
+}
+/* line 576, styles.scss */
+.suchaspirit .statistics-title {
+  text-align: center;
+}
+/* line 580, styles.scss */
+.suchaspirit .statistics-count {
+  text-align: center;
+}
+/* line 584, styles.scss */
+.suchaspirit .new-category {
+  margin-bottom: 24px;
+}
+@media screen and (min-width: 768px) {
+  /* line 584, styles.scss */
+  .suchaspirit .new-category {
+    text-align: right;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
