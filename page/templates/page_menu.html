@@ -1,0 +1,4 @@
+ {% for page in pages %}
+	<li><a href="{% url "page" page.id %}"> {{page.name}}</a></li>
+ {% endfor %}
+	<li><a href="{% url "new_page" %}"><span class="glyphicon glyphicon-plus"></span> New Page</a><</li>

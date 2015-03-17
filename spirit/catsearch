@@ -1,0 +1,623 @@
+forms/topic_private.py:from ..models.category import Category
+forms/topic_private.py:            self.instance.category = Category.objects.get(pk=settings.ST_TOPIC_PRIVATE_CATEGORY_PK)
+forms/topic.py:from spirit.models.category import Category
+forms/topic.py:        fields = ('title', 'category')
+forms/topic.py:        self.fields['category'] = NestedModelChoiceField(queryset=Category.objects.for_public_open(),
+forms/topic.py:                                                         related_name='category_set',
+forms/topic.py:                                                         empty_label=_("Chose a category"))
+forms/topic.py:            del self.fields['category']
+forms/topic.py:    def clean_category(self):
+forms/topic.py:        category = self.cleaned_data['category']
+forms/topic.py:        if category.is_closed or category.is_removed:
+forms/topic.py:            raise forms.ValidationError(_("The chosen category is closed"))
+forms/topic.py:        return category
+forms/admin.py:from spirit.models.category import Category
+forms/admin.py:            has_childrens = self.instance.category_set.all().exists()
+forms/admin.py:                raise forms.ValidationError(_("The category you are updating "
+forms/search.py:from spirit.models.category import Category
+forms/search.py:        return topics.filter(is_removed=False, is_category_removed=False, is_subcategory_removed=False)
+forms/search.py:    category = forms.ModelMultipleChoiceField(queryset=Category.objects.for_public(),
+forms/search.py:        categories = self.cleaned_data['category']
+forms/search.py:            topics = topics.filter(category_id__in=[c.pk for c in categories])
+forms/search.py:        return topics.filter(is_removed=False, is_category_removed=False, is_subcategory_removed=False)
+Binary file locale/de/LC_MESSAGES/django.mo matches
+locale/de/LC_MESSAGES/django.po:"The category you are updating can not has a parent since it has childrens"
+locale/de/LC_MESSAGES/django.po:msgid "Chose a category"
+locale/de/LC_MESSAGES/django.po:msgid "The chosen category is closed"
+locale/de/LC_MESSAGES/django.po:#: .\models\category.py:12
+locale/de/LC_MESSAGES/django.po:msgid "category parent"
+locale/de/LC_MESSAGES/django.po:#: .\models\category.py:14 .\models\topic.py:21
+locale/de/LC_MESSAGES/django.po:#: .\models\category.py:16
+locale/de/LC_MESSAGES/django.po:#: .\models\category.py:17 .\models\topic.py:26
+locale/de/LC_MESSAGES/django.po:#: .\models\category.py:18
+locale/de/LC_MESSAGES/django.po:#: .\models\category.py:19
+locale/de/LC_MESSAGES/django.po:#: .\models\category.py:28 .\models\topic.py:19
+locale/de/LC_MESSAGES/django.po:msgid "category"
+locale/de/LC_MESSAGES/django.po:#: .\models\category.py:29
+locale/de/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_create.html:5
+locale/de/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_create.html:9
+locale/de/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_create.html:15
+locale/de/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_update.html:15
+locale/de/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:5
+locale/de/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:11
+locale/de/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:13
+locale/de/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:29
+locale/de/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:44
+locale/de/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_update.html:5
+locale/de/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_update.html:9
+locale/de/LC_MESSAGES/django.po:#: .\views\admin\category.py:47
+locale/de/LC_MESSAGES/django.po:msgid "The category has been updated!"
+Binary file locale/sv/LC_MESSAGES/django.mo matches
+locale/sv/LC_MESSAGES/django.po:"The category you are updating can not has a parent since it has childrens"
+locale/sv/LC_MESSAGES/django.po:msgid "Chose a category"
+locale/sv/LC_MESSAGES/django.po:msgid "The chosen category is closed"
+locale/sv/LC_MESSAGES/django.po:#: .\models\category.py:12
+locale/sv/LC_MESSAGES/django.po:msgid "category parent"
+locale/sv/LC_MESSAGES/django.po:#: .\models\category.py:14 .\models\topic.py:21
+locale/sv/LC_MESSAGES/django.po:#: .\models\category.py:16
+locale/sv/LC_MESSAGES/django.po:#: .\models\category.py:17 .\models\topic.py:26
+locale/sv/LC_MESSAGES/django.po:#: .\models\category.py:18
+locale/sv/LC_MESSAGES/django.po:#: .\models\category.py:19
+locale/sv/LC_MESSAGES/django.po:#: .\models\category.py:28 .\models\topic.py:19
+locale/sv/LC_MESSAGES/django.po:msgid "category"
+locale/sv/LC_MESSAGES/django.po:#: .\models\category.py:29
+locale/sv/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_create.html:5
+locale/sv/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_create.html:9
+locale/sv/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_create.html:15
+locale/sv/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_update.html:15
+locale/sv/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:5
+locale/sv/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:11
+locale/sv/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:13
+locale/sv/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:29
+locale/sv/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:44
+locale/sv/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_update.html:5
+locale/sv/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_update.html:9
+locale/sv/LC_MESSAGES/django.po:#: .\views\admin\category.py:47
+locale/sv/LC_MESSAGES/django.po:msgid "The category has been updated!"
+locale/en/LC_MESSAGES/django.po:"The category you are updating can not have a parent since it has childrens"
+locale/en/LC_MESSAGES/django.po:msgid "Chose a category"
+locale/en/LC_MESSAGES/django.po:msgid "The chosen category is closed"
+locale/en/LC_MESSAGES/django.po:#: .\models\category.py:13
+locale/en/LC_MESSAGES/django.po:msgid "category parent"
+locale/en/LC_MESSAGES/django.po:#: .\models\category.py:15 .\models\topic.py:22
+locale/en/LC_MESSAGES/django.po:#: .\models\category.py:17
+locale/en/LC_MESSAGES/django.po:#: .\models\category.py:18 .\models\topic.py:27
+locale/en/LC_MESSAGES/django.po:#: .\models\category.py:19
+locale/en/LC_MESSAGES/django.po:#: .\models\category.py:20
+locale/en/LC_MESSAGES/django.po:#: .\models\category.py:29 .\models\topic.py:20
+locale/en/LC_MESSAGES/django.po:msgid "category"
+locale/en/LC_MESSAGES/django.po:#: .\models\category.py:30
+locale/en/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_create.html:5
+locale/en/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_create.html:9
+locale/en/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_create.html:15
+locale/en/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_update.html:15
+locale/en/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:5
+locale/en/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:11
+locale/en/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:13
+locale/en/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:29
+locale/en/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:44
+locale/en/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_update.html:5
+locale/en/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_update.html:9
+locale/en/LC_MESSAGES/django.po:#: .\views\admin\category.py:47
+locale/en/LC_MESSAGES/django.po:msgid "The category has been updated!"
+Binary file locale/es/LC_MESSAGES/django.mo matches
+locale/es/LC_MESSAGES/django.po:"The category you are updating can not has a parent since it has childrens"
+locale/es/LC_MESSAGES/django.po:msgid "Chose a category"
+locale/es/LC_MESSAGES/django.po:msgid "The chosen category is closed"
+locale/es/LC_MESSAGES/django.po:#: .\models\category.py:12
+locale/es/LC_MESSAGES/django.po:msgid "category parent"
+locale/es/LC_MESSAGES/django.po:#: .\models\category.py:14 .\models\topic.py:21
+locale/es/LC_MESSAGES/django.po:#: .\models\category.py:16
+locale/es/LC_MESSAGES/django.po:#: .\models\category.py:17 .\models\topic.py:26
+locale/es/LC_MESSAGES/django.po:#: .\models\category.py:18
+locale/es/LC_MESSAGES/django.po:#: .\models\category.py:19
+locale/es/LC_MESSAGES/django.po:#: .\models\category.py:28 .\models\topic.py:19
+locale/es/LC_MESSAGES/django.po:msgid "category"
+locale/es/LC_MESSAGES/django.po:#: .\models\category.py:29
+locale/es/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_create.html:5
+locale/es/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_create.html:9
+locale/es/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_create.html:15
+locale/es/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_update.html:15
+locale/es/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:5
+locale/es/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:11
+locale/es/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:13
+locale/es/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:29
+locale/es/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_list.html:44
+locale/es/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_update.html:5
+locale/es/LC_MESSAGES/django.po:#: .\templates\spirit\admin\category\category_update.html:9
+locale/es/LC_MESSAGES/django.po:#: .\views\admin\category.py:47
+locale/es/LC_MESSAGES/django.po:msgid "The category has been updated!"
+Binary file managers/category.pyc matches
+managers/topic_notifications.py:        return self.filter(Q(topic__category__parent=None) | Q(topic__category__parent__is_removed=False),
+managers/topic_notifications.py:                           topic__category__is_removed=False,
+managers/topic_notifications.py:            .filter(Q(topic__category__is_private=False) | Q(topic__topics_private__user=user),
+managers/topic.py:        return self.filter(Q(category__parent=None) | Q(category__parent__is_removed=False),
+managers/topic.py:                           category__is_removed=False,
+managers/topic.py:            .filter(category__is_private=False)
+managers/topic.py:    def for_category(self, category):
+managers/topic.py:        if category.is_subcategory:
+managers/topic.py:            return self.filter(category=category,
+managers/topic.py:            return self.filter(Q(category=category) | Q(category__parent=category),
+managers/topic.py:                               category__is_removed=False,
+managers/topic.py:                                     .select_related('category__parent'),
+managers/topic.py:                                     category__is_private=False)
+managers/topic.py:                                     .select_related('category__parent'),
+managers/topic.py:                                     category__is_private=False)
+managers/topic.py:            .filter(Q(category__is_private=False) | Q(topics_private__user=user))
+managers/category.py:        if parent and parent.is_subcategory:
+managers/comment.py:        return self.filter(Q(topic__category__parent=None) | Q(topic__category__parent__is_removed=False),
+managers/comment.py:                           topic__category__is_removed=False,
+managers/comment.py:            .filter(topic__category__is_private=False)
+managers/comment.py:            .filter(Q(topic__category__is_private=False) | Q(topic__topics_private__user=user))
+Binary file managers/comment.pyc matches
+Binary file managers/topic.pyc matches
+Binary file managers/topic_notifications.pyc matches
+Binary file models/category.pyc matches
+Binary file models/__init__.pyc matches
+models/__init__.py:from .category import Category
+models/topic.py:    category = models.ForeignKey('spirit.Category', verbose_name=_("category"))
+models/topic.py:        if self.category_id == settings.ST_TOPIC_PRIVATE_CATEGORY_PK:
+models/topic.py:    def main_category(self):
+models/topic.py:        return self.category.parent or self.category
+models/category.py:from spirit.managers.category import CategoryManager
+models/category.py:    parent = models.ForeignKey('self', verbose_name=_("category parent"), null=True, blank=True)
+models/category.py:        verbose_name = _("category")
+models/category.py:        return reverse('spirit:category-detail', kwargs={'pk': str(self.id), 'slug': self.slug})
+models/category.py:    def is_subcategory(self):
+models/category.py:#    if topic.category.is_subcategory:
+models/category.py:#        category = Category.objects.filter(pk__in=[topic.category.pk, topic.category.parent.pk])
+models/category.py:#        category = Category.objects.filter(pk=topic.category.pk)
+models/category.py:#    category.update(topic_count=F('topic_count') + 1)
+Binary file models/topic.pyc matches
+search_indexes.py:    category_id = indexes.IntegerField(model_attr='category_id')
+search_indexes.py:    is_category_removed = indexes.BooleanField(model_attr='category__is_removed')
+search_indexes.py:    is_subcategory_removed = indexes.BooleanField(model_attr='category__parent__is_removed', default=False)
+search_indexes.py:        return topics.exclude(category_id=settings.ST_TOPIC_PRIVATE_CATEGORY_PK)
+static/spirit/stylesheets/search.html:		<label for="id_category_0">Filtrado por:</label>
+static/spirit/stylesheets/search.html:		<ul class="checkboxes" id="id_category">
+static/spirit/stylesheets/search.html:			<li><label for="id_category_0"><input id="id_category_0" name="category" type="checkbox" value="1" /> Categoria 1</label></li>
+static/spirit/stylesheets/search.html:			<li><label for="id_category_1"><input id="id_category_1" name="category" type="checkbox" value="3" /> --- SubCategoria 1</label></li>
+static/spirit/stylesheets/search.html:			<li><label for="id_category_2"><input id="id_category_2" name="category" type="checkbox" value="2" /> Categoria 2</label></li>
+static/spirit/stylesheets/search.html:			<li><label for="id_category_2"><input id="id_category_2" name="category" type="checkbox" value="2" /> Categoria 2</label></li>
+static/spirit/stylesheets/search.html:			<li><label for="id_category_2"><input id="id_category_2" name="category" type="checkbox" value="2" /> Categoria 2</label></li>
+static/spirit/stylesheets/search.html:			<li><label for="id_category_2"><input id="id_category_2" name="category" type="checkbox" value="2" /> Categoria 2</label></li>
+static/spirit/stylesheets/search.html:			<li><label for="id_category_2"><input id="id_category_2" name="category" type="checkbox" value="2" /> Categoria 2</label></li>
+static/spirit/stylesheets/comments.html:from spirit.managers.category import CategoryManager
+static/spirit/stylesheets/comments.html:    parent = models.ForeignKey('self', verbose_name=_(&quot;category parent&quot;), null=True, blank=True)
+static/spirit/stylesheets/comments.html:        verbose_name = _(&quot;category&quot;)
+static/spirit/stylesheets/comments.html:        return reverse('spirit:category-detail', kwargs={'pk': str(self.id), 'slug': self.slug})
+static/spirit/stylesheets/comments.html:    def is_subcategory(self):
+static/spirit/stylesheets/styles.css:.suchaspirit .new-category {
+static/spirit/stylesheets/styles.css:  .suchaspirit .new-category {
+static/spirit/stylesheets/admin_categories.html:	<div class="new-category">
+static/spirit/stylesheets/styles.scss:.new-category {
+templates/spirit/topic/_top_bar.html:            {% if category %}
+templates/spirit/topic/_top_bar.html:			    <a class="dropdown-button js-tab" href="#" data-related=".js-categories-content">{{ category.title }} <i class="fa fa-chevron-down"></i></a>
+templates/spirit/topic/_top_bar.html:                    {% if category.parent %}
+templates/spirit/topic/_top_bar.html:                        <li><a class="menu-link" href="{{ category.parent.get_absolute_url }}" >{% trans "All Subcategories" %}</a></li>
+templates/spirit/topic/_top_bar.html:            {% if category %}
+templates/spirit/topic/_top_bar.html:                <a class="button" href="{% url "spirit:topic-publish" category.pk %}">{% trans "Create Topic" %}</a>
+templates/spirit/topic/topics_active.html:    {% include "spirit/topic/_top_bar.html" with category=None categories=categories %}
+templates/spirit/topic/topic_detail.html:            {% if topic.category.parent_id %}
+templates/spirit/topic/topic_detail.html:               <li><a href="{{ topic.category.parent.get_absolute_url }}" >{{ topic.category.parent.title }}</a><i class="fa fa-chevron-right"></i></li>
+templates/spirit/topic/topic_detail.html:		    <li><a href="{{ topic.category.get_absolute_url }}" >{{ topic.category.title }}</a></li>
+templates/spirit/topic/_render_list.html:                        {% if show_subcategory %}
+templates/spirit/topic/_render_list.html:                            <a href="{{ t.category.get_absolute_url }}">{{ t.category.title }}</a>
+templates/spirit/topic/_render_list.html:                            {% if t.category.parent %}
+templates/spirit/topic/_render_list.html:                                <a href="{{ t.category.parent.get_absolute_url }}">{{ t.category.parent.title }}</a>
+templates/spirit/topic/_render_list.html:                                <a href="{{ t.category.get_absolute_url }}">{{ t.category.title }}</a>
+templates/spirit/category/category_detail.html:{% block title %}{{ category.title }}{% endblock %}
+templates/spirit/category/category_detail.html:    {% include "spirit/topic/_top_bar.html" with category=category categories=subcategories %}
+templates/spirit/category/category_detail.html:    {% include "spirit/topic/_render_page_list.html" with show_subcategory=True %}
+templates/spirit/admin/category/category_list.html:    <a class="button" href="{% url "spirit:admin-category-create" %}">{% trans "Create Category" %}</a>
+templates/spirit/admin/category/category_list.html:                <a class="row-edit" href="{% url "spirit:admin-category-update" category_id=c.pk %}"><i class="fa fa-cog"></i> {% trans "edit" %}</a>
+templates/spirit/admin/category/category_list.html:            {% for subc in c.category_set.all %}
+templates/spirit/admin/category/category_list.html:                    <a class="row-edit" href="{% url "spirit:admin-category-update" category_id=subc.pk %}"><i class="fa fa-cog"></i> {% trans "edit" %}</a>
+templates/spirit/admin/_side_menu.html:	 --><li><a class="side-menu-link{% ifequal active "categories" %} is-selected{% endifequal %}" href="{% url "spirit:admin-category" %}">{% trans "Categories" %}</a></li><!--
+templates/spirit/admin/index/dashboard.html:			<div class="statistics-count">{{ category_count }}</div>
+tests/tests_category.py:        self.category_1 = utils.create_category(title="cat1")
+tests/tests_category.py:        self.subcategory_1 = utils.create_subcategory(self.category_1)
+tests/tests_category.py:        self.category_2 = utils.create_category(title="cat2")
+tests/tests_category.py:        self.category_removed = utils.create_category(title="cat3", is_removed=True)
+tests/tests_category.py:    def test_category_list_view(self):
+tests/tests_category.py:        response = self.client.get(reverse('spirit:category-list'))
+tests/tests_category.py:                                 ['<Category: Uncategorized>', repr(self.category_1), repr(self.category_2)])
+tests/tests_category.py:    def test_category_detail_view(self):
+tests/tests_category.py:        should display all topics in the category and its subcategories
+tests/tests_category.py:        topic = utils.create_topic(category=self.category_1)
+tests/tests_category.py:        topic2 = utils.create_topic(category=self.subcategory_1)
+tests/tests_category.py:        topic3 = utils.create_topic(category=self.category_1)
+tests/tests_category.py:        response = self.client.get(reverse('spirit:category-detail', kwargs={'pk': self.category_1.pk,
+tests/tests_category.py:                                                                             'slug': self.category_1.slug}))
+tests/tests_category.py:    def test_category_detail_view_order(self):
+tests/tests_category.py:        topic_a = utils.create_topic(category=self.category_1, is_pinned=True)
+tests/tests_category.py:        topic_b = utils.create_topic(category=self.category_1)
+tests/tests_category.py:        topic_c = utils.create_topic(category=self.category_1, is_pinned=True, is_removed=True)
+tests/tests_category.py:        response = self.client.get(reverse('spirit:category-detail', kwargs={'pk': self.category_1.pk,
+tests/tests_category.py:                                                                             'slug': self.category_1.slug}))
+tests/tests_category.py:    def test_category_detail_view_removed_topics(self):
+tests/tests_category.py:        subcategory_removed = utils.create_subcategory(self.category_1, is_removed=True)
+tests/tests_category.py:        topic_removed = utils.create_topic(category=subcategory_removed)
+tests/tests_category.py:        topic_removed2 = utils.create_topic(category=self.category_1, is_removed=True)
+tests/tests_category.py:        topic_bad = utils.create_topic(category=self.category_2)
+tests/tests_category.py:        response = self.client.get(reverse('spirit:category-detail', kwargs={'pk': self.category_1.pk,
+tests/tests_category.py:                                                                             'slug': self.category_1.slug}))
+tests/tests_category.py:    def test_category_detail_view_invalid_category(self):
+tests/tests_category.py:        invalid category
+tests/tests_category.py:        response = self.client.get(reverse('spirit:category-detail', kwargs={'pk': str(99), }))
+tests/tests_category.py:    def test_category_detail_view_invalid_slug(self):
+tests/tests_category.py:        response = self.client.get(reverse('spirit:category-detail', kwargs={'pk': self.category_1.pk,
+tests/tests_category.py:        self.assertRedirects(response, self.category_1.get_absolute_url(), status_code=301)
+tests/tests_category.py:    def test_category_detail_view_no_slug(self):
+tests/tests_category.py:        response = self.client.get(reverse('spirit:category-detail', kwargs={'pk': self.category_1.pk,
+tests/tests_category.py:        self.assertRedirects(response, self.category_1.get_absolute_url(), status_code=301)
+tests/tests_category.py:    def test_category_detail_subcategory(self):
+tests/tests_category.py:        should display all topics in  subcategory
+tests/tests_category.py:        topic = utils.create_topic(category=self.category_1)
+tests/tests_category.py:        topic2 = utils.create_topic(category=self.subcategory_1, title="topic_subcat1")
+tests/tests_category.py:        response = self.client.get(reverse('spirit:category-detail', kwargs={'pk': self.subcategory_1.pk,
+tests/tests_category.py:                                                                             'slug': self.subcategory_1.slug}))
+tests/tests_comment_history.py:        self.category = utils.create_category()
+tests/tests_comment_history.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_comment_history.py:        topic = utils.create_topic(category=self.category, user=self.user, is_removed=True)
+tests/tests_comment_history.py:        # category removed
+tests/tests_comment_history.py:        category = utils.create_category(is_removed=True)
+tests/tests_comment_history.py:        topic = utils.create_topic(category=category, user=self.user)
+tests/tests_comment_history.py:        self.category = utils.create_category()
+tests/tests_comment_history.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_utils_paginator.py:        self.topic = utils.create_topic(utils.create_category())
+tests/tests_utils_paginator.py:        self.topic = utils.create_topic(utils.create_category())
+tests/tests_user.py:        self.category = utils.create_category()
+tests/tests_user.py:        self.topic = utils.create_topic(self.category, user=self.user2)
+tests/tests_user.py:        self.topic2 = utils.create_topic(self.category)
+tests/tests_user.py:        category = utils.create_category()
+tests/tests_user.py:        topic_a = utils.create_topic(category=category, user=self.user2)
+tests/tests_user.py:        topic_b = utils.create_topic(category=category, user=self.user2)
+tests/tests_user.py:        topic_c = utils.create_topic(category=category, user=self.user2)
+tests/tests_user.py:        category = utils.create_category()
+tests/tests_user.py:        category_removed = utils.create_category(is_removed=True)
+tests/tests_user.py:        subcategory = utils.create_category(parent=category_removed)
+tests/tests_user.py:        subcategory_removed = utils.create_category(parent=category, is_removed=True)
+tests/tests_user.py:        topic_b = utils.create_topic(category=category, user=self.user2, is_removed=True)
+tests/tests_user.py:        topic_c = utils.create_topic(category=category_removed, user=self.user2)
+tests/tests_user.py:        topic_d = utils.create_topic(category=subcategory, user=self.user2)
+tests/tests_user.py:        topic_e = utils.create_topic(category=subcategory_removed, user=self.user2)
+tests/tests_user.py:        category = utils.create_category()
+tests/tests_user.py:        category_removed = utils.create_category(is_removed=True)
+tests/tests_user.py:        subcategory = utils.create_category(parent=category_removed)
+tests/tests_user.py:        subcategory_removed = utils.create_category(parent=category, is_removed=True)
+tests/tests_user.py:        topic_b = utils.create_topic(category=category, is_removed=True)
+tests/tests_user.py:        topic_c = utils.create_topic(category=category_removed)
+tests/tests_user.py:        topic_d = utils.create_topic(category=subcategory)
+tests/tests_user.py:        topic_e = utils.create_topic(category=subcategory_removed)
+tests/tests_user.py:        category = utils.create_category()
+tests/tests_user.py:        category_removed = utils.create_category(is_removed=True)
+tests/tests_user.py:        subcategory = utils.create_category(parent=category_removed)
+tests/tests_user.py:        subcategory_removed = utils.create_category(parent=category, is_removed=True)
+tests/tests_user.py:        topic_b = utils.create_topic(category=category, is_removed=True)
+tests/tests_user.py:        topic_c = utils.create_topic(category=category_removed)
+tests/tests_user.py:        topic_d = utils.create_topic(category=subcategory)
+tests/tests_user.py:        topic_e = utils.create_topic(category=subcategory_removed)
+tests/tests_search.py:        category = utils.create_category()
+tests/tests_search.py:        topic = utils.create_topic(category)
+tests/tests_search.py:        category = utils.create_category()
+tests/tests_search.py:        topic = utils.create_topic(category)
+tests/tests_search.py:        self.category = utils.create_category()
+tests/tests_search.py:        self.topic = utils.create_topic(category=self.category, user=self.user, title="spirit search test")
+tests/tests_search.py:        self.topic2 = utils.create_topic(category=self.category, user=self.user, title="foo")
+tests/tests_search.py:    def test_advanced_search_in_category(self):
+tests/tests_search.py:        search by topic in category
+tests/tests_search.py:        category = utils.create_category()
+tests/tests_search.py:        data = {'q': 'spirit search', 'category': category.pk}
+tests/tests_search.py:        data['category'] = self.category.pk
+tests/tests_comment_bookmark.py:        self.category = utils.create_category()
+tests/tests_comment_bookmark.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_comment_bookmark.py:        self.category = utils.create_category()
+tests/tests_comment_bookmark.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_comment_bookmark.py:        self.category = utils.create_category()
+tests/tests_comment_bookmark.py:        self.topic = utils.create_topic(self.category)
+tests/tests_comment_like.py:        self.category = utils.create_category()
+tests/tests_comment_like.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_comment_like.py:        self.category = utils.create_category()
+tests/tests_comment_like.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_comment_like.py:        self.category = utils.create_category()
+tests/tests_comment_like.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_topic_notification.py:        self.category = utils.create_category()
+tests/tests_topic_notification.py:        self.topic = utils.create_topic(self.category)
+tests/tests_topic_notification.py:        self.topic2 = utils.create_topic(self.category)
+tests/tests_topic_notification.py:        category = utils.create_category()
+tests/tests_topic_notification.py:        category_removed = utils.create_category(is_removed=True)
+tests/tests_topic_notification.py:        subcategory = utils.create_category(parent=category_removed)
+tests/tests_topic_notification.py:        subcategory_removed = utils.create_category(parent=category, is_removed=True)
+tests/tests_topic_notification.py:        topic_b = utils.create_topic(category=category, is_removed=True)
+tests/tests_topic_notification.py:        topic_c = utils.create_topic(category=category_removed)
+tests/tests_topic_notification.py:        topic_d = utils.create_topic(category=subcategory)
+tests/tests_topic_notification.py:        topic_e = utils.create_topic(category=subcategory_removed)
+tests/tests_topic_notification.py:        topic = utils.create_topic(self.category, user=self.user2)
+tests/tests_topic_notification.py:        topic = utils.create_topic(self.category, user=user)
+tests/tests_topic_notification.py:            topic = utils.create_topic(self.category, user=user)
+tests/tests_topic_notification.py:        category = utils.create_category()
+tests/tests_topic_notification.py:        topic = utils.create_topic(category)
+tests/tests_topic_notification.py:        category = utils.create_category()
+tests/tests_topic_notification.py:        topic = utils.create_topic(category)
+tests/tests_topic_notification.py:        self.category = utils.create_category()
+tests/tests_topic_notification.py:        self.topic = utils.create_topic(self.category)
+tests/tests_topic_notification.py:        topic = utils.create_topic(self.category)
+tests/tests_topic_notification.py:        self.category = utils.create_category()
+tests/tests_topic_notification.py:        self.topic = utils.create_topic(self.category)
+tests/tests_topic_notification.py:        category = utils.create_category()
+tests/tests_topic_notification.py:        category_removed = utils.create_category(is_removed=True)
+tests/tests_topic_notification.py:        subcategory = utils.create_category(parent=category_removed)
+tests/tests_topic_notification.py:        subcategory_removed = utils.create_category(parent=category, is_removed=True)
+tests/tests_topic_notification.py:        topic_b = utils.create_topic(category=category, is_removed=True)
+tests/tests_topic_notification.py:        topic_c = utils.create_topic(category=category_removed)
+tests/tests_topic_notification.py:        topic_d = utils.create_topic(category=subcategory)
+tests/tests_topic_notification.py:        topic_e = utils.create_topic(category=subcategory_removed)
+tests/tests_topic_notification.py:        topic2 = utils.create_topic(self.category)
+tests/tests_admin.py:from spirit.views.admin import user, category, comment_flag, config, index, topic
+tests/tests_admin.py:from spirit.models.category import Category
+tests/tests_admin.py:        self.category = utils.create_category()
+tests/tests_admin.py:        self.topic = utils.create_topic(self.category, user=self.user)
+tests/tests_admin.py:        self.assertRaises(PermissionDenied, category.category_list, req)
+tests/tests_admin.py:        self.assertRaises(PermissionDenied, category.category_create, req)
+tests/tests_admin.py:        self.assertRaises(PermissionDenied, category.category_update, req)
+tests/tests_admin.py:        topic_ = utils.create_topic(self.category, is_removed=True)
+tests/tests_admin.py:        topic_ = utils.create_topic(self.category, is_closed=True)
+tests/tests_admin.py:        topic_ = utils.create_topic(self.category, is_pinned=True)
+tests/tests_admin.py:    def test_category_list(self):
+tests/tests_admin.py:        subcat = utils.create_category(parent=self.category)
+tests/tests_admin.py:        response = self.client.get(reverse('spirit:admin-category-list'))
+tests/tests_admin.py:    def test_category_create(self):
+tests/tests_admin.py:        response = self.client.post(reverse('spirit:admin-category-create'),
+tests/tests_admin.py:        expected_url = reverse("spirit:admin-category-list")
+tests/tests_admin.py:        response = self.client.get(reverse('spirit:admin-category-create'))
+tests/tests_admin.py:    def test_category_update(self):
+tests/tests_admin.py:        response = self.client.post(reverse('spirit:admin-category-update', kwargs={"category_id": self.category.pk, }),
+tests/tests_admin.py:        expected_url = reverse("spirit:admin-category-list")
+tests/tests_admin.py:        response = self.client.get(reverse('spirit:admin-category-update', kwargs={"category_id": self.category.pk, }))
+tests/tests_admin.py:        self.category = utils.create_category()
+tests/tests_admin.py:        self.topic = utils.create_topic(self.category)
+tests/tests_admin.py:    def test_category(self):
+tests/tests_admin.py:        Add category
+tests/tests_admin.py:    def test_category_invalid_parent(self):
+tests/tests_admin.py:        # parent can not be a subcategory, only one level subcat is allowed
+tests/tests_admin.py:        subcategory = utils.create_category(parent=self.category)
+tests/tests_admin.py:        form_data = {"parent": subcategory.pk, }
+tests/tests_admin.py:        # parent can not be set to a category with childrens
+tests/tests_admin.py:        category_ = utils.create_category()
+tests/tests_admin.py:        form_data = {"parent": category_.pk, }
+tests/tests_admin.py:        form = CategoryForm(data=form_data, instance=self.category)
+tests/tests_admin.py:        category_ = utils.create_category(is_removed=True)
+tests/tests_admin.py:        form_data = {"parent": category_.pk, }
+tests/tests_admin.py:        category_ = utils.create_category(is_private=True)
+tests/tests_admin.py:        form_data = {"parent": category_.pk, }
+tests/tests_topic_poll.py:        self.category = utils.create_category()
+tests/tests_topic_poll.py:        self.topic = utils.create_topic(self.category, user=self.user)
+tests/tests_topic_poll.py:        self.topic2 = utils.create_topic(self.category, user=self.user2)
+tests/tests_topic_poll.py:        self.category = utils.create_category()
+tests/tests_topic_poll.py:        self.topic = utils.create_topic(self.category, user=self.user)
+tests/tests_topic_poll.py:        self.topic2 = utils.create_topic(self.category, user=self.user2)
+tests/tests_topic_poll.py:        self.category = utils.create_category()
+tests/tests_topic_poll.py:        self.topic = utils.create_topic(self.category, user=self.user)
+tests/tests_topic_poll.py:        self.topic2 = utils.create_topic(self.category, user=self.user2)
+tests/tests_topic_poll.py:        self.topic3 = utils.create_topic(self.category, user=self.user2)
+tests/tests_topic_poll.py:        self.category = utils.create_category()
+tests/tests_topic_poll.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_topic_poll.py:        self.topic2 = utils.create_topic(category=self.category, user=self.user)
+tests/tests_topic_poll.py:        self.category = utils.create_category()
+tests/tests_topic_poll.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_topic_poll.py:        topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_utils.py:from spirit.models.category import Category
+tests/tests_utils.py:        category = test_utils.create_category()
+tests/tests_utils.py:        category2 = test_utils.create_category()
+tests/tests_utils.py:        subcategory = test_utils.create_subcategory(category)
+tests/tests_utils.py:                                       related_name='category_set',
+tests/tests_utils.py:                                                       (3, '%s' % category.title),
+tests/tests_utils.py:                                                       (5, '--- %s' % subcategory.title),
+tests/tests_utils.py:                                                       (4, '%s' % category2.title)])
+tests/tests_topic_private.py:from spirit.models.category import Category
+tests/tests_topic_private.py:        category = utils.create_category()
+tests/tests_topic_private.py:        topic = utils.create_topic(category, user=self.user)
+tests/tests_topic_private.py:        Only topics from the category private can be rejoined
+tests/tests_topic_private.py:        category = utils.create_category()
+tests/tests_topic_private.py:        topic = utils.create_topic(category, user=self.user)
+tests/tests_topic_private.py:        category = utils.create_category()
+tests/tests_topic_private.py:        regular_topic = utils.create_topic(category, user=self.user)
+tests/tests_topic_private.py:        category = Category.objects.get(pk=settings.ST_TOPIC_PRIVATE_CATEGORY_PK)
+tests/tests_topic_private.py:        topic = utils.create_topic(category=category, user=self.user)
+tests/tests_topic_private.py:        category = Category.objects.get(pk=settings.ST_TOPIC_PRIVATE_CATEGORY_PK)
+tests/tests_topic_private.py:        topic = utils.create_topic(category=category, user=self.user)
+tests/tests_topic_private.py:        self.category = Category.objects.get(pk=settings.ST_TOPIC_PRIVATE_CATEGORY_PK)
+tests/tests_topic_private.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/utils.py:from spirit.models.category import Category
+tests/utils.py:def create_topic(category, **kwargs):
+tests/utils.py:    return Topic.objects.create(category=category, **kwargs)
+tests/utils.py:    assert 'category' not in kwargs, "do not pass category param"
+tests/utils.py:    category = Category.objects.get(pk=settings.ST_TOPIC_PRIVATE_CATEGORY_PK)
+tests/utils.py:    topic = create_topic(category=category, **kwargs)
+tests/utils.py:def create_category(**kwargs):
+tests/utils.py:def create_subcategory(category, **kwargs):
+tests/utils.py:    return Category.objects.create(parent=category, **kwargs)
+tests/tests_topic.py:from spirit.models.category import Category
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        form_data = {'comment': 'foo', 'title': 'foobar', 'category': category.pk,
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        form_data = {'comment': 'foo', 'title': title, 'category': category.pk,
+tests/tests_topic.py:    def test_topic_publish_in_category(self):
+tests/tests_topic.py:        POST, create topic in category
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        form_data = {'comment': 'foo', 'title': 'foobar', 'category': category.pk,
+tests/tests_topic.py:        response = self.client.post(reverse('spirit:topic-publish', kwargs={'category_id': category.pk, }),
+tests/tests_topic.py:        response = self.client.post(reverse('spirit:topic-publish', kwargs={'category_id': category.pk, }),
+tests/tests_topic.py:    def test_topic_publish_in_subcategory(self):
+tests/tests_topic.py:        POST, create topic in subcategory
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        subcategory = utils.create_subcategory(category)
+tests/tests_topic.py:        form_data = {'comment': 'foo', 'title': 'foobar', 'category': subcategory.pk,
+tests/tests_topic.py:        response = self.client.post(reverse('spirit:topic-publish', kwargs={'category_id': subcategory.pk, }),
+tests/tests_topic.py:    def test_topic_publish_invalid_category(self):
+tests/tests_topic.py:        invalid topic category
+tests/tests_topic.py:        response = self.client.get(reverse('spirit:topic-publish', kwargs={'category_id': str(99), }))
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        form_data = {'title': 'foobar', 'category': category.pk, 'comment': 'foo',
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        form_data = {'comment': 'foo', 'title': 'foobar', 'category': category.pk,
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category=category, user=self.user)
+tests/tests_topic.py:        POST, topic moved to category
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category=category, user=self.user)
+tests/tests_topic.py:        category2 = utils.create_category()
+tests/tests_topic.py:        form_data = {'title': 'foobar', 'category': category2.pk}
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category=category)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category=category)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category=category, user=self.user)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category=category)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category=category)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic_a = utils.create_topic(category=category)
+tests/tests_topic.py:        topic_b = utils.create_topic(category=category, user=self.user, view_count=10)
+tests/tests_topic.py:        topic_c = utils.create_topic(category=category)
+tests/tests_topic.py:        pinned topics. Only show pinned topics from uncategorized category, even if the category is removed
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        # show topic from regular category
+tests/tests_topic.py:        topic_a = utils.create_topic(category=category)
+tests/tests_topic.py:        # dont show pinned from regular category
+tests/tests_topic.py:        topic_b = utils.create_topic(category=category, is_pinned=True)
+tests/tests_topic.py:        uncat_category = Category.objects.get(pk=settings.ST_UNCATEGORIZED_CATEGORY_PK)
+tests/tests_topic.py:        topic_c = utils.create_topic(category=uncat_category, is_pinned=True, is_removed=True)
+tests/tests_topic.py:        # show topic from uncategorized category
+tests/tests_topic.py:        topic_d = utils.create_topic(category=uncat_category, is_pinned=True)
+tests/tests_topic.py:        # show topic from uncategorized category even if it is removed
+tests/tests_topic.py:        Category.objects.filter(pk=uncat_category.pk).update(is_removed=True)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        category_removed = utils.create_category(is_removed=True)
+tests/tests_topic.py:        subcategory = utils.create_category(parent=category_removed)
+tests/tests_topic.py:        subcategory_removed = utils.create_category(parent=category, is_removed=True)
+tests/tests_topic.py:        topic_b = utils.create_topic(category=category, is_removed=True)
+tests/tests_topic.py:        topic_c = utils.create_topic(category=category_removed)
+tests/tests_topic.py:        topic_d = utils.create_topic(category=subcategory)
+tests/tests_topic.py:        topic_e = utils.create_topic(category=subcategory_removed)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category, is_removed=True)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category, is_closed=True)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category, is_pinned=True)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        subcategory = utils.create_subcategory(category)
+tests/tests_topic.py:                     'category': subcategory.pk}
+tests/tests_topic.py:    def test_topic_publish_invalid_subcategory(self):
+tests/tests_topic.py:        invalid subcategory
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        subcategory = utils.create_subcategory(category, is_closed=True)
+tests/tests_topic.py:                     'category': subcategory.pk}
+tests/tests_topic.py:        self.assertNotIn('category', form.cleaned_data)
+tests/tests_topic.py:        category = utils.create_category()
+tests/tests_topic.py:        topic = utils.create_topic(category)
+tests/tests_topic.py:        self.category = utils.create_category()
+tests/tests_topic.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_comment_flag.py:        self.category = utils.create_category()
+tests/tests_comment_flag.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_comment_flag.py:        self.category = utils.create_category()
+tests/tests_comment_flag.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_comment.py:from spirit.models.category import Category
+tests/tests_comment.py:        self.category = utils.create_category()
+tests/tests_comment.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_comment.py:        should be able to create a comment on a closed category (if topic is not closed)
+tests/tests_comment.py:        Category.objects.filter(pk=self.category.pk).update(is_closed=True)
+tests/tests_comment.py:    def test_comment_publish_on_removed_topic_or_category(self):
+tests/tests_comment.py:        # removed category
+tests/tests_comment.py:        # removed subcategory
+tests/tests_comment.py:        subcategory = utils.create_category(parent=self.category, is_removed=True)
+tests/tests_comment.py:        topic2 = utils.create_topic(subcategory)
+tests/tests_comment.py:        to_topic = utils.create_topic(category=self.category)
+tests/tests_comment.py:        to_topic = utils.create_topic(self.category)
+tests/tests_comment.py:        self.category = utils.create_category()
+tests/tests_comment.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_comment.py:        self.category = utils.create_category()
+tests/tests_comment.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_comment.py:        self.category = utils.create_category()
+tests/tests_comment.py:        self.topic = utils.create_topic(category=self.category)
+tests/tests_comment.py:        to_topic = utils.create_topic(category=self.category)
+tests/tests_topic_favorite.py:        self.category = utils.create_category()
+tests/tests_topic_favorite.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_topic_favorite.py:        self.category = utils.create_category()
+tests/tests_topic_favorite.py:        self.topic = utils.create_topic(category=self.category, user=self.user)
+tests/tests_topic_unread.py:        self.category = utils.create_category()
+tests/tests_topic_unread.py:        self.topic = utils.create_topic(self.category)
+tests/tests_topic_unread.py:        self.topic2 = utils.create_topic(self.category, user=self.user)
+tests/tests_topic_unread.py:        self.topic3 = utils.create_topic(self.category, user=self.user)
+tests/tests_topic_unread.py:        self.topic4 = utils.create_topic(self.category, user=self.user)
+tests/tests_topic_unread.py:        category = utils.create_category()
+tests/tests_topic_unread.py:        category_removed = utils.create_category(is_removed=True)
+tests/tests_topic_unread.py:        subcategory = utils.create_category(parent=category_removed)
+tests/tests_topic_unread.py:        subcategory_removed = utils.create_category(parent=category, is_removed=True)
+tests/tests_topic_unread.py:        topic_b = utils.create_topic(category=category, is_removed=True)
+tests/tests_topic_unread.py:        topic_c = utils.create_topic(category=category_removed)
+tests/tests_topic_unread.py:        topic_d = utils.create_topic(category=subcategory)
+tests/tests_topic_unread.py:        topic_e = utils.create_topic(category=subcategory_removed)
+tests/tests_topic_unread.py:        self.category = utils.create_category()
+tests/tests_topic_unread.py:        self.topic = utils.create_topic(self.category)
+tests/tests_topic_unread.py:        self.topic2 = utils.create_topic(self.category, user=self.user)
+urls/__init__.py:                       url(r'^category/', include('spirit.urls.category')),
+urls/topic.py:                       url(r'^publish/(?P<category_id>\d+)/$', 'topic_publish', name='topic-publish'),
+urls/category.py:from spirit.views.category import CategoryList
+urls/category.py:urlpatterns = patterns("spirit.views.category",
+urls/category.py:                       url(r'^$', CategoryList.as_view(), name='category-list'),
+urls/category.py:                       url(r'^(?P<pk>\d+)/$', 'category_detail', kwargs={'slug': "", }, name='category-detail'),
+urls/category.py:                       url(r'^(?P<pk>\d+)/(?P<slug>[\w-]+)/$', 'category_detail', name='category-detail'),
+urls/admin/__init__.py:                       url(r'^category/', include('spirit.urls.admin.category')),
+urls/admin/category.py:urlpatterns = patterns("spirit.views.admin.category",
+urls/admin/category.py:                       url(r'^$', 'category_list', name='admin-category'),
+urls/admin/category.py:                       url(r'^list/$', 'category_list', name='admin-category-list'),
+urls/admin/category.py:                       url(r'^create/$', 'category_create', name='admin-category-create'),
+urls/admin/category.py:                       url(r'^update/(?P<category_id>\d+)/$', 'category_update', name='admin-category-update'),
+views/topic_private.py:    topic = get_object_or_404(Topic, pk=topic_id, user=request.user, category_id=settings.ST_TOPIC_PRIVATE_CATEGORY_PK)
+views/topic_private.py:    topics = Topic.objects.filter(user=request.user, category_id=settings.ST_TOPIC_PRIVATE_CATEGORY_PK)\
+views/topic.py:from spirit.models.category import Category
+views/topic.py:def topic_publish(request, category_id=None):
+views/topic.py:    if category_id:
+views/topic.py:        Category.objects.get_public_or_404(pk=category_id)
+views/topic.py:        form = TopicForm(user=request.user, initial={'category': category_id, })
+views/topic.py:        category_id = topic.category_id
+views/topic.py:            if topic.category_id != category_id:
+views/topic.py:    topics_pinned = Topic.objects.filter(category_id=settings.ST_UNCATEGORIZED_CATEGORY_PK,
+views/topic.py:    topics = topics.order_by('-is_pinned', '-last_active').select_related('category')
+views/category.py:from spirit.models.category import Category
+views/category.py:def category_detail(request, pk, slug):
+views/category.py:    category = Category.objects.get_public_or_404(pk=pk)
+views/category.py:    if category.slug != slug:
+views/category.py:        return HttpResponsePermanentRedirect(category.get_absolute_url())
+views/category.py:    subcategories = Category.objects.for_parent(parent=category)
+views/category.py:    topics = Topic.objects.for_category(category=category)\
+views/category.py:        .select_related('category')
+views/category.py:    return render(request, 'spirit/category/category_detail.html', {'category': category,
+views/category.py:    template_name = 'spirit/category/category_list.html'
+views/admin/category.py:from spirit.models.category import Category
+views/admin/category.py:def category_list(request):
+views/admin/category.py:    return render(request, 'spirit/admin/category/category_list.html', {'categories': categories, })
+views/admin/category.py:def category_create(request):
+views/admin/category.py:            return redirect(reverse("spirit:admin-category-list"))
+views/admin/category.py:    return render(request, 'spirit/admin/category/category_create.html', {'form': form, })
+views/admin/category.py:def category_update(request, category_id):
+views/admin/category.py:    category = get_object_or_404(Category, pk=category_id)
+views/admin/category.py:        form = CategoryForm(data=request.POST, instance=category)
+views/admin/category.py:            messages.info(request, _("The category has been updated!"))
+views/admin/category.py:            return redirect(reverse("spirit:admin-category-list"))
+views/admin/category.py:        form = CategoryForm(instance=category)
+views/admin/category.py:    return render(request, 'spirit/admin/category/category_update.html', {'form': form, })
+views/admin/index.py:from spirit.models.category import Category
+views/admin/index.py:    category_count = Category.objects.all().count() - 1  # - private
+views/admin/index.py:                                                                 'category_count': category_count,

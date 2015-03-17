@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load spirit_tags i18n %}
 {% block content %}
   {% if server %}
 	<h1 class="page-header">{{ server.name}}
@@ -47,6 +48,25 @@
 
 		</div>
 	</div>
+	
+	<div class="row">
+		&nbsp;
+	</div>
+	
+	<div class="row">
+		<div class="tabpanel">
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#forum" aria-controls="forum" role="tab" data-toggle="tab">Forum</a></li>
+			</ul>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="forum">
+					{% forum_other server %}
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
 	<style type="text/css">
 		.tab-content {
 			border-left: 1px solid #ddd;

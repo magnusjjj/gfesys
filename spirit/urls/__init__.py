@@ -28,4 +28,5 @@ urlpatterns = patterns('',
                        url(r'^comment/like/', include('spirit.urls.comment_like')),
                        url(r'^user/', include('spirit.urls.user')),
                        url(r'^search/', include('spirit.urls.search')),
+					   url(r'other/', include('spirit.urls.other')),
                        )

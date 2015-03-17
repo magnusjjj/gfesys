@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{%block content%}
+{% if user.is_superuser %}
+<a class="btn btn-primary" href="{% url "edit_page" page.id %}">Edit</a>
+{% endif %}
+<div class="page_content">	
+	{{page.content|safe}}
+</div>
+{%endblock%}

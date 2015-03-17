@@ -18,6 +18,7 @@ class ViewDetail(DefaultView):
 		super(ViewDetail, self).get(request)
 		self.setrights_server(request, server_id)
 		self.context["server"] = Server.objects.get(pk=server_id)
+		self.context["request"] = request
 		self.context["volunteers"] = Volunteer.objects.all().filter(server=self.context["server"],status="OK")
 		return render(request,'servers/detail.html', self.context)
 		

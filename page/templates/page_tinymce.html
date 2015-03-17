@@ -1,0 +1,12 @@
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'servers/tinymce/js/tinymce/jquery.tinymce.min.js' %}"></script>
+<script type="text/javascript">
+$(function(){
+	$("#{{name}}").tinymce({
+			script_url : '{% static 'servers/tinymce/js/tinymce/tinymce.min.js' %}',
+			theme : "modern",
+			plugins: "autoresize"
+	});
+});
+</script>
+<textarea name="{{name}}" id="{{name}}" class="form-control tinymce">{{value}}</textarea>

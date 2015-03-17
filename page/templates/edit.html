@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load page_tinymce %}
+{%block content%}
+	<form action="{{ request.get_full_path }}" method="POST">
+		{% csrf_token %}
+		<div class="form-group">
+			<input type="text" class="form-control" name="name" value="{{page.name}}"/>
+		</div>
+
+		<div class="form-group">
+			<select class="form-control" name="parent">
+				<option{% if not page or not page.parent %} selected="selected" {% endif %} value="NULL">No parent</option>
+			{% for parent in parents %}
+				<option{% if parent.id = page.parent.pk %} selected="selected" {% endif %} value="{{parent.pk}}">{{parent.name}}</option>
+			{% endfor %}
+			</select>
+		</div>		
+		
+		<div class="form-group">
+			{% page_tinymce "content" page.content %}
+		</div>
+		<input type="submit" value="Save" class="btn btn-primary"/>
+	</form>
+{%endblock%}

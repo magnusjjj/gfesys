@@ -10,24 +10,26 @@ import hashlib
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
 from django.core.mail import send_mail
-from django.contrib.auth import authenticate, logout
-
+from django.contrib.auth import authenticate, logout, login
 
 @require_http_methods(["POST"])
 def login_post(request):
 	# Make a variable to hold all the errors in...
 	errors = []
 	context = {}
-	login = request.POST["login"]
+	login_name = request.POST["login"]
 	password = request.POST["password"]
 	
-	user = authenticate(username=login, password=password)
+	user = authenticate(username=login_name, password=password)
 	if user is None:
 		errors.append("Could not log in. Wrong username or password.")
 		context["errors"] = errors
 		return JsonResponse(context)
 	else:
-		pass
+		if user.is_active:
+			login(request, user)
+		else:
+			errors.append("Your account is for some reason set as not being logged-in-able. Contact support.")
 	
 	context["errors"] = errors
 	return JsonResponse(context)
@@ -65,7 +67,7 @@ def register_post(request):
 	context = {}
 	
 	#Make a list of all the fields we cant stand being empty.. :P
-	notempty = {"country": "Country", "firstname": "First name", "surname": "Surname", "password": "Password",
+	notempty = {"country": "Country", "first_name": "First name", "last_name": "Surname", "password": "Password",
 	"adress": "Adress", "zip": "Zipcode", "birthdate": "Birthdate",
 	"city": "City", "phone": "Phone", "login": "Email", "accept1": "Accept 1", "accept2": "Accept 2", "accept3": "Accept 3"}
 	
@@ -144,8 +146,8 @@ def register_post(request):
 		salt = ''.join(random.SystemRandom().choice(string.uppercase + string.digits) for _ in xrange(20)) 
 		
 		member = Member.objects.create(
-			firstname= request.POST["firstname"],
-			surname= request.POST["surname"],
+			first_name= request.POST["first_name"],
+			last_name= request.POST["last_name"],
 			nick= "",
 			birthdate= request.POST["birthdate"],
 			phone= request.POST["phone"],
@@ -157,15 +159,19 @@ def register_post(request):
 			careof= request.POST["careof"],
 			socialsecuritynumber= request.POST["socialsecuritynumber"],
 			email= request.POST["login"].lower(),
+			username= request.POST["login"].lower(),
 			refreshedon= datetime.datetime.now(),
-			password_hash= hashlib.sha512(request.POST["password"] + salt).hexdigest(),
-			password_salt= salt,
 			image_height=0,
 			image_width=0,
+			is_active=1,
 		)
 		
 		member.save()
-		request.session['member_id'] = member.id
+		member.set_password(request.POST["password"])
+		member.save()
+		
+		
+		user = authenticate(username=member.username, password=request.POST["password"])
 		
 		send_mail('Welcome to GFE!', "Welcome to GFE!\n\n Your username is: \n\n" + request.POST["login"].lower() + "\n\n , and your password is known only to you.\n\n", settings.EMAILFROM,
 		[request.POST["login"].lower()], fail_silently=True)

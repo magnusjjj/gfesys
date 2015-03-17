@@ -16,6 +16,9 @@ from spirit.signals.topic import topic_viewed
 from spirit.managers.topic import TopicManager
 from spirit.utils.models import AutoSlugField
 
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
 
 @python_2_unicode_compatible
 class Topic(models.Model):
@@ -30,12 +33,17 @@ class Topic(models.Model):
     is_pinned = models.BooleanField(_("pinned"), default=False)
     is_closed = models.BooleanField(_("closed"), default=False)
     is_removed = models.BooleanField(default=False)
-
+    
     view_count = models.PositiveIntegerField(_("views count"), default=0)
     comment_count = models.PositiveIntegerField(_("comment count"), default=0)
-
+    
+    other_category_content_type = models.ForeignKey(ContentType, blank=True, null=True)
+    other_category_id = models.PositiveIntegerField(blank=True, null=True)
+    
+    other_category = GenericForeignKey('other_category_content_type', 'other_category_id')
+    
     objects = TopicManager()
-
+    
     class Meta:
         ordering = ['-last_active', ]
         verbose_name = _("topic")

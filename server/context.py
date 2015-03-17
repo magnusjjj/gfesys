@@ -1,8 +1,10 @@
 from django.template import loader, RequestContext
 from models import Member, Server, Volunteer
 from django.core.urlresolvers import resolve
+from django.core.cache import cache
 
 def context(request):
+	cache.clear()
 	context = {}
 	
 	app_name = resolve(request.path).app_name
@@ -15,8 +17,5 @@ def context(request):
 		context["section"] = "forums"
 	
 	context["app_name"] = app_name
-	
-	if request.user.is_authenticated():
-		context["member"] = Member.objects.get(pk=request.user.id)
 	
 	return context

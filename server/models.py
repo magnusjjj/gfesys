@@ -22,13 +22,8 @@ class Server(models.Model):
 class Member(spirit.models.user.AbstractUser):
 	def __str__(self):
 		nicky = " " if self.nick == "" else " \"" + self.nick +  "\" "
-		return self.firstname + nicky + self.surname
-		
-	USERNAME_FIELD = 'email'
-	REQUIRED_FIELDS = []
+		return self.first_name + nicky + self.last_name
 	
-	firstname = models.CharField(max_length=200)
-	surname = models.CharField(max_length=200)
 	nick = models.CharField(max_length=200)
 	birthdate = models.CharField(max_length=200)
 	

@@ -1,0 +1,8 @@
+{% load i18n %}
+<div class="suchaspirit">
+	<div class="new-topic" style="float: right; margin-bottom: 2em;">
+		<a class="button" href="{% url "spirit:other_publish" typeid objectid %}">Skapa ämne</a>
+	</div>
+	<div class="clearfix"></div>
+{% include "spirit/topic/_render_page_list.html" %}
+</div>
