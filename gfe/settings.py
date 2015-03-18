@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from spirit.settings import *
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -17,6 +18,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# There is a neat app for this at:
+# http://www.miniwebtool.com/django-secret-key-generator/
+# CHANGE HERE:
+
 SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -31,35 +36,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'server',
-	'member',
-)
+INSTALLED_APPS = ('server', 'member', 'page') + INSTALLED_APPS
 
-MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
-"django.core.context_processors.debug",
-"django.core.context_processors.i18n",
-"django.core.context_processors.media",
-"django.core.context_processors.static",
-"django.core.context_processors.tz",
-"django.contrib.messages.context_processors.messages"
-)
+TEMPLATE_CONTEXT_PROCESSORS += ("server.context.context",)
 
 ROOT_URLCONF = 'gfe.urls'
 
@@ -68,6 +47,8 @@ WSGI_APPLICATION = 'gfe.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+
+# CHANGE HERE:
 
 DATABASES = {
     'default': {
@@ -96,6 +77,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+# CHANGE HERE:
+
 STATIC_URL = '/static/'
 STATIC_ROOT= "/home/django/gfe/static/"
 
@@ -103,3 +86,5 @@ MEDIA_ROOT = "/home/django/gfe/media/"
 MEDIA_URL = "/media/"
 
 EMAILFROM = "noreply@tuxie.se"
+
+AUTH_USER_MODEL = "member.Member"
