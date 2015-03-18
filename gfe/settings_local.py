@@ -41,9 +41,9 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT= "/home/django/gfe/static/"
+STATIC_ROOT= "/home/django/gfesys/static/"
 
-MEDIA_ROOT = "/home/django/gfe/media/"
+MEDIA_ROOT = "/home/django/gfesys/media/"
 MEDIA_URL = "/media/"
 
 EMAILFROM = "noreply@tuxie.se"
