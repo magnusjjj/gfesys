@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from server.models import *
+from member.models import Member
 from django_countries import countries
 from django.http import JsonResponse
 import datetime

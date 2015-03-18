@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from server.models import *
 from django_countries import countries
+from member.models import Member
 
 def members_index(request):
 	context = {}

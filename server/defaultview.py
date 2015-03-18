@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.views.generic import View
-from models import Member, Server, Volunteer
+from models import Server, Volunteer
 
 class DefaultView(View):
 	context = {}
