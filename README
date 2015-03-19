@@ -1,3 +1,0 @@
-pip install -r requirements.txt
-edit settings.py
-add a first category to the forum for private
