@@ -21,60 +21,75 @@ This is the entire list of install instructions for Debian linux, from a truly c
 
 ###1. First we install the basic requirements:
 
+```
 apt-get update
 apt-get dist-upgrade
 apt-get install git python-pip apache2 mysql-server libmysqlclient-dev python-dev phpmyadmin libapache2-mod-wsgi
+```
 
 We use mysql as a standard, though nothing in the code requires it at the moment. It does come with a really nice web gui, phpmyadmin, which is why we use it in our examples
 
 ###2. Next, we create a user:
 
+```
 adduser django
 su - django
+```
 
 First command adds the user, the second command lets you take control of it.
 
 ###3. Download the sources..
 
+```
 git clone https://github.com/magnusjjj/gfesys.git
 cd gfesys
 git update-index --assume-unchanged gfe/settings_local.py
+```
 
 The first command downloads the sources. The second jumps into the directory created. The final command is a command for developers, which basically says 'ignore changes on this file'.
-It means that if you contribute changes, you don√'t have to worry about accidentally sending us your database passwords :)
+It means that if you contribute changes, you don√É't have to worry about accidentally sending us your database passwords :)
 
 ###4. Install the requirements, stage 2:
 
+```
 pip install -r requirements.txt
+```
 
 ###5. Setup the database:
 
-Go to http://your_ip_adress/phpmyadmin
-Log in
-Go  in under privileges
-'Add new user'
-Choose a username, password, and let host be empty. Check the box that says  'Create a database with the same name and grant all privileges'
-Press 'create user'
-At the bottom of the page there is now a link 'reload privileges'. Press it.
+- Go to http://your_ip_adress/phpmyadmin
+- Log in
+- Go in under privileges
+- 'Add new user'
+- Choose a username, password, and let host be empty. Check the box that says  'Create a database with the same name and grant all privileges'
+- Press 'create user'
+- At the bottom of the page there is now a link 'reload privileges'. Press it.
 
 ###6. Change settings, and populate the database
 
 Change gfe/settings_local.py to reflect the new settings, and generate a new secret_key (there is a link to a generator on the same line)
 Then run:
+
+```
 ./manage.py collectstatic
 ./manage.py createmigrations
 ./manage.py migrate
 ./manage.py createcachetable spirit_cache
+```
 
 ###7. Run the server :)
 
+```
 ./manage.py startserver 0.0.0.0:8000
+```
 
 This starts a webserver at port 8000 for simple testing.
 
 ###(optional) 8. Configure apache. You can see a horribly bad example below, which goes in your web server config.
 
+```
 nano /etc/apache2/sites-enabled/000-default
+```
 
 plonk in:
 
