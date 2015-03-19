@@ -3,8 +3,11 @@ import spirit.models.user
 from django_countries.fields import CountryField
 from django.contrib.auth.models import AbstractBaseUser
 import spirit.models.user
+from .memberusermanager import MemberUserManager
 # Create your models here.
 class Member(spirit.models.user.AbstractUser):
+	objects = MemberUserManager()
+	
 	def __str__(self):
 		nicky = " " if self.nick == "" else " \"" + self.nick +  "\" "
 		return self.first_name + nicky + self.last_name
@@ -26,7 +29,7 @@ class Member(spirit.models.user.AbstractUser):
 	refreshedon = models.DateTimeField('Refreshed on')
 	
 	image = models.ImageField(max_length=500, width_field='image_width', height_field='image_height', upload_to='members')
-	image_height = models.IntegerField()
-	image_width = models.IntegerField()
+	image_height = models.IntegerField(default=0)
+	image_width = models.IntegerField(default=0)
 
 	is_opt_in = models.BooleanField(default=False)
