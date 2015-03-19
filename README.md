@@ -17,7 +17,7 @@ and we are excited to show you the general direction of where we are heading.
 
 ## To setup:
 
-This is the entire list of install instructions for Debian linux, from a truly clean install to installed and working
+This is the entire list of install instructions for Debian linux, from a truly clean install to installed and working.
 
 ###1. First we install the basic requirements:
 
@@ -47,7 +47,7 @@ git update-index --assume-unchanged gfe/settings_local.py
 ```
 
 The first command downloads the sources. The second jumps into the directory created. The final command is a command for developers, which basically says 'ignore changes on this file'.
-It means that if you contribute changes, you donÃ't have to worry about accidentally sending us your database passwords :)
+It means that if you contribute changes, you don't have to worry about accidentally sending us your database passwords :)
 
 ###4. Install the requirements, stage 2:
 
