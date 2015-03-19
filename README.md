@@ -75,8 +75,10 @@ This starts a webserver at port 8000 for simple testing.
 ###(optional) 8. Configure apache. You can see a horribly bad example below, which goes in your web server config.
 
 nano /etc/apache2/sites-enabled/000-default
+
 plonk in:
 
+```ApacheConf
 Alias /static/ /home/django/gfe/static/
 Alias /media/ /home/django/gfe/media/
 
@@ -108,3 +110,4 @@ WSGIPythonPath /home/django/gfe/
 			Satisfy Any
         </Files>
 </Directory>
+```
