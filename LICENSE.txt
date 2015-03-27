@@ -1,0 +1,11 @@
+django is released under the https://github.com/django/django/blob/master/LICENSE , which is a variant of the BSD license.
+gfe page is released under the MIT license
+gfe member is released under the MIT license
+gfe server is released under the MIT license
+spirit is released under the MIT license, as is all changes in gfe's horrible kludge copy :).
+bootstrap is released under the MIT license. See the source code in the comments.
+holder is released under the MIT license.
+IE 10 viewport hack is released under Creative Commons Attribution 3.0 Unported License.
+jQuery cookie is released under the MIT license
+jQuery is released under the MIT license
+default profile image is a picture by 'the yes man', its released under the Creative Commmons 2.0 BY (available at https://creativecommons.org/licenses/by/2.0/). The original is available at https://flic.kr/p/85PkBT.

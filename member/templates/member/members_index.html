@@ -4,13 +4,18 @@
   <div class="row placeholders">
 	{% if members %}
 		{% for member in members %}
-			<a class="col-xs-6 col-sm-3" href="{% url "member" member.id %}">
-				{% if member.image %}
-				<img src="{{member.image.url}}" class="img-responsive" alt="{{ member }}"/>
-				{% endif %}
-				<h4>{{ member }}</h4>
-				<span class="text-muted"></span>
-			</a>
+			<div class="col-md-3">
+				<div class="thumbnail">
+					{% if member.image %}
+						<img alt="300x200" src="http://lorempixel.com/600/200/people">
+					{% endif %}
+					<div class="caption">
+						<h3>{{ member }}</h3>
+						<p></p>
+						<p><a class="btn btn-primary" href="{% url "spirit:profile-detail" member.id %}">view</a> <a class="btn" href="#">Action</a></p>
+					</div>
+				</div>
+			</div>
 		{% endfor %}
 	{% else %}
 		<p>No members are visible.</p>

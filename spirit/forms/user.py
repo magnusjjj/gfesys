@@ -47,10 +47,11 @@ class RegistrationForm(UserCreationForm):
 
 
 class UserProfileForm(forms.ModelForm):
-
+    image = forms.ImageField()
+    
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "location", "timezone")
+        fields = ("first_name", "last_name", "location", "timezone", "image")
 
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)

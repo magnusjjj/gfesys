@@ -8,6 +8,11 @@ from .memberusermanager import MemberUserManager
 class Member(spirit.models.user.AbstractUser):
 	objects = MemberUserManager()
 	
+	GravatarTypes = (('identicon', 'A geometric pattern based on an email hash'),
+	('monsterid', "A generated 'monster' with different colors, faces, etc"),
+	('wavatar', "Generated faces with differing features and backgrounds"),
+	('retro', 'awesome generated, 8-bit arcade-style pixelated faces'))
+	
 	def __str__(self):
 		nicky = " " if self.nick == "" else " \"" + self.nick +  "\" "
 		return self.first_name + nicky + self.last_name
@@ -31,5 +36,7 @@ class Member(spirit.models.user.AbstractUser):
 	image = models.ImageField(max_length=500, width_field='image_width', height_field='image_height', upload_to='members')
 	image_height = models.IntegerField(default=0)
 	image_width = models.IntegerField(default=0)
-
+	
 	is_opt_in = models.BooleanField(default=False)
+	use_gravatar = models.BooleanField(default=False)
+	gravatar_type = models.CharField(default='identicon', max_length=20, choices=GravatarTypes)
