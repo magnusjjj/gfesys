@@ -1,14 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
+
+<style type="text/css">
+	.gfe-list {
+		margin-left: 0;
+		float: none;
+		display: inline-block;
+		vertical-align: top;
+		width: 24%;
+	}
+</style>
+
 <h1 class="page-header">Servers</h1>
-  <div class="row placeholders">
+  <div class="row">
 	{% if servers %}
 		{% for server in servers %}
-			<a class="col-xs-6 col-sm-3" href="/servers/{{ server.id }}/">
-			  <img src="{{server.image.url}}" class="img-responsive" alt="{{ server.name}}">
-			  <h4>{{ server.name}}</h4>
-			  <span class="text-muted">{{server.description}}</span>
-			</a>
+			<div class="col-md-3 gfe-list" style="">
+				<div class="thumbnail">
+					<img src="{{server.image.url}}" class="img-responsive" alt="{{ server.name}}">
+					<div class="caption">
+						<h3>{{ server.name}}</h3>
+						<p>{{server.description}}</p>
+						<p><a class="btn btn-primary" href="{% url 'server:detail' server.id %}">Go to this server</a></p>
+					</div>
+				</div>
+			</div>
 		{% endfor %}
 	{% else %}
 		<p>No servers are available.</p>
