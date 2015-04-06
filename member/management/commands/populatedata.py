@@ -9,19 +9,24 @@ from faker import Faker as Fakey
 import random
 from datetime import datetime
 import pytz
+from django.db import transaction
+import cProfile, pstats, StringIO
+from django.contrib.auth.hashers import make_password
 
 # Todo: Password for users
 # empty database tables?
 
 class Command(BaseCommand):
 	args = '<dodemo dodemopassword>'
-	help = 'Fills the database with the required minimum data. If you want to reset the tables used, also add "reset" to the command line. dodemo, when used, creates demonstration data.'
+	help = 'Fills the database with the required minimum data. dodemo, when used, creates demonstration data. dodemopassword is the password that all fake users passwords are set to'
 	
 	def handle(self, *args, **options):
+		#pr = cProfile.Profile()
+		#pr.enable()
+		transaction.set_autocommit(False)
 		
 		Faker = Fakey()
 		
-		reset = False
 		dodemo = False
 		dodemopassword = ''
 		
@@ -36,34 +41,49 @@ class Command(BaseCommand):
 		
 		# First, spirit needs us to create some categories for it to work at all:
 		
+		self.stdout.write("Filling up the standard categories\n")
+		
 		cat = Category(title="Private",slug="private",description="The category for all private discussions", is_closed=0, is_removed=0, is_private=0)
 		cat.save()
+		transaction.commit()
 		if(cat.pk != ST_TOPIC_PRIVATE_CATEGORY_PK):
 			raise CommandError("The id for the private category does not match up with our default in the settings. Check ST_TOPIC_PRIVATE_CATEGORY_PK, should be %d but is %d " % (ST_TOPIC_PRIVATE_CATEGORY_PK, cat.pk))
 		
 		cat = Category(title="Uncategorized",slug="uncategorized",description="The category for all uncategorized discussions", is_closed=0, is_removed=0, is_private=0)
 		cat.save()
+		transaction.commit()
 		if(cat.pk != ST_UNCATEGORIZED_CATEGORY_PK):
 			raise CommandError("The id for the uncategorized category does not match up with our default in the settings. Check ST_UNCATEGORIZED_CATEGORY_PK, should be %d but is %d " % (ST_UNCATEGORIZED_CATEGORY_PK, cat.pk))
 
 		cat = Category(title="Other",slug="other",description="The category for external (server) discussions", is_closed=0, is_removed=0, is_private=0)
 		cat.save()
+		transaction.commit()
 		if(cat.pk != ST_OTHER_CATEGORY_PK):
 			raise CommandError("The id for the other category does not match up with our default in the settings. Check ST_OTHER_CATEGORY_PK, should be %d but is %d " % (ST_OTHER_CATEGORY_PK, cat.pk))
-		
+			
 		if dodemo:
+			self.stdout.write("Starting the fill of demo data\n")
+		
 			# Here is where we generate some categories
 			
 			animals = ["Penguin", "Zebra", "Cat", "Giraffe", "Horse", "Lion","Narwhaal"]
 			words = ["awesome", "breathtaking", "amazing", "stunning", "astounding", "astonishing", "awe-inspiring", "stupendous", "staggering", "extraordinary", "incredible", "unbelievable"]
 			games = ["Minecraft", "Counter Strike", "FTL", "Minesweeper", "World of warcraft", "Trouble in Terrorist Town", "Prop hunt"]
 			categories = ["Shoot'em'ups", "Competitions", "Minecraft", "Open Discussion", "Website", "Membership", "Development"]
+			cat_list = []
+			
+			self.stdout.write("Creating some fake categories\n")
 			
 			for str in categories:
-				cat = Category(title=str,slug=str.lower(),description="The category for all discussions about " + str, is_closed=0, is_removed=0, is_private=0)
+				cat = Category(title=str,description="The category for all discussions about " + str, is_closed=0, is_removed=0, is_private=0)
 				cat.save()
+				cat_list.append(cat)
+			
+			transaction.commit()
 			
 			# Here is where we generate a couple of servers
+			
+			self.stdout.write("Creating some fake servers\n")
 			
 			servers = []
 			
@@ -72,17 +92,21 @@ class Command(BaseCommand):
 				server = Server(name=name, description=Faker.sentence() + " " +Faker.sentence(), howto="howto here", rules="rules here", questions="questions here", image='tuxie.jpg', image_height=0, image_width=0)
 				server.save()
 				servers.append(server)
-			
+
+			transaction.commit()
+				
 			# Here is where we generate a couple of members
 			
 			members = []
+			
+			self.stdout.write("Creating some fake members (may take a while)\n")
 			
 			for i in range(0,1000):
 				email = Faker.email()
 				phone = Faker.phone_number()
 				
 				mem = Member(is_superuser=False,
-					username='',
+					username=email,
 					first_name=Faker.first_name(),
 					last_name=Faker.last_name(),
 					email=email,
@@ -97,12 +121,17 @@ class Command(BaseCommand):
 					careof='',
 					socialsecuritynumber='',
 					refreshedon=datetime.now(pytz.timezone("GMT")),
-					is_opt_in=Faker.boolean(90)
+					is_opt_in=Faker.boolean(90),
+					password=make_password(dodemopassword, None, 'md5') # Hang on, md5? Yes. Django uses secure hashing by default, which without specifying a weak hashing algorithm makes this script take several minutes to run.
 				)
 				
-				mem.set_password(dodemopassword)
+				#mem.set_password(dodemopassword)
 				mem.save()
 				members.append(mem)
+			
+			transaction.commit()
+			
+			self.stdout.write("Creating some fake volunteers\n")
 			
 			# Here is where we generate a couple of volunteers
 			statuscodes = ["OK", "WAITING", "DENIED"]
@@ -116,12 +145,17 @@ class Command(BaseCommand):
 					sec_edit=Faker.boolean(),
 					sec_accept=Faker.boolean()
 				)
+				vol.save()
 				
 			# Finally some topics
 			
+			transaction.commit()
+			
+			self.stdout.write("Creating some fake threads (may take a while!)\n")
+			
 			for i in range(0, 1000):
 				top = Topic(user=random.choice(members),
-					category=random.choice(categories),
+					category=random.choice(cat_list),
 					title=Faker.sentence(),
 					is_pinned=Faker.boolean(5),
 					is_closed=Faker.boolean(5),
@@ -138,5 +172,14 @@ class Command(BaseCommand):
 						comment=text,
 						comment_html=text
 					)
-					comment.save()
+					comm.save()
+			
+			transaction.commit()
+			
+			#pr.disable()
+			#s = StringIO.StringIO()
+			#sortby = 'cumulative'
+			#ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+			#ps.print_stats()
+			#self.stdout.write(s.getvalue())
 		return
