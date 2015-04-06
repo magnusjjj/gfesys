@@ -10,6 +10,11 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
+
+PROJECT_ROOT = os.path.dirname(__file__)
+sys.path.insert(0, os.path.join(PROJECT_ROOT, '../Spirit'))
+
 from spirit.settings import *
 from settings_local import *
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
