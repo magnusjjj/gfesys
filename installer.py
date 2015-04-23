@@ -106,6 +106,7 @@ class Installer:
 		# That wasn't so bad, was it?
 	
 	def post_config():
+		os.system("git update-index --assume-unchanged gfe/settings_local.py")
 		# All the configuration *after* the settings have been saved
 		os.system("./manage.py collectstatic")
 		os.system("./manage.py createmigrations")

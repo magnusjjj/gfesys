@@ -41,21 +41,15 @@ First command adds the user, the second command lets you take control of it.
 ###3. Download the sources..
 
 ```
-git clone https://github.com/magnusjjj/gfesys.git
+git clone -r https://github.com/magnusjjj/gfesys.git
 cd gfesys
-git update-index --assume-unchanged gfe/settings_local.py
 ```
 
-The first command downloads the sources. The second jumps into the directory created. The final command is a command for developers, which basically says 'ignore changes on this file'.
-It means that if you contribute changes, you don't have to worry about accidentally sending us your database passwords :)
+The first command downloads the sources. The second jumps into the directory created.
 
-###4. Install the requirements, stage 2:
+IMPORTANT: Notice the -r in the command! Its very important, and without it you won't download the whole of the system and will get all kinds of strange errors.
 
-```
-pip install -r requirements.txt
-```
-
-###5. Setup the database:
+###4. Setup the database:
 
 - Go to http://your_ip_adress/phpmyadmin
 - Log in
@@ -65,19 +59,13 @@ pip install -r requirements.txt
 - Press 'create user'
 - At the bottom of the page there is now a link 'reload privileges'. Press it.
 
-###6. Change settings, and populate the database
-
-Change gfe/settings_local.py to reflect the new settings, and generate a new secret_key (there is a link to a generator on the same line)
-Then run:
+###4. Run the installer:
 
 ```
-./manage.py collectstatic
-./manage.py createmigrations
-./manage.py migrate
-./manage.py createcachetable spirit_cache
+./installer.py
 ```
 
-###7. Run the server :)
+###5. Run the server :)
 
 ```
 ./manage.py startserver 0.0.0.0:8000
@@ -85,7 +73,7 @@ Then run:
 
 This starts a webserver at port 8000 for simple testing.
 
-###(optional) 8. Configure apache. You can see a horribly bad example below, which goes in your web server config.
+###(optional) 6. Configure apache. You can see a horribly bad example below, which goes in your web server config.
 
 ```
 nano /etc/apache2/sites-enabled/000-default
