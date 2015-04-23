@@ -24,7 +24,7 @@ This is the entire list of install instructions for Debian linux, from a truly c
 ```
 apt-get update
 apt-get dist-upgrade
-apt-get install git python-pip apache2 mysql-server libmysqlclient-dev python-dev phpmyadmin libapache2-mod-wsgi
+apt-get install git python-pip apache2 mysql-server libmysqlclient-dev python-dev phpmyadmin libapache2-mod-wsgi libpng-dev libjpeg-dev
 ```
 
 We use mysql as a standard, though nothing in the code requires it at the moment. It does come with a really nice web gui, phpmyadmin, which is why we use it in our examples
@@ -68,7 +68,7 @@ IMPORTANT: Notice the --recursive in the command! Its very important, and withou
 ###5. Run the server :)
 
 ```
-./manage.py startserver 0.0.0.0:8000
+./manage.py runserver 0.0.0.0:8000
 ```
 
 This starts a webserver at port 8000 for simple testing.
