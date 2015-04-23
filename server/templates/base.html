@@ -115,17 +115,19 @@
         <div id="navbar" class="navbar-collapse collapse">
 		{% if not user.is_authenticated %}
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#" id="register">Become a Member</a></li>
-				<li><a href="#" id="login">Login</a></li>
+				<li><a href="#" class="do_register">Become a Member</a></li>
+				<li><a href="#" class="do_login">Login</a></li>
 			</ul>
 		{% else %}
 			<ul class="nav navbar-nav navbar-right">
-				<li><a class="header-tab-link js-tab-notification{% if has_notifications %} is-highlighted{% endif %}" href="{% url "spirit:topic-notification-list" %}" data-related=".js-notifications-content"><i class="fa fa-bell"></i></a></li>
+				
+				<li class="dropdown">
+					<a class="header-tab-link {% if has_notifications %} is-highlighted {% endif %}" data-toggle="popover" href="{% url "spirit:topic-notification-list" %}" data-related=".js-notifications-content"><i class="fa fa-bell"></i></a>
+				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Logged in as {{ user }} <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a class="menu-link" href="{% url "spirit:profile-detail" pk=user.pk slug=user.slug %}">{% trans "Profile" %}</a></li>
-						<li><a class="menu-link" href="{% url "spirit:topic-active" %}">{% trans "Topics" %}</a></li>
 						<li><a class="menu-link" href="{% url "spirit:topic-unread-list" %}">{% trans "Unread topics" %}</a></li>
 						<li><a class="menu-link" href="{% url "spirit:private-list" %}">{% trans "Private topics" %}</a></li>
 						{% if user.is_administrator %}
@@ -154,15 +156,17 @@
             <li{% if not section or section == "servers" %} class="active"{% endif %}><a href="{% url "index" %}">Servers <span class="sr-only">(current)</span></a></li>
             <li{% if section == "members"%} class="active"{% endif %}><a href="{% url "members_index" %}">Members</a></li>
             <li{% if section == "forums"%} class="active"{% endif %}><a href="{% url "spirit:index" %}">Forums</a>{% if section == "forums"%}
-			<ul class="nav" style="padding-left: 1em; font-size: 0.9em">
-					<li><a href="#" style="color: black; font-weight: bold;">Admin</a></li>
-					<li><a class="side-menu-link{% ifequal active "dashboard" %} is-selected{% endifequal %}" href="{% url "spirit:admin" %}">{% trans "Dashboard" %}</a></li><!--
-				 --><li><a class="side-menu-link{% ifequal active "basic_settings" %} is-selected{% endifequal %}" href="{% url "spirit:admin-config-basic" %}">{% trans "Basic settings" %}</a></li><!--
-				 --><li><a class="side-menu-link{% ifequal active "categories" %} is-selected{% endifequal %}" href="{% url "spirit:admin-category" %}">{% trans "Categories" %}</a></li><!--
-				 --><li><a class="side-menu-link{% ifequal active "topics" %} is-selected{% endifequal %}" href="{% url "spirit:admin-topic" %}">{% trans "Topics" %}</a></li><!--
-				 --><li><a class="side-menu-link{% ifequal active "users" %} is-selected{% endifequal %}" href="{% url "spirit:admin-user" %}">{% trans "Users" %}</a></li><!--
-				 --><li><a class="side-menu-link{% ifequal active "flags" %} is-selected{% endifequal %}" href="{% url "spirit:admin-flag" %}">{% trans "Flags" %}</a></li>
-			</ul>
+				{% if user.is_administrator %}
+					<ul class="nav" style="padding-left: 1em; font-size: 0.9em">
+							<li><a href="#" style="color: black; font-weight: bold;">Admin</a></li>
+							<li><a class="side-menu-link{% ifequal active "dashboard" %} is-selected{% endifequal %}" href="{% url "spirit:admin" %}">{% trans "Dashboard" %}</a></li><!--
+						 --><li><a class="side-menu-link{% ifequal active "basic_settings" %} is-selected{% endifequal %}" href="{% url "spirit:admin-config-basic" %}">{% trans "Basic settings" %}</a></li><!--
+						 --><li><a class="side-menu-link{% ifequal active "categories" %} is-selected{% endifequal %}" href="{% url "spirit:admin-category" %}">{% trans "Categories" %}</a></li><!--
+						 --><li><a class="side-menu-link{% ifequal active "topics" %} is-selected{% endifequal %}" href="{% url "spirit:admin-topic" %}">{% trans "Topics" %}</a></li><!--
+						 --><li><a class="side-menu-link{% ifequal active "users" %} is-selected{% endifequal %}" href="{% url "spirit:admin-user" %}">{% trans "Users" %}</a></li><!--
+						 --><li><a class="side-menu-link{% ifequal active "flags" %} is-selected{% endifequal %}" href="{% url "spirit:admin-flag" %}">{% trans "Flags" %}</a></li>
+					</ul>
+				{% endif %}
 			{% endif %}</li>
           </ul>
 		  <ul class="nav nav-sidebar">
@@ -202,13 +206,11 @@
 				modal.find('.modal-content').load(modal.data("url"));
 			});
 		
-
-		
-			$("#register").click(function(){
+			$(".do_register").click(function(){
 				$("#modal").data("url", "{% url 'register' %}").modal();
 			});
 			
-			$("#login").click(function(){
+			$(".do_login").click(function(){
 				$("#modal").data("url", "{% url 'login' %}").modal();
 			});
 			

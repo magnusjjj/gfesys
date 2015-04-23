@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 	  {% if server %}		
-			{% if volunteer and volunteer.sec_accept %}
+			{% if volunteer.sec_accept or user.is_administrator %}
 				<h1 class="page-header">{{ server.name}}</h1>
 				<div class="row placeholders">
 					<div class="col-sm-2" href="/servers/{{ server.id }}/">
@@ -28,7 +27,7 @@
 							{% for a in applicants %}
 								<tr {% if not a.status = "OK" %} class="warning" {% endif %}>
 									<td>{{a.createdon}}</td>
-									<td>{{a.member.firstname}} {{a.member.surname}}</td>
+									<td>{{a.member}}</td>
 									<td><a href="#" class="viewanswers" data-applicantid="{{a.id}}">View answers</a></td>
 									<td>
 										<div class="checkbox">
@@ -101,7 +100,7 @@
 						{
 							$(this).attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
 							$.ajax({
-								url: "{% url 'servereditapplicant' %}",
+								url: "{% url 'server:servereditapplicant' %}",
 								type: "POST",
 								headers: {"X-CSRFToken": csrftoken},
 								data: {"applicant_id": $(this).data("applicantid"), "role": $(this).val()}
@@ -119,7 +118,7 @@
 						outside = $(this);
 						$(this).attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
 						$.ajax({
-							url: "{% url 'servereditapplicant' %}",
+							url: "{% url 'server:servereditapplicant' %}",
 							type: "POST",
 							headers: {"X-CSRFToken": csrftoken},
 							data: {"applicant_id": $(this).data("applicantid"), "sec_edit": $(this).is(':checked')}
@@ -135,7 +134,7 @@
 						
 						$(this).attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
 						$.ajax({
-							url: "{% url 'servereditapplicant' %}",
+							url: "{% url 'server:servereditapplicant' %}",
 							type: "POST",
 							headers: {"X-CSRFToken": csrftoken},
 							data: {"applicant_id": $(this).data("applicantid"), "sec_accept": $(this).is(':checked')}
@@ -151,7 +150,7 @@
 						outside = $(this).parent().parent().parent();
 						outside.attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
 						$.ajax({
-							url: "{% url 'servereditapplicant' %}",
+							url: "{% url 'server:servereditapplicant' %}",
 							type: "POST",
 							headers: {"X-CSRFToken": csrftoken},
 							data: {"applicant_id": $(this).data("applicantid"), "status": $(this).data("status")}
@@ -178,7 +177,7 @@
 					});
 					
 					$(".viewanswers").click(function(){
-						$("#modal_manage").data("url", "{% url 'serverviewanswers' %}").data("applicantid", $(this).data("applicantid")).modal();
+						$("#modal_manage").data("url", "{% url 'server:serverviewanswers' %}").data("applicantid", $(this).data("applicantid")).modal();
 					});
 				});
 				
@@ -189,5 +188,4 @@
 	  {% else %}
 		<p>Whoops! This server does not exist.</p>
 	  {% endif %}
-	</div>
 {% endblock %}

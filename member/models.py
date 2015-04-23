@@ -10,12 +10,15 @@ from django_countries.fields import CountryField
 from django.contrib.auth.models import AbstractBaseUser
 import spirit.models.user
 from .memberusermanager import MemberUserManager
+from django.utils.encoding import python_2_unicode_compatible
 
 # This file is a description of the interface between the database and django.
 # We do some slightly different stuff here, mainly importing Spirit (the forum engine) for the auth model.
 # https://docs.djangoproject.com/en/1.8/topics/db/models/
 # https://docs.djangoproject.com/en/dev/ref/contrib/contenttypes/
 
+# This descriptor fixes __str__ on python2
+@python_2_unicode_compatible
 class Member(spirit.models.user.AbstractUser):
 	objects = MemberUserManager()
 	

@@ -72,7 +72,7 @@ class ViewVolunteerFor(DefaultView):
 		
 		# Create and save a volunteer
 		vol = Volunteer.objects.create(
-			member = self.context["member"],
+			member = request.user,
 			server = self.context["server"],
 			answer = request.POST["answer"],
 			role = "",
@@ -101,8 +101,9 @@ class ServerEditApplicant(DefaultView):
 		vals = {}
 		
 		# Sanity check that we have editing rights
-		if not self.context["volunteer"].sec_accept:
-			errors.push("You don't have access to this command")
+		if not request.user.is_administrator:
+			if self.context["volunteer"].sec_accept:
+				errors.push("You don't have access to this command")
 		else:
 			# Edit the values requested:
 			if "role" in request.POST:
@@ -160,17 +161,22 @@ class ServerViewAnswers(DefaultView):
 
 # Simply the view that *renders* the edit screen
 class EditServer(DefaultView):
-	def get(self, request, server_id):
+	def get(self, request, server_id=0):
 		super(EditServer, self).get(request)
 		
-		# Fetch the server requested
-		self.context["server"] = Server.objects.get(pk=server_id)
+		# Fetch (or create) the server
+		if server_id == 0:
+			self.context["server"] = Server()
+		else:
+			self.context["server"] = Server.objects.get(pk=server_id)
 		
 		# Load the access rights
 		self.setrights_server(request, server_id)
 		
+		self.context["server_id"] = server_id
+		
 		# And render
-		if self.context["volunteer"].sec_edit:
+		if request.user.is_administrator or self.context["volunteer"].sec_edit:
 			return render(request,'servers/editserver.html', self.context)
 	
 # This is the motherload. The actual view that saves the server info.	
@@ -205,15 +211,18 @@ class UpdateServerInfo(DefaultView):
 	
 	ALLOWED_STYLES = []
 
-	def post(self, request, server_id):
+	def post(self, request, server_id="0"):
 		super(UpdateServerInfo, self).get(request)
-		# Fetch the server
-		self.context["server"] = Server.objects.get(pk=server_id)
+		# Fetch (or create) the server
+		if server_id == "0":
+			self.context["server"] = Server()
+		else:
+			self.context["server"] = Server.objects.get(pk=server_id)
 		
 		# Fetch the access rights
 		self.setrights_server(request, server_id)
 		
-		if self.context["volunteer"].sec_edit:
+		if request.user.is_administrator or self.context["volunteer"].sec_edit:
 			# Modify the object
 			self.context["server"].name = request.POST["name"]
 			self.context["server"].description = request.POST["description"]
@@ -223,10 +232,14 @@ class UpdateServerInfo(DefaultView):
 			self.context["server"].rules = bleach.clean(request.POST["rules"], self.ALLOWED_TAGS, self.ALLOWED_ATTRIBUTES, self.ALLOWED_STYLES)
 			self.context["server"].questions = request.POST["questions"]
 			
+			# Todo, handle errors here better: 
+			if 'image' in request.FILES:
+				self.context["server"].image = request.FILES['image']
+			
 			# Save the object
 			self.context["server"].save()
 			
-			return redirect("editserver", server_id)
+			return redirect("server:editserver", server_id=self.context["server"].id)
 
 # Like the name applies, handles image uploads for servers
 class UploadServerImage(DefaultView):

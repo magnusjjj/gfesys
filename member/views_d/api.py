@@ -18,6 +18,7 @@ from django.views.decorators.http import require_http_methods
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, logout, login
+import django.contrib.auth
 
 @require_http_methods(["POST"])
 def login_post(request):
@@ -35,10 +36,14 @@ def login_post(request):
 	else:
 		if user.is_active:
 			login(request, user)
+			try: 
+				context["redirectto"] = request.POST["next"]
+			except:
+				pass
 		else:
 			errors.append("Your account is for some reason set as not being logged-in-able. Contact support.")
-	
 	context["errors"] = errors
+	
 	return JsonResponse(context)
 
 @require_http_methods(["POST"])
@@ -49,7 +54,7 @@ def forgot_post(request):
 	login = request.POST["login"]
 	themember = {}
 	try:
-		themember = Member.objects.get(login__iexact=login)
+		themember = Member.objects.get(username__iexact=login)
 	except:
 		errors.append("Could not find a user with that email.")
 		context["errors"] = errors
@@ -62,7 +67,7 @@ def forgot_post(request):
 	
 	
 	send_mail('Password reset', "Your new password is: \n\n" + newpassword, settings.EMAILFROM,
-	[request.POST["login"].lower()], fail_silently=True)	
+	[themember.email], fail_silently=True)	
 
 	context["errors"] = errors
 	return JsonResponse(context)
@@ -187,5 +192,5 @@ def register_post(request):
 	return JsonResponse(context)
 	
 def logout(request):
-	logout(request)
+	django.contrib.auth.logout(request)
 	return JsonResponse({})

@@ -1,48 +1,51 @@
 {% extends "member/modal.html" %}
 {% block heading %}Log in{% endblock %}{% block okbutton%}Log in{% endblock %}
 {% block content %}
-	<div class="alert alert-danger login_errorlist_box" style="display: none;">
-		<ul class="login_errorlist">
-		</ul>
+	<div class="login">
+		<div class="alert alert-danger login_errorlist_box" style="display: none;">
+			<ul class="login_errorlist">
+			</ul>
+		</div>
+		<form action="{% url 'register' %}" method="post" class="col-md-12 form-horizontal login_form">
+			{% csrf_token %}
+			<div class="form-group field-login">
+				<label for="login" class="control-label">Email</label>
+				<input type="text" name="login" value="" id="login" class="form-control"  />
+			</div>
+			<div class="form-group field-password">
+				<label for="password" class="control-label">Password</label>
+				<input type="password" name="password" id="password" class="form-control"/>
+			</div>
+			<input type="hidden" value="{{ request.GET.next }}" name="next"/>
+		</form>
+		<form method="post" class="col-md-12 form-horizontal forgot_form" style="display: none;">
+			{% csrf_token %}
+			Forgot your password? Write your email here and we will send you a new password.
+			
+			<div class="alert alert-danger forgot_errorlist_box" style="display: none;">
+					<ul class="forgot_errorlist">
+					</ul>
+			</div>
+			
+			<div class="alert alert-success forgot_success" style="display: none;">
+				Success!
+			</div>
+			
+			<div class="form-group field-login">
+				<label for="login" class="control-label">Email</label>
+				<input type="text" name="login" value="" id="login" class="form-control"  />
+			</div>
+			<a class="btn btn-default forgot_button">Send email</a>
+		</form>
 	</div>
-	<form action="{% url 'register' %}" method="post" class="col-md-12 form-horizontal login_form">
-		{% csrf_token %}
-		<div class="form-group field-login">
-			<label for="login" class="control-label">Email</label>
-			<input type="text" name="login" value="" id="login" class="form-control"  />
-		</div>
-		<div class="form-group field-password">
-			<label for="password" class="control-label">Password</label>
-			<input type="password" name="password" id="password" class="form-control"/>
-		</div>	
-	</form>
-	<form method="post" class="col-md-12 form-horizontal forgot_form" style="display: none;">
-		{% csrf_token %}
-		Forgot your password? Write your email here and we will send you a new password.
-		
-		<div class="alert alert-danger forgot_errorlist_box" style="display: none;">
-				<ul class="forgot_errorlist">
-				</ul>
-		</div>
-		
-		<div class="alert alert-success forgot_success" style="display: none;">
-			Success!
-		</div>
-		
-		<div class="form-group field-login">
-			<label for="login" class="control-label">Email</label>
-			<input type="text" name="login" value="" id="login" class="form-control"  />
-		</div>
-		<a class="btn btn-default forgot_button">Send email</a>
-	</form>
-	
 	<div class="clearfix"></div>
 	<script type="text/javascript">
 		$(function(){
-			btn = $("#modal").find(".btn-primary");
+			btn = $(".modal-footer").find(".btn-primary");
 			btn.unbind();
 			btn.click(function() {
 				form = $(this).parent().parent().find("form");
+				
 				response = $.post("{% url 'login_post' %}", $(".login_form").serialize(), function(data)
 				{
 					errorbox = form.parent().find(".login_errorlist_box").hide();
@@ -55,7 +58,12 @@
 					
 					if(data.errors.length == 0)
 					{
-						document.location = "{% url 'index' %}";
+						if(data.redirectto)
+						{
+							document.location = data.redirectto;
+						} else {
+							document.location = "{% url 'index' %}";
+						}
 					}
 					
 				}, 'json');
