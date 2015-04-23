@@ -41,13 +41,13 @@ First command adds the user, the second command lets you take control of it.
 ###3. Download the sources..
 
 ```
-git clone -r https://github.com/magnusjjj/gfesys.git
+git clone --recursive https://github.com/magnusjjj/gfesys.git
 cd gfesys
 ```
 
 The first command downloads the sources. The second jumps into the directory created.
 
-IMPORTANT: Notice the -r in the command! Its very important, and without it you won't download the whole of the system and will get all kinds of strange errors.
+IMPORTANT: Notice the --recursive in the command! Its very important, and without it you won't download the whole of the system and will get all kinds of strange errors.
 
 ###4. Setup the database:
 
