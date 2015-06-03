@@ -19,7 +19,7 @@ class Page(models.Model):
 		return self.name
 	
 	def get_absolute_url(self):
-		return reverse('page.views.page', args=[str(self.id)])
+		return reverse('page:page', args=[str(self.id)])
 	
 	name = models.CharField(max_length=200)
 	content = models.TextField()
@@ -29,3 +29,7 @@ class Page(models.Model):
 	parent_object_id = models.PositiveIntegerField(blank=True, null=True)
 	
 	parent = GenericForeignKey('parent_content_type', 'parent_object_id')
+
+class PageFile(models.Model):
+	page = models.ForeignKey(Page)
+	file = models.FileField()

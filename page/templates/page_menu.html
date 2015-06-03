@@ -1,6 +1,6 @@
  {% for page in pages %}
-	<li><a href="{% url "page" page.id %}"> {{page.name}}</a></li>
+	<li><a href="{% url "page:page" page.id %}"> {{page.name}}</a></li>
  {% endfor %}
  {% if user.is_administrator %}
-	<li><a href="{% url "new_page" %}"><span class="glyphicon glyphicon-plus"></span> New Page</a></li>
+	<li><a href="{% url "page:new_page" %}"><span class="glyphicon glyphicon-plus"></span> New Page</a></li>
  {% endif %}

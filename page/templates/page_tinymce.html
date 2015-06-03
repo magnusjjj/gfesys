@@ -2,11 +2,19 @@
 <script type="text/javascript" src="{% static 'servers/tinymce/js/tinymce/jquery.tinymce.min.js' %}"></script>
 <script type="text/javascript">
 $(function(){
+	// TODO: Load the css location in a more reliable way
 	$("#{{name}}").tinymce({
 			script_url : '{% static 'servers/tinymce/js/tinymce/tinymce.min.js' %}',
 			theme : "modern",
-			plugins: "autoresize"
+			plugins: "autoresize paste link table codemirror image",
+			content_css: "{% static 'servers/css/bootstrap.min.css' %}, {% static 'page/tinymcefixes.css' %}",
+			convert_urls: false,
+			codemirror: {
+				path: "{% static 'servers/tinymce/js/tinymce/plugins/codemirror/codemirror-4.8' %}",
+				indentOnInit: true,
+			},
 	});
+	
 });
 </script>
 <textarea name="{{name}}" id="{{name}}" class="form-control tinymce">{{value}}</textarea>
