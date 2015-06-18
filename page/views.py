@@ -11,8 +11,8 @@ from django.http import JsonResponse
 
 
 # The view that renders a text page. Its a view that views a page ;D
-def page(request, page_id):
-	return render(request, "page.html", {"page": Page.objects.get(pk=page_id)})
+def page(request, slug):
+	return render(request, "page.html", {"page": Page.objects.get(slug=slug)})
 
 # The view that, uhm, deletes a page
 def page_delete(request, page_id):
