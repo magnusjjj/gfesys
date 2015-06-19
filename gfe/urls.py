@@ -11,6 +11,6 @@ urlpatterns = patterns('',
 	url(r'^forum', include('spirit.urls')),
     url(r'^servers/', include('server.urls', namespace='server')),
     url(r'^members/', include('member.urls', app_name="member")),
-	url(r'^pages/', include('page.urls', app_name="page")),
+	url(r'^pages/', include('page.urls', app_name="page", namespace='page')),
     url(r'^admin/', include(admin.site.urls)),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

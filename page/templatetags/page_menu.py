@@ -19,9 +19,9 @@ class page_menuNode(template.Node):
 		# Get the template to render
 		t = template.loader.get_template('page_menu.html')
 		# Get a page list
-		pages = Page.objects.filter(parent_content_type=None, parent_object_id=None, type="_generic_page")
+		pages = Page.objects.filter(parent_content_type=None, parent_object_id=None, type="")
 		# Render it!
-		return t.render(Context({"pages": pages}))
+		return t.render(Context({"pages": pages, "user": context["user"]}))
 
 # The code below registers the templatetag to django.
 def do_page_menu(parser, token):

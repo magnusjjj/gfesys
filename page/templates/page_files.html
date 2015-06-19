@@ -1,0 +1,16 @@
+{% load staticfiles %}
+<input type="file" name="fileupload"/>
+
+<script type="text/javascript">
+	$(function(){
+		$(".page_filedelete").click(function(){
+			$.get($(this).data("deleteurl"), "", function(data){
+				$(".page_file"+data.id).remove();
+			});
+		});
+	});
+</script>
+
+{% for file in files %}
+	<div class="page_file page_file{{file.pk}}">{{ file.file.url }} <a href="#" class="page_filedelete" data-deleteurl="{% url "page:delete_pagefile" file.pk %}">Delete</a></div>
+{% endfor %}
