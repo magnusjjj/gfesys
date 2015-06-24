@@ -14,9 +14,9 @@ from django.conf.urls import patterns, url
 from page import views
 
 urlpatterns = patterns('',
-	url(r'^p/(?P<slug>[a-zA-Z\-]+)/$', views.page, name='page'),
-	url(r'^edit/(?P<page_id>\d+)/$', views.edit_page, name='edit_page'),
-	url(r'^delete/(?P<page_id>\d+)/$', views.page_delete, name='page_delete'),
-	url(r'^delete_pagefile/(?P<pagefile_id>\d+)/$', views.delete_pagefile, name='delete_pagefile'),
-	url(r'^new/$', views.new_page, name='new_page'),
+	url(r'^(?P<slug>[a-zA-Z\-]+)/$', views.page, name='page'),
+	url(r'^pages/edit/(?P<page_id>\d+)/$', views.edit_page, name='edit_page'),
+	url(r'^pages/delete/(?P<page_id>\d+)/$', views.page_delete, name='page_delete'),
+	url(r'^pages/delete_pagefile/(?P<pagefile_id>\d+)/$', views.delete_pagefile, name='delete_pagefile'),
+	url(r'^pages/new/$', views.new_page, name='new_page'),
 )

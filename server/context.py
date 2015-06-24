@@ -20,8 +20,10 @@ def context(request):
 	cache.clear()
 	context = {}
 	
+	res = resolve(request.path)
+	
 	# Check which menu item to show as selected
-	app_name = resolve(request.path).app_name
+	app_name = res.app_name
 	
 	if app_name == "server":
 		context["section"] = "servers"
@@ -29,7 +31,9 @@ def context(request):
 		context["section"] = "members"
 	if app_name == "spirit":
 		context["section"] = "forums"
-	
+	if app_name == "page":
+		context["section"] = "page"
+		
 	context["app_name"] = app_name
 	
 	return context
