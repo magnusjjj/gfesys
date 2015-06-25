@@ -142,15 +142,15 @@ def register_post(request):
 					pass
 			else:
 				errors.append("Your Swedish social security number is specified in the wrong format. The correct format is YYMMDD-XXXX")
-		# Also check that its unique:
-		doesnotexist = False
-		try:
-			Member.objects.get(socialsecuritynumber=request.POST["socialsecuritynumber"])
-		except Member.DoesNotExist:
-			doesnotexist = True
-			
-		if doesnotexist == False:
-			errors.append("This SSID is already taken. Contact support.")
+			# Also check that its unique:
+			doesnotexist = False
+			try:
+				Member.objects.get(socialsecuritynumber=request.POST["socialsecuritynumber"])
+			except Member.DoesNotExist:
+				doesnotexist = True
+				
+			if doesnotexist == False:
+				errors.append("This SSID is already taken. Contact support.")
 	
 	# Now, we need to make a member
 	
