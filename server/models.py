@@ -48,8 +48,24 @@ class Volunteer(models.Model):
 	
 	sec_edit = models.BooleanField(default=False)
 	sec_accept = models.BooleanField(default=False)
+	sec_moderator = models.BooleanField(default=False)
 	
 	createdon = models.DateTimeField('Created on', auto_now_add=True)
+	
+	@staticmethod
+	def patch_user_moderator(user,server):
+		is_server_moderator = False
+		try:
+			# And return if we find admin rights on the current user
+			volun = Volunteer.objects.all().filter(member=user,server=server,status="OK")[0]
+			if volun.sec_moderator:
+				is_server_moderator = True
+		except:
+			pass	
+		
+		if is_server_moderator:
+			user.is_moderator = True
+			return user
 	
 	class Meta:
 		ordering = ["-sec_accept", "-sec_edit", "role"]

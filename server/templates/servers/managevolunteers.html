@@ -18,7 +18,7 @@
 								<th>Date</th>
 								<th>Name of applicant</th>
 								<th>Answers to questions</th>
-								<th colspan="2">Access rights</th>
+								<th colspan="3">Access rights</th>
 								<th>Role</th>
 								<th>Status</th>
 							</tr>
@@ -40,6 +40,13 @@
 										<div class="checkbox">
 											<label>
 												<input type="checkbox" class="sec_edit" data-applicantid="{{a.id}}" {% if a.sec_edit %} checked="checked" {% endif %} name="sec_edit"/> Can manage volunteers
+											</label>
+										</div> 
+									</td>
+									<td>
+										<div class="checkbox">
+											<label>
+												<input type="checkbox" class="sec_moderator" data-applicantid="{{a.id}}" {% if a.sec_moderator %} checked="checked" {% endif %} name="sec_moderator"/> Moderator
 											</label>
 										</div> 
 									</td>
@@ -144,7 +151,22 @@
 					}).blur(function(e){
 						$(this).tooltip("destroy");
 					});
-				
+	
+					$('.sec_moderator').change(function(e){
+						outside = $(this);
+						
+						$(this).attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
+						$.ajax({
+							url: "{% url 'server:servereditapplicant' %}",
+							type: "POST",
+							headers: {"X-CSRFToken": csrftoken},
+							data: {"applicant_id": $(this).data("applicantid"), "sec_moderator": $(this).is(':checked')}
+						}).done(function(data){
+							outside.attr('title', 'Saved!').tooltip('fixTitle').tooltip('show');
+						}, 'json');
+					}).blur(function(e){
+						$(this).tooltip("destroy");
+					});	
 				
 					$(".dropdown-menu a").click(function(){
 						outside = $(this).parent().parent().parent();
