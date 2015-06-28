@@ -1,5 +1,5 @@
- {% for page in pages %}
-	<li><a href="{{ page.get_absolute_url }}"> {{page.name}}</a></li>
+ {% for thepage in pages %}
+	<li{% if page.pk == thepage.pk %} class="active" {% endif %}> <a href="{{ thepage.get_absolute_url }}"> {{thepage.name}}</a></li>
  {% endfor %}
  {% if user.is_administrator %}
 	<li><a href="{% url "page:new_page" %}"><span class="glyphicon glyphicon-plus"></span> New Page</a></li>

@@ -6,7 +6,7 @@
 
 from django.shortcuts import render,redirect
 from page.models import Page, PageFile
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponse
 from django.http import JsonResponse
 
 
@@ -54,6 +54,7 @@ def edit_page(request, page_id):
 			file.page = page
 			file.file = request.FILES['fileupload']
 			file.save()
+		
 	# Render the editor
 	return render(request, "edit.html", {"page": page, "parents": parents, "files": files})
 	

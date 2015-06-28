@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from page import views
 
 urlpatterns = patterns('',
     # Examples:
@@ -11,6 +12,6 @@ urlpatterns = patterns('',
 	url(r'^forum', include('spirit.urls')),
     url(r'^servers/', include('server.urls', namespace='server')),
     url(r'^members/', include('member.urls', app_name="member")),
-	url(r'^pages/', include('page.urls', app_name="page", namespace='page')),
     url(r'^admin/', include(admin.site.urls)),
+	url(r'', include('page.urls', app_name="page", namespace='page')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

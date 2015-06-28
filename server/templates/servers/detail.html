@@ -16,51 +16,48 @@
 		</div>
 	</div>
 	<div class="row">
-		<div role="tabpanel">
+		<div class="col-md-6">
+			<div role="tabpanel">
 
-		  <!-- Nav tabs -->
-		  <ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#howto" aria-controls="howto" role="tab" data-toggle="tab">Howto</a></li>
-			<li role="presentation"><a href="#rules" aria-controls="rules" role="tab" data-toggle="tab">Rules</a></li>
-			<li role="presentation"><a href="#volunteers" aria-controls="volunteers" role="tab" data-toggle="tab">Volunteers</a></li>
-		  </ul>
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#howto" aria-controls="howto" role="tab" data-toggle="tab">Howto</a></li>
+				<li role="presentation"><a href="#rules" aria-controls="rules" role="tab" data-toggle="tab">Rules</a></li>
+				<li role="presentation"><a href="#volunteers" aria-controls="volunteers" role="tab" data-toggle="tab">Volunteers</a></li>
+			  </ul>
 
-		  <!-- Tab panes -->
-		  <div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="howto">{{server.howto|safe}}</div>
-			<div role="tabpanel" class="tab-pane" id="rules">{{server.rules|safe}}</div>
-			<div role="tabpanel" class="tab-pane" id="volunteers">
-				<table class="table">
-					<thead>
-						<th>Role</th><th>Name</th>
-					</thead>
-					<tbody>
-						{% for volunteer in volunteers %}
-						<tr>
-							<td>{{volunteer.role}}</td><td>{{volunteer.member.firstname}} {{volunteer.member.surname}}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="howto">{{server.howto|safe}}</div>
+				<div role="tabpanel" class="tab-pane" id="rules">{{server.rules|safe}}</div>
+				<div role="tabpanel" class="tab-pane" id="volunteers">
+					<table class="table">
+						<thead>
+							<th>Role</th><th>Name</th>
+						</thead>
+						<tbody>
+							{% for volunteer in volunteers %}
+							<tr>
+								<td>{{volunteer.role}}</td><td>{{volunteer.member.firstname}} {{volunteer.member.surname}}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				
+				</div>
+			  </div>
+
 			</div>
-		  </div>
-
 		</div>
-	</div>
-	
-	<div class="row">
-		&nbsp;
-	</div>
-	
-	<div class="row">
-		<div class="tabpanel">
-			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active"><a href="#forum" aria-controls="forum" role="tab" data-toggle="tab">Forum</a></li>
-			</ul>
-			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active" id="forum">
-					{% forum_other server %}
+		<div class="col-md-6">
+			<div class="tabpanel">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#forum" aria-controls="forum" role="tab" data-toggle="tab">Forum</a></li>
+				</ul>
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="forum">
+						{% forum_other server %}
+					</div>
 				</div>
 			</div>
 		</div>

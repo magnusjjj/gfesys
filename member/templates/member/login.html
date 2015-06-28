@@ -43,7 +43,8 @@
 		$(function(){
 			btn = $(".modal-footer").find(".btn-primary");
 			btn.unbind();
-			btn.click(function() {
+			
+			loginf = function() {
 				form = $(this).parent().parent().find("form");
 				
 				response = $.post("{% url 'login_post' %}", $(".login_form").serialize(), function(data)
@@ -67,8 +68,14 @@
 					}
 					
 				}, 'json');
+			};
+			btn.click(loginf);
+			$(".login_form input[type=password]").unbind().keypress(function(e) {
+				if(e.which == 13) {
+					loginf();
+				}
 			});
-
+			
 			$(".forgot").click(function(){
 				$(".login_form").hide();
 				$(".forgot_form").show();

@@ -121,6 +121,12 @@ class ServerEditApplicant(DefaultView):
 				else:
 					applicant.sec_edit = False
 			
+			if "sec_moderator" in request.POST:
+				if request.POST["sec_moderator"] == "true":
+					applicant.sec_moderator = True
+				else:
+					applicant.sec_moderator = False
+			
 			if "status" in request.POST:
 				applicant.status = request.POST["status"]
 				for choice in applicant.STATUSCODES:

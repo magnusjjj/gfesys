@@ -3,6 +3,7 @@
   <head>
 	{% load spirit_tags i18n %}
 	{% load page_menu %}
+	{% load pipeline %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,50 +14,11 @@
 	{% load staticfiles %}
 	
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'servers/css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="{% static 'servers/css/dashboard.css' %}" rel="stylesheet">
-	
-	<link rel="stylesheet" href="{{ STATIC_URL }}spirit/stylesheets/vendors/font-awesome.min.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}spirit/stylesheets/vendors/github.min.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}spirit/stylesheets/vendors/jquery.atwho.min.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}spirit/stylesheets/styles.css">
-	
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="{% static 'js/html5shiv.min.js' %}"></script>
-      <script src="{% static 'js/respond.min.js' %}"></script>
-    <![endif]-->
+	{% stylesheet "main" %}
+	{% javascript "main" %}
+	<!-- staaaph-->
 	
 	{% block help %}{% endblock %}
-    <script src="{% static 'servers/js/jquery.min.js' %}"></script>
-    <script src="{% static 'servers/js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'servers/js/jquery.cookie.js' %}"></script>
-	
-    <script src="{{ STATIC_URL }}spirit/scripts/vendors/highlightjs/highlight.min.js"></script>
-    <script src="{{ STATIC_URL }}spirit/scripts/util.js"></script>
-    <script src="{{ STATIC_URL }}spirit/scripts/tab.js"></script>
-    <script src="{{ STATIC_URL }}spirit/scripts/postify.js"></script>
-    <script src="{{ STATIC_URL }}spirit/scripts/social_share.js"></script>
-	{% if user.is_authenticated %}
-        <script src="{{ STATIC_URL }}spirit/scripts/vendors/atwho/jquery.caret.min.js"></script>
-        <script src="{{ STATIC_URL }}spirit/scripts/vendors/atwho/jquery.atwho.min.js"></script>
-        <script src="{{ STATIC_URL }}spirit/scripts/vendors/marked/marked.min.js"></script>
-        <script src="{{ STATIC_URL }}spirit/scripts/vendors/waypoints/waypoints.min.js"></script>
-        <script src="{{ STATIC_URL }}spirit/scripts/store.js"></script>
-        <script src="{{ STATIC_URL }}spirit/scripts/editor_image_upload.js"></script>
-	    <script src="{{ STATIC_URL }}spirit/scripts/editor.js"></script>
-        <script src="{{ STATIC_URL }}spirit/scripts/emoji_list.js"></script>
-        <script src="{{ STATIC_URL }}spirit/scripts/like.js"></script>
-        <script src="{{ STATIC_URL }}spirit/scripts/bookmark.js"></script>
-        <script src="{{ STATIC_URL }}spirit/scripts/notification.js"></script>
-    {% endif %}
-	
-	{% if user.is_moderator %}
-        <script src="{{ STATIC_URL }}spirit/scripts/move_comments.js"></script>
-    {% endif %}
 	
 	<script type="text/javascript">
 		$(function() {
@@ -84,10 +46,6 @@
 	{% block extrahead %}{% endblock %}
 	{% block extra_script %}{% endblock %}
 	{% block head-extra %}{% endblock %}
-	<!--[if (lt IE 9) & (!IEMobile)]>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
-    <![endif]-->
 	<style type="text/css">
 		.suchaspirit .nav>li>a {
 			display: inline;
@@ -190,13 +148,6 @@
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 	
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-
-    <script src="{% static 'servers/js/docs.min.js' %}"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="{% static 'servers/js/ie10-viewport-bug-workaround.js' %}"></script>
 	<script type="text/javascript">
 
 	
