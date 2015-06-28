@@ -14,10 +14,6 @@ from django.core.cache import cache
 # or which menu item is selected
 
 def context(request):
-	# Disable cache, the hard, stupid stupid way.
-	# Spirit did some really stupid shit here.
-	# Remove and test everything when possible.
-	cache.clear()
 	context = {}
 	
 	res = resolve(request.path)
