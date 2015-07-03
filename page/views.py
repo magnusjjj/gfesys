@@ -32,7 +32,7 @@ def handle_save(request, page_id=None, parent_override=None, stripsettings=None)
 	page.content = request.POST["content"]
 	
 	if stripsettings is not None:
-		page.content = bleach.clean(request.POST["howto"], stripsettings.ALLOWED_TAGS, stripsettings.ALLOWED_ATTRIBUTES, stripsettings.ALLOWED_STYLES)
+		page.content = bleach.clean(request.POST["content"], stripsettings.ALLOWED_TAGS, stripsettings.ALLOWED_ATTRIBUTES, stripsettings.ALLOWED_STYLES)
 	
 	page.parent = parent
 	

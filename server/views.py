@@ -60,7 +60,7 @@ class ViewIndex(DefaultView):
 
 # This view is for viewing a specific server
 class ViewDetail(DefaultView):	
-	def get(self, request, slug):
+	def get(self, request, slug, slug_page=None):
 		super(ViewDetail, self).get(request)
 		# Get the server in question
 		self.context["server"] = Server.objects.get(slug=slug)
@@ -72,6 +72,14 @@ class ViewDetail(DefaultView):
 		# Get a list of text pages for this server
 		self.context["pages"] = Page.objects.filter(parent_object_id=self.context["server"].pk,
 									parent_content_type=ContentType.objects.get_for_model(self.context["server"]))
+		# What page is active?
+		if slug_page is None:
+			try:
+				self.context["page_active"] = self.context["pages"][0].slug
+			except:
+				self.context["page_active"] = ""
+		else:
+			self.context["page_active"] = slug_page
 		
 		# Get a list of volunteers for the server
 		self.context["volunteers"] = Volunteer.objects.all().filter(server=self.context["server"],status="OK")
