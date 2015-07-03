@@ -16,7 +16,7 @@ from server import views
 
 urlpatterns = patterns('',
     url(r'^$', views.ViewIndex.as_view(), name='index'),
-	url(r'^(?P<server_id>\d+)/$', views.ViewDetail.as_view(), name='detail'),
+	url(r'^(?P<slug>[a-zA-Z\-]+)/$', views.ViewDetail.as_view(), name='detail'),
 	url(r'^volunteer/(?P<server_id>\d+)/$', views.ViewVolunteerFor.as_view(), name='volunteer'),
 	url(r'^editserver/(?P<server_id>\d+)/$', views.EditServer.as_view(), name='editserver'),
 	url(r'^newserver$', views.EditServer.as_view(), name='newserver'),
@@ -25,4 +25,7 @@ urlpatterns = patterns('',
 	url(r'^serverviewanswers$', views.ServerViewAnswers.as_view(), name='serverviewanswers'),
 	url(r'^uploadserverimage/(?P<server_id>\d+)/$', views.UploadServerImage.as_view(), name='uploadserverimage'),
 	url(r'^updateserverinfo/(?P<server_id>\d+)/$', views.UpdateServerInfo.as_view(), name='updateserverinfo'),
+	url(r'^addpage/(?P<server_id>\d+)/$', views.AddPage.as_view(), name='addpage'),
+	url(r'^deletepage/(?P<page_id>\d+)/$', views.DeletePage.as_view(), name='deletepage'),
+	url(r'^editpage/(?P<page_id>\d+)/$', views.EditPage.as_view(), name='editpage')
 )

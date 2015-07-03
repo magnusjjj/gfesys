@@ -1,18 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block content %}
-	<script type="text/javascript" src="{% static 'servers/tinymce/js/tinymce/jquery.tinymce.min.js' %}"></script>
-	<script type="text/javascript">
-	$(function(){
-		$("textarea.tinymce").each(function(){
-			$(this).tinymce({
-				script_url : '{% static 'servers/tinymce/js/tinymce/tinymce.min.js' %}',
-				theme : "modern",
-			});
-		});
-	});
-	</script>
-
 	<div class="row">
 		<form  action="{% url "server:updateserverinfo" server_id %}" method="post" enctype="multipart/form-data">
 			{% csrf_token %}
@@ -24,14 +12,6 @@
 			<div class="form-group field-description">
 				<label for="description" class="control-label">Description. A few sentences about your server. Can be cut off in uncomfortable places.*</label>
 				<textarea name="description" id="description" class="form-control">{{server.description}}</textarea>
-			</div>
-			<div class="form-group field-howto">
-				<label for="howto" class="control-label">Howto (instructions for joining the server)*</label>
-				<textarea name="howto" id="howto" class="tinymce">{{server.howto|safe}}</textarea>
-			</div>
-			<div class="form-group field-rules">
-				<label for="rules" class="control-label">Rules*</label>
-				<textarea name="rules" id="rules" class="tinymce">{{server.rules|safe}}</textarea>
 			</div>
 			<div class="form-group field-questions">
 				<label for="questions" class="control-label">Questions for volunteers*</label>

@@ -43,7 +43,7 @@
 						<div class="caption">
 							<h3 style="min-height: 3em">{{ server.name}}</h3>
 							<p style="min-height: 5.5em">{{server.description}}</p>
-							<p><a class="btn btn-primary form-control"  href="{% url 'server:detail' server.id %}">Go to this server</a></p>
+							<p><a class="btn btn-primary form-control"  href="{% url 'server:detail' server.slug %}">Go to this server</a></p>
 						</div>
 					</div>
 				</div>

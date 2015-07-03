@@ -5,6 +5,7 @@
 	<h1 class="page-header">{{ server.name}}
 		{% if volunteer and volunteer.sec_accept or user.is_administrator %}<a href="{% url "server:editserver" server.id %}" class="btn btn-default">Edit</a>{% endif %}
 		{% if volunteer and volunteer.sec_accept or user.is_administrator %}<a href="{% url "server:managevolunteers" server.id %}" class="btn btn-default">Manage Volunteers</a>{% endif %}
+		
 		{% if not volunteer %}<a href="{% url "server:volunteer" server.id%}" class="btn btn-default">Volunteer for this Server</a>{% endif %}
 	</h1>
 	<div class="row placeholders">
@@ -21,15 +22,24 @@
 
 			  <!-- Nav tabs -->
 			  <ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active"><a href="#howto" aria-controls="howto" role="tab" data-toggle="tab">Howto</a></li>
-				<li role="presentation"><a href="#rules" aria-controls="rules" role="tab" data-toggle="tab">Rules</a></li>
+				<!--<li role="presentation" class="active"><a href="#howto" aria-controls="howto" role="tab" data-toggle="tab">Howto</a></li>
+				<li role="presentation"><a href="#rules" aria-controls="rules" role="tab" data-toggle="tab">Rules</a></li>-->
+				{% for page in pages %}
+					<li role="presentation"><a href="#{{page.slug}}" aria-controls="{{page.slug}}" role="tab" data-toggle="tab">{{ page.name }}</a></li>
+				{% endfor %}
 				<li role="presentation"><a href="#volunteers" aria-controls="volunteers" role="tab" data-toggle="tab">Volunteers</a></li>
+				{% if volunteer and volunteer.sec_edit or user.is_administrator %}<li role="presentation"><a href="{% url "server:addpage" server.id %}"><span class="glyphicon glyphicon-plus"></span></a></li>{% endif %}
 			  </ul>
-
+			
 			  <!-- Tab panes -->
 			  <div class="tab-content">
-				<div role="tabpanel" class="tab-pane active" id="howto">{{server.howto|safe}}</div>
-				<div role="tabpanel" class="tab-pane" id="rules">{{server.rules|safe}}</div>
+				{% for page in pages %}
+				<div role="tabpanel" class="tab-pane" id="{{page.slug}}">
+					{% if volunteer and volunteer.sec_edit or user.is_administrator %}<a class="btn btn-primary" href="{% url "server:editpage" page.pk %}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>{% endif %}
+					{% if volunteer and volunteer.sec_edit or user.is_administrator %}<a class="btn btn-danger" style="float: right;" href="{% url "server:deletepage" page.pk %}"><span class="glyphicon glyphicon-remove"></span> Delete</a>{% endif %}
+					{{page.content|safe}}
+				</div>
+				{% endfor %}
 				<div role="tabpanel" class="tab-pane" id="volunteers">
 					<table class="table">
 						<thead>
