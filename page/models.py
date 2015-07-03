@@ -25,7 +25,7 @@ class Page(models.Model):
 	name = models.CharField(max_length=200)
 	content = models.TextField()
 	type= models.CharField(max_length=200, default="")
-	slug=AutoSlugField(max_length=40, populate_from='name')
+	slug=AutoSlugField(max_length=40, populate_from='name', unique_with=('parent_object_id','parent_content_type'))
 	
 	parent_content_type = models.ForeignKey(ContentType, blank=True, null=True)
 	parent_object_id = models.PositiveIntegerField(blank=True, null=True)
