@@ -11,19 +11,18 @@ from models import Server, Volunteer
 # This file keeps some helper functions for the views in this app.
 
 class DefaultView(View):
-	context = {}
 	def get(self, request):
 		return
 	
 	# Gets the currently logged in user's access rights for the current user
-	def setrights_server(self, request, server_id):
+	def setrights_server(self, request, context, server_id):
 		# If we are logged in
-		if 'member' in self.context:
-			m = self.context["member"]
+		if request.user.is_authenticated():
+			m = request.user
 			s = Server.objects.get(pk=server_id)
 			try:
 				# And return if we find admin rights on the current user
 				volun = Volunteer.objects.all().filter(member=m,server=s,status="OK")[0]
-				self.context["volunteer"] = volun
+				context["volunteer"] = volun
 			except:
 				pass
