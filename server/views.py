@@ -35,6 +35,14 @@ class StripSettings:
 		'strong',
 		'ul',
 		'p',
+		'span',
+		'div',
+		'img',
+		'h1',
+		'h2',
+		'h3',
+		'h4',
+		'h5'
 	]
 
 	# Like the above, but 'safe' attributes
@@ -42,6 +50,8 @@ class StripSettings:
 		'a': ['href', 'title'],
 		'abbr': ['title'],
 		'acronym': ['title'],
+		'img': ['src'],
+		'*': ['class']
 	}
 	
 	# Like the above, but safe styles. Mmmmmyup.
@@ -53,72 +63,77 @@ class StripSettings:
 class ViewIndex(DefaultView):
 	def get(self, request):
 		super(ViewIndex, self).get(request)
+		context = {}
 		# Get all the servers, and order by id.
-		self.context["servers"] = Server.objects.order_by('id')
+		context["servers"] = Server.objects.order_by('id')
 		# Render that thing right up
-		return render(request,'servers/index.html', self.context)
+		return render(request,'servers/index.html', context)
 
 # This view is for viewing a specific server
 class ViewDetail(DefaultView):	
 	def get(self, request, slug, slug_page=None):
 		super(ViewDetail, self).get(request)
+		context = {}
 		# Get the server in question
-		self.context["server"] = Server.objects.get(slug=slug)
+		context["server"] = Server.objects.get(slug=slug)
 		
 		# Find out if we have editing rights to said server
-		self.setrights_server(request, self.context["server"].pk)
-		self.context["request"] = request
+		self.setrights_server(request, context, context["server"].pk)
+		context["request"] = request
 		
 		# Get a list of text pages for this server
-		self.context["pages"] = Page.objects.filter(parent_object_id=self.context["server"].pk,
-									parent_content_type=ContentType.objects.get_for_model(self.context["server"]))
+		context["pages"] = Page.objects.filter(parent_object_id=context["server"].pk,
+									parent_content_type=ContentType.objects.get_for_model(context["server"]))
 		# What page is active?
 		if slug_page is None:
 			try:
-				self.context["page_active"] = self.context["pages"][0].slug
+				context["page_active"] = context["pages"][0].slug
 			except:
-				self.context["page_active"] = ""
+				context["page_active"] = ""
 		else:
-			self.context["page_active"] = slug_page
+			context["page_active"] = slug_page
 		
 		# Get a list of volunteers for the server
-		self.context["volunteers"] = Volunteer.objects.all().filter(server=self.context["server"],status="OK")
+		context["volunteers"] = Volunteer.objects.all().filter(server=context["server"],status="OK")
 		# And, BAM, render that thing.
-		return render(request,'servers/detail.html', self.context)
+		return render(request,'servers/detail.html', context)
 
 # This view is for an admin, allowing them to manage the list of volunteers
 class ViewManageVolunteers(DefaultView):
 	def get(self, request, server_id):
 		super(ViewManageVolunteers, self).get(request)
+		context = {}
 		# Get the server in question
-		self.context["server"] = Server.objects.get(pk=server_id)
+		context["server"] = Server.objects.get(pk=server_id)
 		# Find out if we have editing rights to said server
-		self.setrights_server(request, server_id)
+		self.setrights_server(request, context, server_id)
 		# Get the list of volunteers...
-		self.context["applicants"] = Volunteer.objects.filter(server=self.context["server"])
+		context["applicants"] = Volunteer.objects.filter(server=context["server"])
 		# Now render it. So hard.
-		return render(request,'servers/managevolunteers.html', self.context)
+		return render(request,'servers/managevolunteers.html', context)
 
 # This view is used when a user wants to send in an application to become a volunteer
 class ViewVolunteerFor(DefaultView):
 	def get(self, request, server_id):
 		super(ViewVolunteerFor, self).get(request)
+		context = {}
 		# Get the server in question
-		self.context["server"] = Server.objects.get(pk=server_id)
+		context["server"] = Server.objects.get(pk=server_id)
 		# Render it
-		return render(request,'servers/volunteer.html', self.context)
+		return render(request,'servers/volunteer.html', context)
 	
 	def post(self, request, server_id):
 		super(ViewVolunteerFor, self).get(request)
+		context = {}
 		# Get the server in question
-		self.context["server"] = Server.objects.get(pk=server_id)
+		context["server"] = Server.objects.get(pk=server_id)
 		# Display a shiny message
-		self.context["hasposted"] = True
+		context["hasposted"] = True
 		
 		# Create and save a volunteer
 		vol = Volunteer.objects.create(
 			member = request.user,
-			server = self.context["server"],
+			server = context["server"],
 			answer = request.POST["answer"],
 			role = "",
 		)
@@ -126,18 +141,19 @@ class ViewVolunteerFor(DefaultView):
 		vol.save()
 		
 		# Render. Wooooo.
-		return render(request,'servers/volunteer.html', self.context)
+		return render(request,'servers/volunteer.html', context)
 
 
 # This is a view to save changes to a volunteer, for the server admins to use. AJAX, responds with a JSON string.
 class ServerEditApplicant(DefaultView):
 	def post(self, request):
 		super(ServerEditApplicant, self).get(request)
+		context = {}
 		# Fetch the volunteer
 		applicant = Volunteer.objects.get(pk=int(request.POST["applicant_id"]))
 		
 		# Fetch our access rights
-		self.setrights_server(request, applicant.server_id)
+		self.setrights_server(request, context, applicant.server_id)
 		
 		# A simple list to hold error messages in
 		errors = []
@@ -147,7 +163,7 @@ class ServerEditApplicant(DefaultView):
 		
 		# Sanity check that we have editing rights
 		if not request.user.is_administrator:
-			if self.context["volunteer"].sec_accept:
+			if context["volunteer"].sec_accept:
 				errors.push("You don't have access to this command")
 		else:
 			# Edit the values requested:
@@ -192,14 +208,14 @@ class ServerViewAnswers(DefaultView):
 		applicant = Volunteer.objects.get(pk=int(request.POST["applicant_id"]))
 		
 		# Fetch our access rights
-		self.setrights_server(request, applicant.server_id)
+		self.setrights_server(request, context, applicant.server_id)
 		
 		# A simple list for the errors, and a dictionary for the return values
 		errors = []
 		vals = {}
 		
 		# Sanity check that we have edit rights
-		if not self.context["volunteer"].sec_accept:
+		if not context["volunteer"].sec_accept:
 			errors.push("You don't have access to this command")
 		else:
 			# Just format the response a little bit
@@ -213,103 +229,106 @@ class ServerViewAnswers(DefaultView):
 # Simply the view that *renders* the edit screen
 class EditServer(DefaultView):
 	def get(self, request, server_id=0):
+		context = {}
 		super(EditServer, self).get(request)
 		
 		# Fetch (or create) the server
 		if server_id == 0:
-			self.context["server"] = Server()
+			context["server"] = Server()
 		else:
-			self.context["server"] = Server.objects.get(pk=server_id)
+			context["server"] = Server.objects.get(pk=server_id)
 		
 		# Load the access rights
-		self.setrights_server(request, server_id)
+		self.setrights_server(request, context, server_id)
 		
-		self.context["server_id"] = server_id
+		context["server_id"] = server_id
 		
 		# And render
-		if request.user.is_administrator or self.context["volunteer"].sec_edit:
-			return render(request,'servers/editserver.html', self.context)
+		if request.user.is_administrator or context["volunteer"].sec_edit:
+			return render(request,'servers/editserver.html', context)
 	
 # This is the motherload. The actual view that saves the server info.	
 class UpdateServerInfo(DefaultView):
 	def post(self, request, server_id="0"):
 		super(UpdateServerInfo, self).get(request)
+		context = {}
 		# Fetch (or create) the server
 		if server_id == "0":
-			self.context["server"] = Server()
+			context["server"] = Server()
 		else:
-			self.context["server"] = Server.objects.get(pk=server_id)
+			context["server"] = Server.objects.get(pk=server_id)
 		
 		# Fetch the access rights
-		self.setrights_server(request, server_id)
+		self.setrights_server(request, context, server_id)
 		
-		if request.user.is_administrator or self.context["volunteer"].sec_edit:
+		if request.user.is_administrator or context["volunteer"].sec_edit:
 			# Modify the object
-			self.context["server"].name = request.POST["name"]
-			self.context["server"].description = request.POST["description"]
-			self.context["server"].questions = request.POST["questions"]
+			context["server"].name = request.POST["name"]
+			context["server"].description = request.POST["description"]
+			context["server"].questions = request.POST["questions"]
 			
 			# Todo, handle errors here better: 
 			if 'image' in request.FILES:
-				self.context["server"].image = request.FILES['image']
+				context["server"].image = request.FILES['image']
 			
 			# Save the object
-			self.context["server"].save()
+			context["server"].save()
 			
-			return redirect("server:editserver", server_id=self.context["server"].id)
+			return redirect("server:editserver", server_id=context["server"].id)
 
 # Like the name applies, handles image uploads for servers
 class UploadServerImage(DefaultView):
 	def post(self, request, server_id):
 		super(UploadServerImage, self).get(request)
+		context = {}
 		
 		# Fetch the server
-		self.context["server"] = Server.objects.get(pk=server_id)
+		context["server"] = Server.objects.get(pk=server_id)
 		
 		# Fetch our access rights
-		self.setrights_server(request, server_id)
+		self.setrights_server(request, context, server_id)
 		
 		# Security sanity check that we have edit rights
-		if request.user.is_administrator or self.context["volunteer"].sec_edit:
+		if request.user.is_administrator or context["volunteer"].sec_edit:
 			# Handle the image upload
-			self.context["server"].image = request.FILES['image']
-			self.context["server"].save()
+			context["server"].image = request.FILES['image']
+			context["server"].save()
 			return redirect("editserver", server_id)
 
 class AddPage(DefaultView):
 	def get(self, request, server_id):
 		super(AddPage, self).get(request)
-		
+		context = {}
 		# Fetch the server
-		self.context["server"] = Server.objects.get(pk=server_id)
+		context["server"] = Server.objects.get(pk=server_id)
 		
 		# Empty page, for the view
 		page = Page()
-		self.context["page"] = page
+		context["page"] = page
 		
 		# Fetch our access rights
-		self.setrights_server(request, server_id)
+		self.setrights_server(request, context, server_id)
 		
 		# Security sanity check that we have edit rights
-		if request.user.is_administrator or self.context["volunteer"].sec_edit:
+		if request.user.is_administrator or context["volunteer"].sec_edit:
 			# Some sort of wierd error causes the request to point to the wrong place. What?
-			self.context["request"] = request
-			return render(request,'servers/addpage.html', self.context)
+			context["request"] = request
+			return render(request,'servers/addpage.html', context)
 	
 	def post(self, request, server_id):
 		super(AddPage, self).get(request)
 		server = Server.objects.get(pk=server_id)
-		
+		context = {}
 		# Fetch the server
-		self.context["server"] = Server.objects.get(pk=server_id)
+		context["server"] = Server.objects.get(pk=server_id)
 		
 		# Fetch our access rights
-		self.setrights_server(request, server_id)
+		self.setrights_server(request, context, server_id)
 		
 		# Security sanity check that we have edit rights
-		if request.user.is_administrator or self.context["volunteer"].sec_edit:
+		if request.user.is_administrator or context["volunteer"].sec_edit:
 			# Some sort of wierd error causes the request to point to the wrong place. What?
-			self.context["request"] = request
+			context["request"] = request
 			strip = StripSettings()
 			page = views.handle_save(request, None, server, strip)
 			return redirect(server)
@@ -317,58 +336,58 @@ class AddPage(DefaultView):
 class DeletePage(DefaultView):
 	def get(self, request, page_id):
 		super(DeletePage, self).get(request)
-		
+		context = {}
 		# Fetch Page
 		page = Page.objects.get(pk=page_id)
 		
 		if type(page.parent) is Server:
 			# Fetch the server
-			self.context["server"] = page.parent
+			context["server"] = page.parent
 			
 			# Fetch our access rights
-			self.setrights_server(request, page.parent.pk)
+			self.setrights_server(request, context, page.parent.pk)
 		
 			# Security sanity check that we have edit rights
-			if request.user.is_administrator or self.context["volunteer"].sec_edit:
+			if request.user.is_administrator or context["volunteer"].sec_edit:
 				page.delete()
 				return redirect(page.parent)
 	
 class EditPage(DefaultView):
 	def get(self, request, page_id):
 		super(EditPage, self).get(request)
-		
+		context = {}
 		# Fetch Page
 		page = Page.objects.get(pk=page_id)
-		self.context["page"] = page
+		context["page"] = page
 		
 		if type(page.parent) is Server:
 			# Fetch the server
-			self.context["server"] = page.parent
+			context["server"] = page.parent
 			
 			# Fetch our access rights
-			self.setrights_server(request, page.parent.pk)
+			self.setrights_server(request, context, page.parent.pk)
 			
 			# Security sanity check that we have edit rights
-			if request.user.is_administrator or self.context["volunteer"].sec_edit:
-				return render(request,'servers/addpage.html', self.context)
+			if request.user.is_administrator or context["volunteer"].sec_edit:
+				return render(request,'servers/addpage.html', context)
 	
 	def post(self, request, page_id):
 		super(EditPage, self).get(request)
-		
+		context = {}
 		# Fetch Page
 		page = Page.objects.get(pk=page_id)
-		self.context["page"] = page
+		context["page"] = page
 		
 		if type(page.parent) is Server:
 			# Fetch the server
-			self.context["server"] = page.parent
+			context["server"] = page.parent
 			
 			# Fetch our access rights
-			self.setrights_server(request, page.parent.pk)
+			self.setrights_server(request, context, page.parent.pk)
 			strip = StripSettings()
 			
 			# Security sanity check that we have edit rights
-			if request.user.is_administrator or self.context["volunteer"].sec_edit:
-				page = views.handle_save(request, page_id, self.context["server"], strip)
-				return redirect(self.context["server"])
+			if request.user.is_administrator or context["volunteer"].sec_edit:
+				page = views.handle_save(request, page_id, context["server"], strip)
+				return redirect(context["server"])
 	
