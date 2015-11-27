@@ -235,14 +235,16 @@ class EditServer(DefaultView):
 		# Fetch (or create) the server
 		if server_id == 0:
 			context["server"] = Server()
+			if not (request.user.is_administrator):
+				raise ValueError('You dont have access to this function. Boo!')
 		else:
 			context["server"] = Server.objects.get(pk=server_id)
-		
-		# Load the access rights
-		self.setrights_server(request, context, server_id)
-		
+			# Load the access rights
+			self.setrights_server(request, context, server_id)
+			if not (request.user.is_administrator or context["volunteer"].sec_edit):
+				raise ValueError('You dont have access to this function. Boo!')
 		context["server_id"] = server_id
-		
+
 		# And render
 		if request.user.is_administrator or context["volunteer"].sec_edit:
 			return render(request,'servers/editserver.html', context)
@@ -258,9 +260,11 @@ class UpdateServerInfo(DefaultView):
 		else:
 			context["server"] = Server.objects.get(pk=server_id)
 		
-		# Fetch the access rights
-		self.setrights_server(request, context, server_id)
-		
+		try:
+			# Fetch the access rights
+			self.setrights_server(request, context, server_id)
+		except:
+			pass
 		if request.user.is_administrator or context["volunteer"].sec_edit:
 			# Modify the object
 			context["server"].name = request.POST["name"]
