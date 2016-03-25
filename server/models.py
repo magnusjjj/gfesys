@@ -23,10 +23,14 @@ class Server(models.Model):
 	description = models.TextField()
 	questions = models.TextField()
 	
+	STATUS_LIVE = 1
+	STATUS_TESTING = 2
+	STATUS_DRAFT = 3
+	
 	STATUS_CHOICES = (
-		(1, 'Live'),
-		(2, 'Testing'),
-		(3, 'Draft'),
+		(STATUS_LIVE, 'Live'),
+		(STATUS_TESTING, 'Testing'),
+		(STATUS_DRAFT, 'Draft'),
 	)
 	
 	def get_absolute_url(self):

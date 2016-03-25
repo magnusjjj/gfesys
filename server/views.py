@@ -65,7 +65,7 @@ class ViewIndex(DefaultView):
 		super(ViewIndex, self).get(request)
 		context = {}
 		# Get all the servers, and order by id.
-		context["servers"] = Server.objects.order_by('id')
+		context["servers"] = Server.objects.filter(status__in=[Server.STATYS_LIVE, Server.STATUS_TESTING]).order_by('status','id')
 		# Render that thing right up
 		return render(request,'servers/index.html', context)
 
