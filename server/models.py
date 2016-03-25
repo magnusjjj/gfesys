@@ -23,12 +23,19 @@ class Server(models.Model):
 	description = models.TextField()
 	questions = models.TextField()
 	
+	STATUS_CHOICES = (
+		(1, 'Live'),
+		(2, 'Testing'),
+		(3, 'Draft'),
+	)
+	
 	def get_absolute_url(self):
 		return reverse('server:detail', args=[str(self.slug)])
 	
 	image = models.ImageField(max_length=500, width_field='image_width', height_field='image_height', upload_to='servers')
 	image_height = models.IntegerField()
 	image_width = models.IntegerField()
+	status = models.IntegerField(choices=STATUS_CHOICES, default=3)
 
 class Volunteer(models.Model):
 	member = models.ForeignKey(Member)
