@@ -40,11 +40,24 @@
 				<div class="col-md-3 gfe-list" style="">
 					<div class="thumbnail">
 						<img src="{{server.image.url}}" class="img-responsive" alt="{{ server.name}}">
+						{% if server.status == server.STATUS_DRAFT %}
+						<br/>
+						<div class="icon">
+							<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-inbox"></span> Draft</div>
+						</div>
+						{% endif %}
+						{% if server.status == server.STATUS_TESTING %}
+						<br/>
+						<div class="icon">
+							<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-inbox"></span> Testing</div>
+						</div>
+						{% endif %}
 						<div class="caption">
 							<h3 style="min-height: 3em">{{ server.name}}</h3>
 							<p style="min-height: 5.5em">{{server.description}}</p>
 							<p><a class="btn btn-primary form-control"  href="{% url 'server:detail' server.slug %}">Go to this server</a></p>
 						</div>
+
 					</div>
 				</div>
 			{% endfor %}

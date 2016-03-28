@@ -8,6 +8,18 @@
 		
 		{% if not volunteer %}<a href="{% url "server:volunteer" server.id%}" class="btn btn-default">Volunteer for this Server</a>{% endif %}
 	</h1>
+	{% if server.status == server.STATUS_DRAFT %}
+	<br/>
+	<div class="icon">
+		<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;This server is marked as a *draft*. This means it won't be listed in the server listing just yet.</div>
+	</div>
+	{% endif %}
+	{% if server.status == server.STATUS_TESTING %}
+	<br/>
+	<div class="icon">
+		<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;This server is marked as testing. This means it might not be fully set up yet, but is accepting and welcoming to players. Expect some bugs, but friendlyness.</div>
+	</div>
+	{% endif %}
 	<div class="row placeholders">
 		<div class="col-sm-2" href="/servers/{{ server.id }}/">
 		  <img src="{{server.image.url}}" class="img-responsive" alt="{{ server.name}}">
