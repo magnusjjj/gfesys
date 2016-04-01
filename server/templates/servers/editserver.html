@@ -22,7 +22,25 @@
 				<input type="file" name="image" value="" id="image" class="file">
 				<p class="help-block">The file should be a PNG file with 300x300 dimensions</p>
 			</div>
-			
+			<div class="form-group field-status">
+				<label for="status" class="control-label">Status*</label>
+				<div class="radio">
+				  <label><input type="radio" name="status" value="{{server.STATUS_DRAFT}}" {% if server.status == server.STATUS_DRAFT %} checked="checked" {%endif%}>Draft</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="status" value="{{server.STATUS_TESTING}}" {% if server.status == server.STATUS_TESTING %} checked="checked" {%endif%}>Testing</label>
+				</div>
+				<div class="radio">
+				  <label><input type="radio" name="status" value="{{server.STATUS_LIVE}}" {% if server.status == server.STATUS_LIVE %} checked="checked" {%endif%}>Live</label>
+				</div>
+				<p class="help-block">The status of the server.
+					<ul>
+						<li>Drafts won't be listed in the server listings, but can be viewed directly via the URL.</li>
+						<li>Testing is for 'beta' servers, where you are not sure that everything is set up correctly but want players.</li>
+						<li>It puts up a warning about it. Live has no warning, and you are listed, for you know, when you are done ;)</li>
+					</ul>
+				</p>
+			</div>
 			<div class="form-group">
 				<input type="submit" class="btn btn-primary" value="Save!"/>
 			</div>

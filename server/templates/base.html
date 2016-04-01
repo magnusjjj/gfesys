@@ -127,14 +127,18 @@
 				{% endif %}
 			{% endif %}</li>
           </ul>
-		  <ul class="nav nav-sidebar">
-			{% page_menu %}
-		  </ul>
+	  <ul class="nav nav-sidebar">
+	 	{% page_menu %}
+	  </ul>
+	Do you want to know if things happen with GFE?
+	Register for our new newsletter here!<br/><br/>
+	<a class="btn btn-primary" href="{% url 'newsletter_list' %}">Yes! Take me to your newsletter list!</a>
         </div>
 		
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			{% block containertop %}{% endblock %}
 			{% block content %}{% endblock %}
+			{% block body %}{% endblock body %}
 			{% block containerbottom %}{% endblock %}
 		</div>
       </div>

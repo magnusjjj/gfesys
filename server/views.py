@@ -64,8 +64,11 @@ class ViewIndex(DefaultView):
 	def get(self, request):
 		super(ViewIndex, self).get(request)
 		context = {}
+		status_list = [Server.STATUS_LIVE, Server.STATUS_TESTING]
+		if hasattr(request.user, 'is_administrator') and request.user.is_administrator:
+			status_list.append(Server.STATUS_DRAFT)
 		# Get all the servers, and order by id.
-		context["servers"] = Server.objects.order_by('id')
+		context["servers"] = Server.objects.filter(status__in=status_list).order_by('status','id')
 		# Render that thing right up
 		return render(request,'servers/index.html', context)
 
@@ -270,6 +273,7 @@ class UpdateServerInfo(DefaultView):
 			context["server"].name = request.POST["name"]
 			context["server"].description = request.POST["description"]
 			context["server"].questions = request.POST["questions"]
+			context["server"].status = request.POST["status"]
 			
 			# Todo, handle errors here better: 
 			if 'image' in request.FILES:

@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
 
-INSTALLED_APPS = ('server', 'member', 'page', 'pipeline') + INSTALLED_APPS
+INSTALLED_APPS = ('django.contrib.sites', 'sorl.thumbnail', 'django_extensions', 'server', 'member', 'page', 'pipeline', 'newsletter') + INSTALLED_APPS
 
 TEMPLATE_CONTEXT_PROCESSORS += ("server.context.context",)
 
@@ -86,3 +86,6 @@ PIPELINE_YUGLIFY_BINARY = "/usr/bin/env yuglify"
 PIPELINE_DISABLE_WRAPPER = True
 PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
 PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
+
+SITE_ID = 1
+TIMEZONE = 'Europe/Stockholm'

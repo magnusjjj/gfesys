@@ -17,3 +17,12 @@ fake-factory==0.5.0
 pytz==2015.2
 django-autoslug==1.8.0
 django-pipeline==1.5.1
+django-newsletter==0.6
+sorl-thumbnail==12.4a1
+django-extensions==1.6.1
+python-card-me<1.0
+ldif3<3.2
+chardet
+surlex>=0.2.0
+six
+unicodecsv<0.15
