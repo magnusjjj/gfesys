@@ -21,7 +21,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
 
-INSTALLED_APPS = ('django.contrib.sites', 'sorl.thumbnail', 'django_extensions', 'server', 'member', 'page', 'pipeline', 'newsletter') + INSTALLED_APPS
+INSTALLED_APPS = ('django.contrib.sites', 'sorl.thumbnail', 'django_extensions', 'server', 'member', 'page', 'pipeline', 'newsletter', 'oauth2_provider', 'corsheaders') + INSTALLED_APPS
+
+MIDDLEWARE_CLASSES = ('corsheaders.middleware.CorsMiddleware','oauth2_provider.middleware.OAuth2TokenMiddleware') + MIDDLEWARE_CLASSES
+
+AUTHENTICATION_BACKENDS =('oauth2_provider.backends.OAuth2Backend',) + AUTHENTICATION_BACKENDS
 
 TEMPLATE_CONTEXT_PROCESSORS += ("server.context.context",)
 
@@ -89,3 +93,5 @@ PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
 
 SITE_ID = 1
 TIMEZONE = 'Europe/Stockholm'
+
+CORS_ORIGIN_ALLOW_ALL = True
