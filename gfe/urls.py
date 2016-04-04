@@ -14,5 +14,6 @@ urlpatterns = patterns('',
     url(r'^members/', include('member.urls', app_name="member")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^newsletter/', include('newsletter.urls')),
+    url(r'^oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'', include('page.urls', app_name="page", namespace='page')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

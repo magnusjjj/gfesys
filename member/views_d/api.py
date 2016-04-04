@@ -18,7 +18,10 @@ from django.views.decorators.http import require_http_methods
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth.decorators import login_required
+from oauth2_provider.views.generic import ProtectedResourceView
 import django.contrib.auth
+import json
 
 @require_http_methods(["POST"])
 def login_post(request):
@@ -194,3 +197,7 @@ def register_post(request):
 def logout(request):
 	django.contrib.auth.logout(request)
 	return JsonResponse({})
+
+@login_required()
+def me(request):
+	return JsonResponse({"id": request.user.id, "name": request.user.first_name + ' ' + request.user.last_name, 'username': request.user.email, 'email': request.user.email})

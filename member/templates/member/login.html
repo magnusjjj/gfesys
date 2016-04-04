@@ -16,7 +16,8 @@
 				<label for="password" class="control-label">Password</label>
 				<input type="password" name="password" id="password" class="form-control"/>
 			</div>
-			<input type="hidden" value="{{ request.GET.next }}" name="next"/>
+			<input type="hidden" name="next" value="{{ next }}" />
+			<!--<input type="hidden" value="{{ request.GET.next }}" name="next"/>-->
 		</form>
 		<form method="post" class="col-md-12 form-horizontal forgot_form" style="display: none;">
 			{% csrf_token %}
