@@ -149,7 +149,7 @@ class Command(BaseCommand):
 			
 			for i in range(0, 100):
 				name = random.choice(self.animals) + "'s " + random.choice(self.words) + " " + random.choice(self.games)
-				server = Server(name=name, description=self.Faker.sentence() + " " +self.Faker.sentence(), howto="howto here", rules="rules here", questions="questions here", image='tuxie.jpg', image_height=0, image_width=0)
+				server = Server(name=name, description=self.Faker.sentence() + " " +self.Faker.sentence(), questions="questions here", image='tuxie.jpg', image_height=0, image_width=0, status=random.randint(1, 3))
 				server.save()
 				servers.append(server)
 
