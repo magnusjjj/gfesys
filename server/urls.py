@@ -11,11 +11,11 @@
 
 from django.conf.urls import patterns, url
 
-
 from server import views
 
 urlpatterns = patterns('',
     url(r'^$', views.ViewIndex.as_view(), name='index'),
+	url(r'^$servers/', views.ViewServerList.as_view(), name='serverlist'),
 	url(r'^volunteer/(?P<server_id>\d+)/$', views.ViewVolunteerFor.as_view(), name='volunteer'),
 	url(r'^editserver/(?P<server_id>\d+)/$', views.EditServer.as_view(), name='editserver'),
 	url(r'^newserver', views.EditServer.as_view(), name='newserver'),

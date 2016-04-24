@@ -1,12 +1,46 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block content %}
 
 <div class="row">
 	<div class="col-md-12">
-	<img src="/media/header.jpg" class="img-responsive"/>
-	<h1>Gaming For Everyone - Feminist gaming</h1>
-	<p>Gaming For Everyone is an intersectional feminist gaming association, with focus on <strong><em>active moderation</em></strong>.<br/> We both run game servers, and help other people set up game servers, that are both welcoming and fun for <strong>anyone</strong> to play on.</p>
-	
+		<img src="/media/header.jpg" class="img-responsive"/>
+		<div class="col-md-6">
+			<h1>Gaming For Everyone - Feminist gaming</h1>
+			<p>Gaming For Everyone is an intersectional feminist gaming association, with focus on <strong><em>active moderation</em></strong>.<br/> We both run game servers, and help other people set up game servers, that are both welcoming and fun for <strong>anyone</strong> to play on.</p>
+		</div>
+		<div class="col-md-6">
+			
+			<h1>News</h1>
+			<ul class="media-list">
+			{% for newspost in news %}
+				<li class="media">
+					<div class="media-left">
+						<!--<img class="media-object" src="..." alt="...">
+						<a href="#">
+						</a>
+						-->
+						<h4><span class="glyphicon glyphicon-envelope"></span></h4>
+						
+					</div>
+					<div class="media-body">
+						{{ newspost.message.date_create }}<br/>
+						<h4 class="media-heading"><a href="{{ newspost.get_absolute_url }}">{{ newspost.message.title }}</a></h4>
+					</div>
+				</li>
+			{% endfor %}
+			</ul>
+			<div style="position: relative">
+			<div class="col-md-6">
+				Do you want to know if things happen with GFE?<br/>
+				Register for our new newsletter here!<br/><br/>
+				<a class="btn btn-primary" href="{% url 'newsletter_list' %}">Yes! Oh god yes!</a>
+			</div>
+			<div class="col-md-6">
+				<img src="{% static 'servers/mailkun/mailkun.png' %}" class="col-md-12"/>
+			</div>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -67,4 +101,18 @@
 	  </div>
 	</div>
 </div>
+
+<!-- Start of Rocket.Chat Livechat Script -->
+<script type="text/javascript">
+(function(w, d, s, f, u) {
+	w[f] = w[f] || [];
+	w[f].push(u);
+	var h = d.getElementsByTagName(s)[0],
+		j = d.createElement(s);
+	j.async = true;
+	j.src = 'https://chat.gfe.nu/packages/rocketchat_livechat/assets/rocket-livechat.js';
+	h.parentNode.insertBefore(j, h);
+})(window, document, 'script', 'initRocket', 'https://chat.gfe.nu/livechat');
+</script>
+<!-- End of Rocket.Chat Livechat Script -->
 {% endblock %}

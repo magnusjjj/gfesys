@@ -13,6 +13,7 @@ from django.http import JsonResponse
 from page import views
 from page.models import *
 from django.contrib.contenttypes.models import ContentType
+from newsletter.models import *
 
 # This file is a bit messy, i must admit.
 # It holds all of the Views, the code that is called when a page is requested.
@@ -61,6 +62,21 @@ class StripSettings:
 
 # This view is for the listing of all the servers
 class ViewIndex(DefaultView):
+	def get(self, request):
+		super(ViewIndex, self).get(request)
+		context = {}
+		status_list = [Server.STATUS_LIVE, Server.STATUS_TESTING]
+		if hasattr(request.user, 'is_administrator') and request.user.is_administrator:
+			status_list.append(Server.STATUS_DRAFT)
+		# Get all the servers, and order by id.
+		context["servers"] = Server.objects.filter(status__in=status_list).order_by('status','id')
+		
+		context["news"] = Submission.objects.filter(publish=True)
+		
+		# Render that thing right up
+		return render(request,'servers/index.html', context)
+
+class ViewServerList(DefaultView):
 	def get(self, request):
 		super(ViewIndex, self).get(request)
 		context = {}
@@ -399,3 +415,7 @@ class EditPage(DefaultView):
 				page = views.handle_save(request, page_id, context["server"], strip)
 				return redirect(context["server"])
 	
+class SubmissionArchiveDetailOverrideView(DefaultView):
+	def get(self, request, newsletter_slug, year, month, day, slug):
+		themessage = Message.objects.get(slug=slug)
+		return render(request,'newsletter/message/message_online.html', {"message": themessage, "newsletter": themessage.newsletter})
