@@ -32,8 +32,7 @@ class Member(spirit.models.user.AbstractUser):
 	# If you want to change how the users look ("Magnus Johnsson") when you
 	# use them like strings, here it is:
 	def __str__(self):
-		nicky = " " if self.nick == "" else " \"" + self.nick +  "\" "
-		return self.first_name + nicky + self.last_name
+		return username
 	
 	nick = models.CharField(max_length=200)
 	birthdate = models.CharField(max_length=200)
@@ -58,3 +57,5 @@ class Member(spirit.models.user.AbstractUser):
 	is_opt_in = models.BooleanField(default=False)
 	use_gravatar = models.BooleanField(default=False)
 	gravatar_type = models.CharField(default='identicon', max_length=20, choices=GravatarTypes)
+	
+	membership_populated = models.BooleanField(default=True)

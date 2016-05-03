@@ -1,0 +1,136 @@
+{% extends "server/base.html" %}
+{% block heading %}Become a Member!{% endblock %}{% block okbutton%}Become a Member!{% endblock %}
+{% block content %}
+	<div class="alert alert-danger register_errorlist_box" style="display: none;">
+		<ul class="register_errorlist">
+		</ul>
+	</div>
+	<form action="{% url 'register' %}" method="post" class="col-md-12 form-horizontal">
+		{% csrf_token %}
+		<div class="form-group field-country">
+			<label for="country" class="control-label">Country*</label>
+			<select name="country" class="form-control"  required="required">
+				{% for country in countries %}
+					<option value="{{country.0}}"{% if country.0 == values.country %} selected="selected" {% endif %}>{{country.1}}</option>
+				{% endfor %}
+			</select>
+			<p class="help-block">What country are you from?</p>
+		</div>
+		
+		<div class="form-group field-birthdate">
+			<label for="birthdate" class="control-label">Birthdate*</label>
+			<input type="text" name="birthdate" value="" id="birthdate" class="form-control" required="required"/>
+			<p class="help-block">When were you born? The format should be in YYYY-MM-DD.</p>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-6" style="padding-left: 0">
+				<div class="field-first_name">
+					<label for="first_name" class="control-label">First name*</label>
+					<input type="text" name="first_name" value="" id="first_name" class="form-control" required="required"/>
+				</div>
+			</div>
+			<div class="col-lg-6" style="padding-right: 0">
+				<div class="field-last_name">
+					<label for="last_name" class="control-label">Surname*</label>
+					<input type="text" name="last_name" value="" id="last_name" class="form-control" required="required"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group field-socialsecuritynumber">
+			<label for="socialsecuritynumber" class="control-label">Social Security Number (personnummer)*</label>
+			<input type="text" name="socialsecuritynumber" value="" id="socialsecuritynumber" class="form-control"  />
+			<p class="help-block">If your country has something called a 'Social Security number', type it in here, otherwise leave it empty. It helps us identify you, and is *required* for swedish members.</p>
+		</div>
+
+		<div class="form-group field-careof">
+			<label for="careof" class="control-label">Care Of (C/O)</label>
+			<input type="text" name="careof" value="" id="careof" class="form-control"/>
+			<p class="help-block">It can be left empty. Basically, if you live somewhere that you are not registered for the postal service, type the name of a person who does here.</p>
+		</div>
+
+		<div class="form-group field-adress">
+			<label for="adress" class="control-label">Street name and number*</label>
+			<input type="text" name="adress" value="" id="adress" class="form-control" required="required"/>
+		</div>
+
+		<div class="form-group field-zip">
+			<label for="zipcode" class="control-label">Zip code / Post code / Area code*</label>
+			<input type="text" name="zip" value="" id="zipcode" class="form-control" required="required"/>
+		</div>
+
+		<div class="form-group field-city">
+			<label for="city" class="control-label">City*</label>
+			<input type="text" name="city" value="" id="city" class="form-control" required="required"/>
+		</div>
+
+		<div class="form-group field-phone">
+			<label for="phone" class="control-label">Phone number*</label>
+			<input type="text" name="phone" value="" id="phone" class="form-control" required="required"/>
+			<p class="help-block">It would help us a lot if you added the country prefix, but if you cant figure it out leave it out.</p>
+		</div>
+
+		<div class="form-group field-other_phone">
+			<label for="other_phone" class="control-label">Other phone number</label>
+			<input type="text" name="other_phone" value="" id="other_phone" class="form-control"/>
+		</div>
+
+		<div class="form-group field-login">
+			<label for="login" class="control-label">Your Email*</label>
+			<input type="text" name="login" value="" id="login" class="form-control" required="required"/>
+		</div>
+		
+		<div class="form-group field-password">
+			<label for="password" class="control-label">Password</label>
+			<input type="password" name="password" id="password" class="form-control" required="required"/>
+		</div>			
+		
+		<div class="checkbox field-accept1">
+			<p class="help-block">Before coming a member of Gaming For Everyone, you need to accept http://gfe.nu/about-us/statutes/ . This is the document that describes what a member is, what Gaming For Everyone is, and how your democratic rights in the association works.</p>
+			<label for="accept1" class="control-label">
+				<input type="checkbox" name="accept1" value="checked" id="accept1" required="required"/> I accept Gaming For Everyone's statutes.*
+			</label>
+			
+		</div>
+		<div class="checkbox field-accept2">
+			<p class="help-block">Before becoming a member, we need you to understand how we are going to use your personal information. For one thing, we are going to store your information in a database. Apart from that, we are also going to use your personal information when applying for grants. This is because some organisations require proof that we have a certain amount of members. Finally, we usually only use your private information to contact you for things like the annual meeting, or for questions regarding abuse.</p>
+			<label for="accept2" class="control-label">
+				<input type="checkbox" name="accept2" value="checked" id="accept2" required="required"/> I accept how you are going to use my personal information.*
+			</label>
+		</div>
+		<div class="checkbox field-accept3">
+			<p class="help-block">We apply for grants from Sverok, and other organisations. When we do that, we give them our membership list. They in turn need to do a few random checks so that the membership list is accurate, and that we have not just put a bunch of random people in it without their knowledge. They do this by calling a random number of persons from the membership list and asking 'Are you a member of Gaming For Everyone?' to which you should reply 'Yes'.</p>
+			<label for="accept3" class="control-label">
+				<input type="checkbox" name="accept3" value="checked" id="accept3" required="required"/> I understand that Sverok and other organisations might contact me.*
+			</label>
+		</div>
+	</form>
+	<div class="clearfix"></div>
+	<script type="text/javascript">
+		$(function(){
+			btn = $("#modal").find(".btn-primary");
+			btn.unbind();
+			btn.click(function() {
+				form = $(this).parent().parent().find("form");
+				response = $.post("{% url 'register_post' %}", form.serialize(), function(data)
+				{
+					errorbox = form.parent().find(".register_errorlist_box").hide();
+					errorlist = form.parent().find(".register_errorlist").html("");
+					
+					for (i = 0; i < data.errors.length; i++) {
+						errorbox.show();
+						errorlist.append("<li>"+data.errors[i]+"</li>");
+					}
+					
+					if(data.errors.length == 0)
+					{
+						document.location = "{% url 'index' %}";
+					} else {
+						$("html, body").animate({ scrollTop: 0 }, "fast");
+					}
+				}, 'json');
+			});
+		});
+	</script>
+{% endblock %}
