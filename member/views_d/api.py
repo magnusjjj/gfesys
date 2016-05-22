@@ -150,10 +150,21 @@ def register_post(request):
 		
 		
 		user = authenticate(username=member.username, password=request.POST["password"])
-		#errors.append("Got to the end of registration")
-		#send_mail('Welcome to GFE!', "Welcome to GFE!\n\n Your username is: \n\n" + request.POST["username"].lower() + "\n\n , and your password is known only to you.\n\n", settings.EMAILFROM,
-#		[request.POST["email"].lower()], fail_silently=True)
-		
+		if user is None:
+			errors.append("Could not log in. Thats really wierd.")
+			context["errors"] = errors
+			return JsonResponse(context)
+		else:
+			if user.is_active:
+				login(request, user)
+				try: 
+					context["redirectto"] = request.POST["next"]
+				except:
+					pass
+			else:
+				errors.append("Your account is for some reason set as not being logged-in-able. Contact support. This is super duper wierd.")
+		send_mail('Welcome to GFE!', "Welcome to GFE!\n\n Your username is: \n\n" + request.POST["username"].lower() + "\n\n , and your password is known only to you.\n\n", settings.EMAILFROM,
+		[request.POST["email"].lower()], fail_silently=True)		
 	context["errors"] = errors
 	return JsonResponse(context)
 	

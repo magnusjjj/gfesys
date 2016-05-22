@@ -8,6 +8,9 @@ from django.shortcuts import render
 from server.models import *
 from django_countries import countries
 from member.models import Member
+import re
+from django_countries import countries
+import datetime
 
 def members_index(request):
 	context = {}
@@ -20,119 +23,97 @@ def members_view(request, member_id):
 	return render(request,'member/members_view.html', context)
 
 def become_member(request):
+	context = {}
 	# Make a variable to hold all the errors in...
 	errors = []
-	context = {}
+
+	currmember = request.user
+
+
+	context["member"] = currmember
+	context["countries"] = countries
+
+	if request.method == 'GET':
+		return render(request,'member/become_member.html', context)
+	elif request.method == 'POST':
+		#Make a list of all the fields we cant stand being empty.. :P
+		notempty = {"country": "Country", "first_name": "First name", "last_name": "Surname",
+		"adress": "Adress", "zip": "Zipcode", "birthdate": "Birthdate",
+		"city": "City", "phone": "Phone", "accept1": "Accept 1", "accept2": "Accept 2", "accept3": "Accept 3"}
 	
-	#Make a list of all the fields we cant stand being empty.. :P
-	notempty = {"country": "Country", "first_name": "First name", "last_name": "Surname", "password": "Password",
-	"adress": "Adress", "zip": "Zipcode", "birthdate": "Birthdate",
-	"city": "City", "phone": "Phone", "login": "Email", "accept1": "Accept 1", "accept2": "Accept 2", "accept3": "Accept 3"}
+		# Loop through them
+		for field in notempty:
+			if field not in request.POST or request.POST[field].strip() == "":
+				# And begin setting errors
+				errors.append("The field \"" + notempty[field] + "\" must not be empty")
 	
-	# Loop through them
-	for field in notempty:
-		if field not in request.POST or request.POST[field].strip() == "":
-			# And begin setting errors
-			errors.append("The field \"" + notempty[field] + "\" must not be empty")
 	
-	# Check the email adress...
-	emailcheck = re.compile("^[^@]*@(.*)$")
-	if "login" in request.POST and emailcheck.match(request.POST["login"]) is None:
-		errors.append("Check the Email field, that does not look like an Email adress.")
-	else:
-		# Also check that its unique:
-		doesnotexist = False
-		try:
-			Member.objects.get(email=request.POST["login"])
-		except Member.DoesNotExist:
-			doesnotexist = True
-			
-		if doesnotexist == False:
-			errors.append("This Email is already taken. Contact support.")
+		# Check the birthdate...
+		datecheck = re.compile("^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$")
+		if datecheck.match(request.POST["birthdate"]) is None:
+			errors.append("Check the Birthdate field, the format should be YYYY-MM-DD.")
 	
-	# Check the birthdate...
-	datecheck = re.compile("^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$")
-	if "login" in request.POST and datecheck.match(request.POST["birthdate"]) is None:
-		errors.append("Check the Birthdate field, the format should be YYYY-MM-DD.")
+		# If its a swedish personnummer, check that its valid:
 	
-	# Check the password length...
-	if "login" in request.POST and len(request.POST["password"]) < 8:
-		errors.append("Your password needs to be at least 8 characters long.")
-	
-	# If its a swedish personnummer, check that its valid:
-	
-	if "socialsecuritynumber" in request.POST and "country" in request.POST:
-		personnummer = request.POST["socialsecuritynumber"]
-		personkoll = re.compile("^[0-9]{6}\\-[0-9]{4}$")
-		if request.POST["country"] == "SE":
-			if personkoll.match(personnummer) is not None:
-				sum = 0
-				n = 2
+		if "socialsecuritynumber" in request.POST and "country" in request.POST:
+			personnummer = request.POST["socialsecuritynumber"]
+			personkoll = re.compile("^[0-9]{6}\\-[0-9]{4}$")
+			if request.POST["country"] == "SE":
+				if personkoll.match(personnummer) is not None:
+					sum = 0
+					n = 2
 				
-				personnummer = personnummer[:6] + personnummer[7:]
-				for i in range(0,9):
+					personnummer = personnummer[:6] + personnummer[7:]
+					for i in range(0,9):
 					
-					tmp = int(personnummer[i]) * n
+						tmp = int(personnummer[i]) * n
 					
-					if (tmp > 9):
-						sum += 1 + ((tmp % 10))
+						if (tmp > 9):
+							sum += 1 + ((tmp % 10))
+						else:
+							sum += tmp
+						if n == 2:
+							n = 1
+						else:
+							n = 2
+					if ((sum + int(personnummer[9])) % 10) != 0:
+						errors.append("Your Swedish social security number is incorrect. Please double check.")
 					else:
-						sum += tmp
-					if n == 2:
-						n = 1
-					else:
-						n = 2
-				if ((sum + int(personnummer[9])) % 10) != 0:
-					errors.append("Your Swedish social security number is incorrect. Please double check.")
+						pass
 				else:
-					pass
-			else:
-				errors.append("Your Swedish social security number is specified in the wrong format. The correct format is YYMMDD-XXXX")
-			# Also check that its unique:
-			doesnotexist = False
-			try:
-				Member.objects.get(socialsecuritynumber=request.POST["socialsecuritynumber"])
-			except Member.DoesNotExist:
-				doesnotexist = True
+					errors.append("Your Swedish social security number is specified in the wrong format. The correct format is YYMMDD-XXXX")
+				# Also check that its unique:
+				doesnotexist = False
+				try:
+					testmember = Member.objects.get(socialsecuritynumber=request.POST["socialsecuritynumber"])
+					if testmember.pk == currmember.pk:
+						doesnotexist = True
+				except:
+					doesnotexist = True
 				
-			if doesnotexist == False:
-				errors.append("This SSID is already taken. Contact support.")
+				if doesnotexist == False:
+					errors.append("This SSID is already taken. Contact support.")
 	
-	# Now, we need to make a member
-	
-	if len(errors) == 0:
-		salt = ''.join(random.SystemRandom().choice(string.uppercase + string.digits) for _ in xrange(20)) 
+		# Temporarily change the member in memory, so that postback works when erroring
+		currmember.first_name= request.POST["first_name"]
+		currmember.last_name= request.POST["last_name"]
+		currmember.nick= ""
+		currmember.birthdate= request.POST["birthdate"]
+		currmember.phone= request.POST["phone"]
+		currmember.mobile= request.POST["other_phone"]
+		currmember.street= request.POST["adress"]
+		currmember.city= request.POST["city"]
+		currmember.country_id= request.POST["country"]
+		currmember.zip= request.POST["zip"]
+		currmember.careof= request.POST["careof"]
+		currmember.socialsecuritynumber= request.POST["socialsecuritynumber"]
+		currmember.refreshedon= datetime.datetime.now()
+		currmember.membership_populated = True
 		
-		member = Member.objects.create(
-			first_name= request.POST["first_name"],
-			last_name= request.POST["last_name"],
-			nick= "",
-			birthdate= request.POST["birthdate"],
-			phone= request.POST["phone"],
-			mobile= request.POST["other_phone"],
-			street= request.POST["adress"],
-			city= request.POST["city"],
-			country_id= request.POST["country"],
-			zip= request.POST["zip"],
-			careof= request.POST["careof"],
-			socialsecuritynumber= request.POST["socialsecuritynumber"],
-			email= request.POST["login"].lower(),
-			username= request.POST["login"].lower(),
-			refreshedon= datetime.datetime.now(),
-			image_height=0,
-			image_width=0,
-			is_active=1,
-		)
+		# If there are no errors, save the member		
+		if len(errors) == 0:
+			currmember.save()
 		
-		member.save()
-		member.set_password(request.POST["password"])
-		member.save()
-		
-		
-		user = authenticate(username=member.username, password=request.POST["password"])
-		
-		send_mail('Welcome to GFE!', "Welcome to GFE!\n\n Your username is: \n\n" + request.POST["login"].lower() + "\n\n , and your password is known only to you.\n\n", settings.EMAILFROM,
-		[request.POST["login"].lower()], fail_silently=True)
-		
-	context["errors"] = errors
-	return JsonResponse(context)
+		context["errors"] = errors
+		context["member"] = currmember
+		return render(request,'member/become_member.html', context)

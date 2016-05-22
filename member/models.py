@@ -32,7 +32,7 @@ class Member(spirit.models.user.AbstractUser):
 	# If you want to change how the users look ("Magnus Johnsson") when you
 	# use them like strings, here it is:
 	def __str__(self):
-		return username
+		return self.username
 	
 	nick = models.CharField(max_length=200)
 	birthdate = models.CharField(max_length=200)
