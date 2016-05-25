@@ -82,9 +82,7 @@ def register_post(request):
 	context = {}
 	
 	#Make a list of all the fields we cant stand being empty.. :P
-	notempty = {"country": "Country", "first_name": "First name", "last_name": "Surname", "password": "Password",
-	"adress": "Adress", "zip": "Zipcode", "birthdate": "Birthdate",
-	"city": "City", "phone": "Phone", "login": "Email", "accept1": "Accept 1", "accept2": "Accept 2", "accept3": "Accept 3"}
+	notempty = {"password": "Password","email": "Email", "accept": "Accept", "username": "Username"}
 	
 	# Loop through them
 	for field in notempty:
@@ -94,91 +92,56 @@ def register_post(request):
 	
 	# Check the email adress...
 	emailcheck = re.compile("^[^@]*@(.*)$")
-	if "login" in request.POST and emailcheck.match(request.POST["login"]) is None:
+	if "email" in request.POST and emailcheck.match(request.POST["email"]) is None:
 		errors.append("Check the Email field, that does not look like an Email adress.")
 	else:
 		# Also check that its unique:
 		doesnotexist = False
 		try:
-			Member.objects.get(email=request.POST["login"])
+			Member.objects.get(email=request.POST["email"])
 		except Member.DoesNotExist:
 			doesnotexist = True
 			
 		if doesnotexist == False:
 			errors.append("This Email is already taken. Contact support.")
 	
-	# Check the birthdate...
-	datecheck = re.compile("^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$")
-	if "login" in request.POST and datecheck.match(request.POST["birthdate"]) is None:
-		errors.append("Check the Birthdate field, the format should be YYYY-MM-DD.")
+	# Check that the username does not already exist adress...
+	if "username" in request.POST:
+		try:
+			member = Member.objects.get(username=request.POST["username"]) # This will trigger an exception if not found
+			errors.append("That user already exists!" + member)
+		except:
+			pass
 	
 	# Check the password length...
-	if "login" in request.POST and len(request.POST["password"]) < 8:
+	if "email" in request.POST and len(request.POST["password"]) < 8:
 		errors.append("Your password needs to be at least 8 characters long.")
 	
-	# If its a swedish personnummer, check that its valid:
-	
-	if "socialsecuritynumber" in request.POST and "country" in request.POST:
-		personnummer = request.POST["socialsecuritynumber"]
-		personkoll = re.compile("^[0-9]{6}\\-[0-9]{4}$")
-		if request.POST["country"] == "SE":
-			if personkoll.match(personnummer) is not None:
-				sum = 0
-				n = 2
-				
-				personnummer = personnummer[:6] + personnummer[7:]
-				for i in range(0,9):
-					
-					tmp = int(personnummer[i]) * n
-					
-					if (tmp > 9):
-						sum += 1 + ((tmp % 10))
-					else:
-						sum += tmp
-					if n == 2:
-						n = 1
-					else:
-						n = 2
-				if ((sum + int(personnummer[9])) % 10) != 0:
-					errors.append("Your Swedish social security number is incorrect. Please double check.")
-				else:
-					pass
-			else:
-				errors.append("Your Swedish social security number is specified in the wrong format. The correct format is YYMMDD-XXXX")
-			# Also check that its unique:
-			doesnotexist = False
-			try:
-				Member.objects.get(socialsecuritynumber=request.POST["socialsecuritynumber"])
-			except Member.DoesNotExist:
-				doesnotexist = True
-				
-			if doesnotexist == False:
-				errors.append("This SSID is already taken. Contact support.")
-	
-	# Now, we need to make a member
+	# Now, we need to make a user
 	
 	if len(errors) == 0:
 		salt = ''.join(random.SystemRandom().choice(string.uppercase + string.digits) for _ in xrange(20)) 
 		
 		member = Member.objects.create(
-			first_name= request.POST["first_name"],
-			last_name= request.POST["last_name"],
+			first_name= "",
+			last_name= "",
 			nick= "",
-			birthdate= request.POST["birthdate"],
-			phone= request.POST["phone"],
-			mobile= request.POST["other_phone"],
-			street= request.POST["adress"],
-			city= request.POST["city"],
-			country_id= request.POST["country"],
-			zip= request.POST["zip"],
-			careof= request.POST["careof"],
-			socialsecuritynumber= request.POST["socialsecuritynumber"],
-			email= request.POST["login"].lower(),
-			username= request.POST["login"].lower(),
+			birthdate= "",
+			phone= "",
+			mobile= "",
+			street= "",
+			city= "",
+			country_id= "",
+			zip= "",
+			careof= "",
+			socialsecuritynumber= "",
+			email= request.POST["email"].lower(),
+			username= request.POST["username"].lower(),
 			refreshedon= datetime.datetime.now(),
 			image_height=0,
 			image_width=0,
 			is_active=1,
+			membership_populated=False,
 		)
 		
 		member.save()
@@ -187,10 +150,21 @@ def register_post(request):
 		
 		
 		user = authenticate(username=member.username, password=request.POST["password"])
-		
-		send_mail('Welcome to GFE!', "Welcome to GFE!\n\n Your username is: \n\n" + request.POST["login"].lower() + "\n\n , and your password is known only to you.\n\n", settings.EMAILFROM,
-		[request.POST["login"].lower()], fail_silently=True)
-		
+		if user is None:
+			errors.append("Could not log in. Thats really wierd.")
+			context["errors"] = errors
+			return JsonResponse(context)
+		else:
+			if user.is_active:
+				login(request, user)
+				try: 
+					context["redirectto"] = request.POST["next"]
+				except:
+					pass
+			else:
+				errors.append("Your account is for some reason set as not being logged-in-able. Contact support. This is super duper wierd.")
+		send_mail('Welcome to GFE!', "Welcome to GFE!\n\n Your username is: \n\n" + request.POST["username"].lower() + "\n\n , and your password is known only to you.\n\n", settings.EMAILFROM,
+		[request.POST["email"].lower()], fail_silently=True)		
 	context["errors"] = errors
 	return JsonResponse(context)
 	

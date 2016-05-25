@@ -164,6 +164,10 @@
         </div>
 		
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			{% if user.is_authenticated and user.membership_populated == 0%}
+				You should totes become a member of the association as well, it helps us when we get grants, and you get democratic voting rights on the annual meeting.
+				<a href="{% url 'become_member' %}">Become a member!</a>
+			{% endif %}
 			{% block containertop %}{% endblock %}
 			{% block content %}{% endblock %}
 			{% block body %}{% endblock body %}
