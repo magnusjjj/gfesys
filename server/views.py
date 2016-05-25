@@ -300,7 +300,7 @@ class UpdateServerInfo(DefaultView):
 				if request.POST.get("rocketenabled", False) == "True":
 					r = requests.post('http://chat.gfe.nu:1420/ChannelCreate', json={"ChannelName": rocketchannel, "ServerName": context["server"].name, "Enabled": "1"})
 					m.rocketenabled = 1
-				else
+				else:
 					m.rocketenabled = 0
 					r = requests.post('http://chat.gfe.nu:1420/ChannelCreate', json={"ChannelName": rocketchannel, "ServerName": context["server"].name, "Enabled": "0"})
 				m.save()
