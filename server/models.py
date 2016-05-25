@@ -83,3 +83,8 @@ class Volunteer(models.Model):
 	
 	class Meta:
 		ordering = ["-sec_accept", "-sec_edit", "role"]
+
+class rocketchat(models.Model):
+		server = models.ForeignKey(Server)
+		channelname = models.CharField(max_length=200)
+		rocketenabled = models.BooleanField(default=False)

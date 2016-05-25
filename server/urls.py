@@ -27,7 +27,7 @@ urlpatterns = patterns('',
 	url(r'^addpage/(?P<server_id>\d+)/$', views.AddPage.as_view(), name='addpage'),
 	url(r'^deletepage/(?P<page_id>\d+)/$', views.DeletePage.as_view(), name='deletepage'),
 	url(r'^editpage/(?P<page_id>\d+)/$', views.EditPage.as_view(), name='editpage'),
+	url(r'^rocketchatcreateserverapi$', views.rocketchatcreateserverapi.as_view(), name='rocketchatcreateserverapi'),
 	url(r'^(?P<slug>[a-zA-Z\-]+)/$', views.ViewDetail.as_view(), name='detail'),
 	url(r'^(?P<slug>[a-zA-Z\-]+)/(?P<slug_page>[a-zA-Z\-]+)$', views.ViewDetail.as_view(), name='detail'),
-
 )

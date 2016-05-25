@@ -14,7 +14,7 @@ from page import views
 from page.models import *
 from django.contrib.contenttypes.models import ContentType
 from newsletter.models import *
-
+import httplib, urllib, json, requests
 # This file is a bit messy, i must admit.
 # It holds all of the Views, the code that is called when a page is requested.
 # It should be split up a bit more (see the membership code)
@@ -263,7 +263,8 @@ class EditServer(DefaultView):
 			if not (request.user.is_administrator or context["volunteer"].sec_edit):
 				raise ValueError('You dont have access to this function. Boo!')
 		context["server_id"] = server_id
-
+		context["server"] = Server.objects.get(pk=server_id)
+		context["channels"] = rocketchat.objects.filter(server=context["server"])
 		# And render
 		if request.user.is_administrator or context["volunteer"].sec_edit:
 			return render(request,'servers/editserver.html', context)
@@ -290,7 +291,19 @@ class UpdateServerInfo(DefaultView):
 			context["server"].description = request.POST["description"]
 			context["server"].questions = request.POST["questions"]
 			context["server"].status = request.POST["status"]
-			
+			rocketchannels = request.POST.getlist('rocketchannel')
+			rocketchat.objects.filter(server=context["server"]).delete()
+			for rocketchannel in rocketchannels:
+				m = rocketchat()
+				m.channelname = rocketchannel
+				m.server = context["server"]
+				if request.POST.get("rocketenabled", False) == "True":
+					r = requests.post('http://chat.gfe.nu:1420/ChannelCreate', json={"ChannelName": rocketchannel, "ServerName": context["server"].name, "Enabled": "1"})
+					m.rocketenabled = 1
+				else
+					m.rocketenabled = 0
+					r = requests.post('http://chat.gfe.nu:1420/ChannelCreate', json={"ChannelName": rocketchannel, "ServerName": context["server"].name, "Enabled": "0"})
+				m.save()
 			# Todo, handle errors here better: 
 			if 'image' in request.FILES:
 				context["server"].image = request.FILES['image']
@@ -419,3 +432,11 @@ class SubmissionArchiveDetailOverrideView(DefaultView):
 	def get(self, request, newsletter_slug, year, month, day, slug):
 		themessage = Message.objects.get(slug=slug)
 		return render(request,'newsletter/message/message_online.html', {"message": themessage, "newsletter": themessage.newsletter})
+class rocketchatcreateserverapi(DefaultView):
+	def post(self, request):
+		super(rocketchatcreateserverapi, self).get(request)
+		self.setrights_server(request, context, server_id)
+		context = {}
+		server_id = request.POST["server_id"]
+		if request.user.is_administrator or context["volunteer"].sec_edit:
+			return JsonResponse({"tuxie":"Such a scrub nub", "optic": "Again, such a scrub nub", "GG142": "Magnificent twat"})	

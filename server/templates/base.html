@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+		<style>
+			.rocketchannelP {
+				
+			 font-family: 'Helvetica', 'Arial', sans-serif; color: #adadad; margin-left: 10px; font-size: 30px; margin-bottom: 0px; }
+			.rocketchannelP:hover {
+				color: #2c2c2c; cursor:pointer;
+			}
+		</style>
 	{% load spirit_tags i18n %}
 	{% load page_menu %}
 	{% load pipeline %}
@@ -9,13 +17,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ config.site_description }}">
     <meta name="author" content="">
-
+		
     <title>{{ config.site_name }}</title>
 	{% load staticfiles %}
 	
     <!-- Bootstrap core CSS -->
 	{% stylesheet "main" %}
 	{% javascript "main" %}
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
 	<!-- staaaph-->
 	
 	{% block help %}{% endblock %}

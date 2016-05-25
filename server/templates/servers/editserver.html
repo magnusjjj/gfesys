@@ -41,6 +41,35 @@
 					</ul>
 				</p>
 			</div>
+<!--Here comes some GG power! -->
+<script>
+$(document).ready(function() {
+	if ($('#rocketenabled').prop('checked') === true) {console.log("yeso")}
+	else {console.log("noh"); $(".rocketchannel").toggle(); $(".rocketchannelP").toggle()}
+	$(".Testerino").click(function() {$("#rocketwrapper").append('<div style="display: flex;"><input name="rocketchannel" type="text" class="rocketchannel form-control" value="{{channel.channelname}}" style="text-align: center; width: 200px;"> <span title="DELETE CHANNEL"><p class="rocketchannelP rocketchannelX">X</p></span></input></div>')})
+$("#rocketenabled").click(function() {$(".rocketchannel").toggle(); $(".rocketchannelP").toggle()})
+$(".rocketchannelX").click(function() {$(this).parent().parent().remove()})
+})
+</script>
+<!--Okay that's enough shitty js-->
+<div class="form-group field-rocket">
+<label for="rocket" class="control-label">Rocket.Chat*</label>
+				<div class="radio" id="rocketenabledwrapper">
+				  <label id="rocketenabledlabel"><input id="rocketenabled" type="checkbox" name="rocketenabled" value="True" {% for channel in channels %} {% if channel.rocketenabled == True %} checked="checked" {%endif%} {% endfor %}>Enable Rocket.Chat for your server.</input></label>
+	</div>
+	<p class="help-block">Current channels assigned to server:
+					 
+					<div id="rocketwrapper">
+						
+														 	<!--Yeah boy, do dat flexing boi, yeeeeeh-->	
+	{% for channel in channels %}<div style="display: flex;"><input name="rocketchannel" type="text" class="rocketchannel form-control" value="{{channel.channelname}}" style="text-align: center; width: 200px;"> <span title="DELETE CHANNEL"><p class="rocketchannelP rocketchannelX">X</p></span></input></div>{% endfor %}
+</div>
+<p class="Testerino rocketchannelP" id="rocket+" style="width: 25px;">+</p>
+
+	</p>
+
+
+											</div>
 			<div class="form-group">
 				<input type="submit" class="btn btn-primary" value="Save!"/>
 			</div>
