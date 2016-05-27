@@ -25,7 +25,7 @@ INSTALLED_APPS = ('django.contrib.sites', 'sorl.thumbnail', 'django_extensions',
 
 MIDDLEWARE_CLASSES = ('corsheaders.middleware.CorsMiddleware','oauth2_provider.middleware.OAuth2TokenMiddleware') + MIDDLEWARE_CLASSES
 
-AUTHENTICATION_BACKENDS =('oauth2_provider.backends.OAuth2Backend',) + ('django.contrib.auth.backends.ModelBackend',)
+AUTHENTICATION_BACKENDS =('oauth2_provider.backends.OAuth2Backend',) + ('django.contrib.auth.backends.ModelBackend',) + AUTHENTICATION_BACKENDS
 
 TEMPLATE_CONTEXT_PROCESSORS += ("server.context.context",)
 
