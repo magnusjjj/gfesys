@@ -174,4 +174,4 @@ def logout(request):
 
 @login_required()
 def me(request):
-	return JsonResponse({"id": request.user.id, "name": request.user.first_name + ' ' + request.user.last_name, 'username': request.user.email, 'email': request.user.email})
+	return JsonResponse({"id": request.user.id, "name": request.user.first_name + ' ' + request.user.last_name, 'username': request.user.username, 'email': request.user.email})
