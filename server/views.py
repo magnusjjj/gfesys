@@ -4,21 +4,21 @@
 # Changelog:
 # 2015-04-14 - Magnus Johnsson - Added the license header
 
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.template import RequestContext, loader
-from server.models import *
-from server.defaultview import DefaultView
+import requests
 from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from newsletter.models import *
+
 from page import views
 from page.models import *
-from django.contrib.contenttypes.models import ContentType
-from newsletter.models import *
-import httplib, urllib, json, requests
+from server.defaultview import DefaultView
+from server.models import *
+
 # This file is a bit messy, i must admit.
 # It holds all of the Views, the code that is called when a page is requested.
 # It should be split up a bit more (see the membership code)
 # Alas, I could not get my thumb out of my anus.
+
 
 class StripSettings:
 	# Simple list with a bunch of.. 'safe' html tags
@@ -59,34 +59,6 @@ class StripSettings:
 	
 	ALLOWED_STYLES = []
 
-
-# This view is for the listing of all the servers
-class ViewIndex(DefaultView):
-	def get(self, request):
-		super(ViewIndex, self).get(request)
-		context = {}
-		status_list = [Server.STATUS_LIVE, Server.STATUS_TESTING]
-		if hasattr(request.user, 'is_administrator') and request.user.is_administrator:
-			status_list.append(Server.STATUS_DRAFT)
-		# Get all the servers, and order by id.
-		context["servers"] = Server.objects.filter(status__in=status_list).order_by('status','id')
-		
-		context["news"] = Submission.objects.filter(publish=True)
-		
-		# Render that thing right up
-		return render(request,'servers/index.html', context)
-
-class ViewServerList(DefaultView):
-	def get(self, request):
-		super(ViewIndex, self).get(request)
-		context = {}
-		status_list = [Server.STATUS_LIVE, Server.STATUS_TESTING]
-		if hasattr(request.user, 'is_administrator') and request.user.is_administrator:
-			status_list.append(Server.STATUS_DRAFT)
-		# Get all the servers, and order by id.
-		context["servers"] = Server.objects.filter(status__in=status_list).order_by('status','id')
-		# Render that thing right up
-		return render(request,'servers/index.html', context)
 
 # This view is for viewing a specific server
 class ViewDetail(DefaultView):	
