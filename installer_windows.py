@@ -126,6 +126,6 @@ EMAILFROM = '""" + EMAILFROM.encode("string_escape") + """'"""
 
 # Run the installer :)
 installer = Installer()
-#installer.pip_install()
-#installer.installer_console_tutorial()
+installer.pip_install()
+installer.installer_console_tutorial()
 installer.post_config()
