@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.base import RedirectView
+
+import server.views_normal.SubmissionArchiveDetailOverrideView
 from page import views
 from surlex.dj import surl
 from server import views as server_views
@@ -18,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 	surl(
         '^newsletter/<newsletter_slug:s>/archive/<year:Y>/<month:m>/<day:d>/<slug:s>/$',
-        server_views.SubmissionArchiveDetailOverrideView.as_view(), name='newsletter_archive_detail_override'
+        server.views_normal.SubmissionArchiveDetailOverrideView.SubmissionArchiveDetailOverrideView.as_view(), name='newsletter_archive_detail_override'
     ),
     url(r'^newsletter/', include('newsletter.urls')),
 	
