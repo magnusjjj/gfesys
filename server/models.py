@@ -7,6 +7,8 @@
 from django.db import models
 from member.models import Member
 from django.core.urlresolvers import reverse
+from server.groupapi.basemodel import GroupBaseModel
+
 from autoslug import AutoSlugField
 
 # This file is a description of the interface between the database and django.
@@ -14,15 +16,7 @@ from autoslug import AutoSlugField
 # https://docs.djangoproject.com/en/1.8/topics/db/models/
 # https://docs.djangoproject.com/en/dev/ref/contrib/contenttypes/
 
-class Server(models.Model):
-	def __str__(self):
-		return self.name
-	name = models.CharField(max_length=200)
-	slug=AutoSlugField(max_length=40, populate_from='name')
-	
-	description = models.TextField()
-	questions = models.TextField()
-	
+class Server(GroupBaseModel):
 	STATUS_LIVE = 1
 	STATUS_TESTING = 2
 	STATUS_DRAFT = 3
@@ -36,9 +30,6 @@ class Server(models.Model):
 	def get_absolute_url(self):
 		return reverse('server:detail', args=[str(self.slug)])
 	
-	image = models.ImageField(max_length=500, width_field='image_width', height_field='image_height', upload_to='servers')
-	image_height = models.IntegerField()
-	image_width = models.IntegerField()
 	status = models.IntegerField(choices=STATUS_CHOICES, default=3)
 
 class Volunteer(models.Model):
