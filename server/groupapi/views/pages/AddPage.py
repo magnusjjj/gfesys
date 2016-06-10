@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from page import views
 from page.models import Page
 from server.defaultview import DefaultView
+from server.groupapi.views.pages.StripSettings import StripSettings
 from server.models import Server
-from server.views_normal.StripSettings import StripSettings
 
 
 class AddPage(DefaultView):

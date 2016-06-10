@@ -3,7 +3,3 @@
 # Revision 1
 # Changelog:
 # 2015-04-14 - Magnus Johnsson - Added the license header
-
-from django.http import JsonResponse
-
-from server.defaultview import DefaultView
