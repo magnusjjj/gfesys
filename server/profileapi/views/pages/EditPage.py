@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from page import views
 from page.models import Page
 from server.defaultview import DefaultView
-from server.groupapi.views.pages.StripSettings import StripSettings
+from server.profileapi.views.pages.StripSettings import StripSettings
 from server.models import Server
 
 

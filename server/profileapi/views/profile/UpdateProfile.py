@@ -2,7 +2,9 @@ import requests
 from django.shortcuts import redirect
 
 from server.defaultview import DefaultView
-from server.models import Server, rocketchat
+from server.models import Server
+from server.profileapi.models import rocketchat
+
 
 # This is the motherload. The actual view that saves the server info.
 class UpdateServerInfo(DefaultView):

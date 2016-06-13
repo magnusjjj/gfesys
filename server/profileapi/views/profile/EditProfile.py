@@ -1,7 +1,9 @@
 from django.shortcuts import render
 
 from server.defaultview import DefaultView
-from server.models import Server, rocketchat
+from server.models import Server
+from server.profileapi.models import rocketchat
+
 
 # Simply the view that *renders* the edit screen
 class EditServer(DefaultView):
