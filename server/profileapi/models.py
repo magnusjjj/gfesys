@@ -25,7 +25,7 @@ class ProfileTemplate(models.Model):
 class rocketchat(models.Model):
 	chatroom_for_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
 	chatroom_for_object_id = models.PositiveIntegerField()
-	chatroom_for = GenericForeignKey('chatroom_for_object_id', 'chatroom_for_content_type')
+	chatroom_for = GenericForeignKey('chatroom_for_content_type', 'chatroom_for_object_id')
 	channelname = models.CharField(max_length=200)
 	rocketenabled = models.BooleanField(default=False)
 
@@ -34,7 +34,7 @@ class Volunteer(models.Model):
 	member = models.ForeignKey(Member)
 	volunteer_for_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
 	volunteer_for_object_id = models.PositiveIntegerField()
-	volunteer_for = GenericForeignKey('volunteer_for_object_id','volunteer_for_content_type')
+	volunteer_for = GenericForeignKey('volunteer_for_content_type','volunteer_for_object_id')
 	answer = models.TextField()
 	role = models.CharField(max_length=200)
 

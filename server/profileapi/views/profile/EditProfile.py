@@ -1,12 +1,12 @@
 from django.shortcuts import render
 
-from server.defaultview import DefaultView
 from server.models import Server
 from server.profileapi.models import rocketchat
+from django.views.generic import View
 
 
 # Simply the view that *renders* the edit screen
-class EditServer(DefaultView):
+class EditServer(View):
 	def get(self, request, server_id=0):
 		context = {}
 		super(EditServer, self).get(request)

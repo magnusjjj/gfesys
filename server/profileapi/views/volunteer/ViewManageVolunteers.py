@@ -1,10 +1,11 @@
 from django.shortcuts import render
 
-from server.defaultview import DefaultView
-from server.models import Server, Volunteer
+from server.models import Server
+from server.profileapi.models import Volunteer
+from django.views.generic import View
 
 # This view is for an admin, allowing them to manage the list of volunteers
-class ViewManageVolunteers(DefaultView):
+class ViewManageVolunteers(View):
 	def get(self, request, server_id):
 		super(ViewManageVolunteers, self).get(request)
 		context = {}

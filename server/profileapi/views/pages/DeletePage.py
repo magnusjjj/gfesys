@@ -1,11 +1,10 @@
 from django.shortcuts import redirect
 
 from page.models import Page
-from server.defaultview import DefaultView
 from server.models import Server
 
 
-class DeletePage(DefaultView):
+class DeletePage:
 	def get(self, request, page_id):
 		super(DeletePage, self).get(request)
 		context = {}

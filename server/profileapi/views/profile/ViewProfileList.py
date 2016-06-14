@@ -1,11 +1,11 @@
 from django.shortcuts import render
 
-from server.defaultview import DefaultView
 from server.models import Server
 from server.views_normal.ViewIndex import ViewIndex
+from django.views.generic import View
 
 
-class ViewServerList(DefaultView):
+class ViewServerList(View):
 	def get(self, request):
 		super(ViewIndex, self).get(request)
 		context = {}

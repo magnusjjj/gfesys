@@ -1,10 +1,10 @@
-from server.defaultview import DefaultView
 from server.models import Server
 from newsletter.models import Submission
+from django.views.generic import View
 
 # This view is for the listing of all the servers
 
-class ViewIndex(DefaultView):
+class ViewIndex(View):
 	def get(self, request):
 		super(ViewIndex, self).get(request)
 		context = {}

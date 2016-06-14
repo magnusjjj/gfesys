@@ -1,10 +1,10 @@
 from django.http import JsonResponse
 
-from server.defaultview import DefaultView
-from server.models import Volunteer
+from server.profileapi.models import Volunteer
+from django.views.generic import View
 
 # Like the above, but simply returns the answers that the volunteer filled in while applying
-class ServerViewAnswers(DefaultView):
+class ServerViewAnswers(View):
 	def post(self, request):
 		super(ServerViewAnswers, self).get(request)
 		# Get the applicant

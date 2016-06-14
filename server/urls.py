@@ -9,7 +9,7 @@
 # and we don't do anything freakier than what is explained in the tutorials. Promise <3
 # https://docs.djangoproject.com/en/1.8/topics/http/urls/
 
-import server.profileapi.views.AddPage
+import server.profileapi.views.pages.AddPage
 from django.conf.urls import patterns, url
 
 import server.profileapi.views.pages.DeletePage

@@ -1,10 +1,9 @@
 from django.shortcuts import redirect
-
-from server.defaultview import DefaultView
+from django.views.generic import View
 from server.models import Server
 
 
-class UploadServerImage(DefaultView):
+class UploadServerImage(View):
 	def post(self, request, server_id):
 		super(UploadServerImage, self).get(request)
 		context = {}

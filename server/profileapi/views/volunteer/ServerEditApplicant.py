@@ -1,10 +1,10 @@
 from django.http import JsonResponse
 
-from server.defaultview import DefaultView
-from server.models import Volunteer
+from server.profileapi.models import Volunteer
+from django.views.generic import View
 
 # This is a view to save changes to a volunteer, for the server admins to use. AJAX, responds with a JSON string.
-class ServerEditApplicant(DefaultView):
+class ServerEditApplicant(View):
 	def post(self, request):
 		super(ServerEditApplicant, self).get(request)
 		context = {}

@@ -2,12 +2,11 @@ from django.shortcuts import render, redirect
 
 from page import views
 from page.models import Page
-from server.defaultview import DefaultView
 from server.profileapi.views.pages.StripSettings import StripSettings
 from server.models import Server
 
 
-class EditPage(DefaultView):
+class EditPage:
 	def get(self, request, page_id):
 		super(EditPage, self).get(request)
 		context = {}

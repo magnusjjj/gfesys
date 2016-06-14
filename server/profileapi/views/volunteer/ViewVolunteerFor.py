@@ -1,10 +1,11 @@
 from django.shortcuts import render
 
-from server.defaultview import DefaultView
-from server.models import Server, Volunteer
+from server.models import Server
+from server.profileapi.models import Volunteer
+from django.views.generic import View
 
 # This view is used when a user wants to send in an application to become a volunteer
-class ViewVolunteerFor(DefaultView):
+class ViewVolunteerFor(View):
 	def get(self, request, server_id):
 		super(ViewVolunteerFor, self).get(request)
 		context = {}

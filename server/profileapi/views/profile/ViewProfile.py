@@ -2,12 +2,13 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render
 
 from page.models import Page
-from server.defaultview import DefaultView
-from server.models import Server, Volunteer
+from server.models import Server
+from server.profileapi.models import Volunteer
+from django.views.generic import View
 
 # This view is for viewing a specific server
 
-class ViewDetail(DefaultView):
+class ViewDetail(View):
 	def get(self, request, slug, slug_page=None):
 		super(ViewDetail, self).get(request)
 		context = {}
