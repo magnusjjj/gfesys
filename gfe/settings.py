@@ -21,7 +21,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
 
-INSTALLED_APPS = ('django.contrib.sites', 'sorl.thumbnail', 'django_extensions', 'server', 'member', 'page', 'pipeline', 'newsletter', 'oauth2_provider', 'corsheaders') + INSTALLED_APPS
+INSTALLED_APPS = ('django.contrib.sites',
+				'sorl.thumbnail',
+				'django_extensions',
+				'server',
+				'member',
+				'page',
+				'pipeline',
+				'newsletter',
+				'oauth2_provider',
+				'corsheaders',
+				'profileapi') + INSTALLED_APPS
 
 MIDDLEWARE_CLASSES = ('corsheaders.middleware.CorsMiddleware','oauth2_provider.middleware.OAuth2TokenMiddleware') + MIDDLEWARE_CLASSES
 

@@ -9,7 +9,8 @@ from spirit.models.category import Category
 from spirit.models.topic import Topic
 from spirit.models.comment import Comment
 from member.models import Member
-from server.models import Server, Volunteer
+from server.models import Server
+from profileapi.models import Volunteer
 from gfe.settings import *
 from faker import Factory
 import random
@@ -188,7 +189,7 @@ class Command(BaseCommand):
 			
 			for i in range(0, 300):
 				vol = Volunteer(member=random.choice(self.members),
-					server=random.choice(servers),
+					volunteer_for=random.choice(servers),
 					answer=self.Faker.text(),
 					role=self.Faker.word(),
 					status=random.choice(statuscodes),

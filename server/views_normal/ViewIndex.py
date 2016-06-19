@@ -1,12 +1,12 @@
 from server.models import Server
 from newsletter.models import Submission
 from django.views.generic import View
+from django.shortcuts import render
 
 # This view is for the listing of all the servers
 
 class ViewIndex(View):
 	def get(self, request):
-		super(ViewIndex, self).get(request)
 		context = {}
 		status_list = [Server.STATUS_LIVE, Server.STATUS_TESTING]
 		if hasattr(request.user, 'is_administrator') and request.user.is_administrator:

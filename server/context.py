@@ -4,10 +4,8 @@
 # Changelog:
 # 2015-04-14 - Magnus Johnsson - Added the license header
 
-from django.template import loader, RequestContext
-from models import Member, Server, Volunteer
 from django.core.urlresolvers import resolve
-from django.core.cache import cache
+
 
 # This file is kindof a proxy deal, that sets some variables
 # we need all over the system, like the current user, 

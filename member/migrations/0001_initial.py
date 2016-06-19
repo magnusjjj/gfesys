@@ -56,6 +56,7 @@ class Migration(migrations.Migration):
                 ('is_opt_in', models.BooleanField(default=False)),
                 ('use_gravatar', models.BooleanField(default=False)),
                 ('gravatar_type', models.CharField(default=b'identicon', max_length=20, choices=[(b'identicon', b'A geometric pattern based on an email hash'), (b'monsterid', b"A generated 'monster' with different colors, faces, etc"), (b'wavatar', b'Generated faces with differing features and backgrounds'), (b'retro', b'awesome generated, 8-bit arcade-style pixelated faces')])),
+                ('membership_populated', models.BooleanField(default=True)),
                 ('groups', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Group', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of his/her group.', verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(related_query_name='user', related_name='user_set', to='auth.Permission', blank=True, help_text='Specific permissions for this user.', verbose_name='user permissions')),
             ],
