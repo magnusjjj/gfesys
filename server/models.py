@@ -29,7 +29,7 @@ class Server(ProfileTemplate):
 	)
 	
 	def get_absolute_url(self):
-		return reverse('server:detail', args=[str(self.slug)])
+		return reverse('server:profile:detail', args=[str(self.slug)])
 
 	status = models.IntegerField(choices=STATUS_CHOICES, default=3)
 
