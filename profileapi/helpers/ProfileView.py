@@ -6,8 +6,8 @@ class ProfileView(View):
 	profilemodel = None
 
 	@classonlymethod
-	def as_view(cls, **initkwargs):
+	def as_view(cls, **kwargs):
 		context = {}
-		context["profilemodel"] = initkwargs["profilemodel"]
-		initkwargs["context"] = context
-		return super(ProfileView, cls).as_view(**initkwargs)
+		context["profilemodel"] = kwargs["profilemodel"]
+		kwargs["context"] = context
+		return super(ProfileView, cls).as_view(**kwargs)

@@ -11,23 +11,12 @@
 
 from django.conf.urls import patterns, url, include
 from server.views_normal.ViewIndex import ViewIndex
-from profileapi.views.profile.UpdateProfile import UpdateProfile
 from profileapi.views.profile.ViewProfileList import ViewProfileList
-from profileapi.views.profile.EditProfile import EditProfile
-from profileapi.views.profile.ViewProfile import ViewProfile
-from profileapi.views.profile.UploadProfileImage import UploadProfileImage
-from profileapi.views.volunteer.ViewVolunteerFor import ViewVolunteerFor
-from profileapi.views.volunteer.ViewManageVolunteers import ViewManageVolunteers
-from profileapi.views.volunteer.EditApplicant import EditApplicant
-from profileapi.views.volunteer.ViewAnswers import ViewAnswers
-from profileapi.views.pages.EditPage import EditPage
-from profileapi.views.pages.AddPage import AddPage
-from profileapi.views.pages.DeletePage import DeletePage
 
 from models import Server
 
 urlpatterns = patterns('',
-					url(r'^$', ViewIndex.as_view(), name='index'),
-					url(r'^$servers/', ViewProfileList.as_view(), name='serverlist'),
+					url(r'^$', ViewIndex.as_view(profilemodel=Server), name='index'),
+					url(r'^$servers/', ViewProfileList.as_view(profilemodel=Server), name='serverlist'),
 					url('', include("server.profileurls", namespace="profile")),
 				)
