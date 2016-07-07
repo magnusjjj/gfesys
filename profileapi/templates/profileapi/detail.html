@@ -3,7 +3,7 @@
 {% block content %}
   {% if profile %}
 	<h1 class="page-header">{{ profile.name}}
-		{% if volunteer and volunteer.sec_accept or user.is_administrator %}<a href="{% profileurl "editprofile" profile.pk %}" class="btn btn-default">Edit</a>{% endif %}
+		{% if volunteer and volunteer.sec_accept or user.is_administrator %}<a href="{% profileurl "edit" profile.pk %}" class="btn btn-default">Edit</a>{% endif %}
 		{% if volunteer and volunteer.sec_accept or user.is_administrator %}<a href="{% profileurl "managevolunteers" profile.pk %}" class="btn btn-default">Manage Volunteers</a>{% endif %}
 		{% if not volunteer %}<a href="{% profileurl "volunteer" profile.pk%}" class="btn btn-default">Volunteer for this profile</a>{% endif %}
 	</h1>

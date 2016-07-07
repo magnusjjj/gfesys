@@ -31,8 +31,8 @@ app_name = "server"
 
 urlpatterns = patterns('',
 					   url(r'^volunteer/(?P<profile_id>[0-9]+)/$', ViewVolunteerFor.as_view(profilemodel=Server), name='volunteer'),
-					   url(r'^editprofile/(?P<profile_id>\d+)/$', EditProfile.as_view(profilemodel=Server), name='edit'),
-					   url(r'^newprofile', EditProfile.as_view(profilemodel=Server), name='new'),
+					   url(r'^edit/(?P<profile_id>\d+)/$', EditProfile.as_view(profilemodel=Server), name='edit'),
+					   url(r'^new', EditProfile.as_view(profilemodel=Server), name='new'),
 					   url(r'^managevolunteers/(?P<profile_id>\d+)/$', ViewManageVolunteers.as_view(profilemodel=Server), name='managevolunteers'),
 					   url(r'^editapplicant$', EditApplicant.as_view(profilemodel=Server), name='profileeditapplicant'),
 					   url(r'^viewanswers$', ViewAnswers.as_view(profilemodel=Server), name='profileviewanswers'),
