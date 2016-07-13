@@ -4,22 +4,18 @@ from profileapi.models import Volunteer
 from django.views.generic import View
 from profileapi.helpers.ProfileView import ProfileView
 
-# Like the above, but simply returns the answers that the volunteer filled in while applying
+# Simply returns the answers that the volunteer filled in while applying
 class ViewAnswers(ProfileView):
 	def post(self, request):
-		super(ViewAnswers, self).get(request)
 		# Get the applicant
 		applicant = Volunteer.objects.get(pk=int(request.POST["applicant_id"]))
-
-		# Fetch our access rights
-		self.setrights_server(request, context, applicant.server_id)
 
 		# A simple list for the errors, and a dictionary for the return values
 		errors = []
 		vals = {}
 
 		# Sanity check that we have edit rights
-		if not context["volunteer"].sec_accept:
+		if not request.user.has_perm("profileapi.volunteer_edit", applicant.volunteer_for):
 			errors.push("You don't have access to this command")
 		else:
 			# Just format the response a little bit

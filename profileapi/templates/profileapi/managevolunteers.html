@@ -1,14 +1,15 @@
 {% extends "base.html" %}
+{% load staticfiles profileurl %}
 {% block content %}
-	  {% if server %}		
+	  {% if profile %}
 			{% if volunteer.sec_accept or user.is_administrator %}
-				<h1 class="page-header">{{ server.name}}</h1>
+				<h1 class="page-header">{{ profile.name}}</h1>
 				<div class="row placeholders">
-					<div class="col-sm-2" href="/servers/{{ server.id }}/">
-					  <img src="{{server.image.url}}" class="img-responsive" alt="{{ server.name}}">
+					<div class="col-sm-2" href="{{profile.get_absolute_url}}">
+					  <img src="{{profile.image.url}}" class="img-responsive" alt="{{ profile.name}}">
 					</div>
-					<div class="col-sm-2" href="/servers/{{ server.id }}/">
-					  <span class="text-muted">{{server.description}}</span>
+					<div class="col-sm-2" href="{{profile.get_absolute_url}}">
+					  <span class="text-muted">{{profile.description}}</span>
 					</div>
 				</div>
 				<div class="row">
@@ -32,7 +33,7 @@
 									<td>
 										<div class="checkbox">
 											<label>
-												<input type="checkbox" class="sec_accept" data-applicantid="{{a.id}}" {% if a.sec_accept %} checked="checked" {% endif %} name="sec_accept"/> Can edit serverinfo
+												<input type="checkbox" class="sec_accept" data-applicantid="{{a.id}}" {% if a.sec_accept %} checked="checked" {% endif %} name="sec_accept"/> Can edit profileinfo
 											</label>
 										</div>
 									</td>
@@ -107,7 +108,7 @@
 						{
 							$(this).attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
 							$.ajax({
-								url: "{% url 'server:servereditapplicant' %}",
+								url: "{% profileurl 'editapplicant' %}",
 								type: "POST",
 								headers: {"X-CSRFToken": csrftoken},
 								data: {"applicant_id": $(this).data("applicantid"), "role": $(this).val()}
@@ -125,7 +126,7 @@
 						outside = $(this);
 						$(this).attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
 						$.ajax({
-							url: "{% url 'server:servereditapplicant' %}",
+							url: "{% profileurl 'editapplicant' %}",
 							type: "POST",
 							headers: {"X-CSRFToken": csrftoken},
 							data: {"applicant_id": $(this).data("applicantid"), "sec_edit": $(this).is(':checked')}
@@ -141,7 +142,7 @@
 						
 						$(this).attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
 						$.ajax({
-							url: "{% url 'server:servereditapplicant' %}",
+							url: "{% profileurl 'editapplicant' %}",
 							type: "POST",
 							headers: {"X-CSRFToken": csrftoken},
 							data: {"applicant_id": $(this).data("applicantid"), "sec_accept": $(this).is(':checked')}
@@ -157,7 +158,7 @@
 						
 						$(this).attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
 						$.ajax({
-							url: "{% url 'server:servereditapplicant' %}",
+							url: "{% profileurl 'editapplicant' %}",
 							type: "POST",
 							headers: {"X-CSRFToken": csrftoken},
 							data: {"applicant_id": $(this).data("applicantid"), "sec_moderator": $(this).is(':checked')}
@@ -172,7 +173,7 @@
 						outside = $(this).parent().parent().parent();
 						outside.attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
 						$.ajax({
-							url: "{% url 'server:servereditapplicant' %}",
+							url: "{% profileurl 'editapplicant' %}",
 							type: "POST",
 							headers: {"X-CSRFToken": csrftoken},
 							data: {"applicant_id": $(this).data("applicantid"), "status": $(this).data("status")}
@@ -199,7 +200,7 @@
 					});
 					
 					$(".viewanswers").click(function(){
-						$("#modal_manage").data("url", "{% url 'server:serverviewanswers' %}").data("applicantid", $(this).data("applicantid")).modal();
+						$("#modal_manage").data("url", "{% profileurl 'viewanswers' %}").data("applicantid", $(this).data("applicantid")).modal();
 					});
 				});
 				
@@ -208,6 +209,6 @@
 			<div class="alert alert-danger" role="alert">You don't have the right to access this function! Boo!</div>
 			{% endif %}
 	  {% else %}
-		<p>Whoops! This server does not exist.</p>
+		<p>Whoops! This profile does not exist.</p>
 	  {% endif %}
 {% endblock %}

@@ -34,7 +34,7 @@ class ViewProfile(ProfileView):
 								status="OK")
 
 		self.context["has_volunteer_edit"] = request.user.has_perm("volunteer_edit", self.context["profile"])
-		self.context["has_page_edit"] = request.user.has_perm("page_edit",self.context["profile"])
+		self.context["has_page_edit"] = request.user.has_perm("edit_page",self.context["profile"])
 
 		# And, BAM, render that thing.
 		return render(request,'profileapi/detail.html', self.context)

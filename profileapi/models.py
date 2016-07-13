@@ -51,10 +51,6 @@ class Volunteer(models.Model):
 
 	status = models.CharField(max_length=200, default="WAITING", choices=STATUSCODES)
 
-	sec_edit = models.BooleanField(default=False)
-	sec_accept = models.BooleanField(default=False)
-	sec_moderator = models.BooleanField(default=False)
-
 	createdon = models.DateTimeField('Created on', auto_now_add=True)
 
 	@staticmethod

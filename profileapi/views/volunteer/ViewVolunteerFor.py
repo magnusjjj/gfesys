@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render
 
 from server.models import Server
@@ -8,23 +9,22 @@ from profileapi.helpers.ProfileView import ProfileView
 # This view is used when a user wants to send in an application to become a volunteer
 class ViewVolunteerFor(ProfileView):
 	def get(self, request, profile_id):
-		context = {}
 		# Get the server in question
-		context["server"] = Server.objects.get(pk=profile_id)
+		self.context["profile"] = Server.objects.get(pk=profile_id)
 		# Render it
-		return render(request,'servers/volunteer.html', context)
+		return render(request,'profileapi/volunteer.html', self.context)
 
 	def post(self, request, profile_id):
-		context = {}
 		# Get the server in question
-		context["server"] = Server.objects.get(pk=profile_id)
+		self.context["server"] = Server.objects.get(pk=profile_id)
 		# Display a shiny message
-		context["hasposted"] = True
+		self.context["hasposted"] = True
 
 		# Create and save a volunteer
 		vol = Volunteer.objects.create(
 			member = request.user,
-			server = context["server"],
+			volunteer_for_object_id = self.context["profile"].pk,
+			volunteer_for_content_type=ContentType.objects.get_for_model(self.context["profile"]),
 			answer = request.POST["answer"],
 			role = "",
 		)
@@ -32,6 +32,6 @@ class ViewVolunteerFor(ProfileView):
 		vol.save()
 
 		# Render. Wooooo.
-		return render(request,'servers/volunteer.html', context)
+		return render(request,'profileapi/volunteer.html', self.context)
 
 
