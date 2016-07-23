@@ -7,40 +7,43 @@
 			<div class="form-group field-phone">
 				<label for="name" class="control-label">Name*</label>
 				<input type="text" name="name" value="{{profile.name}}" id="name" class="form-control" required="required"/>
-				<p class="help-block">It would help us a lot if you added the country prefix, but if you cant figure it out leave it out.</p>
 			</div>		
 			<div class="form-group field-description">
-				<label for="description" class="control-label">Description. A few sentences about your server. Can be cut off in uncomfortable places.*</label>
+				<label for="description" class="control-label">Description. A few sentences about your {{ profilemodel.modelname }}. Can be cut off in uncomfortable places.*</label>
 				<textarea name="description" id="description" class="form-control">{{profile.description}}</textarea>
 			</div>
-			<div class="form-group field-questions">
-				<label for="questions" class="control-label">Questions for volunteers*</label>
-				<textarea name="questions" id="questions" class="form-control"/>{{profile.questions}}</textarea>
-			</div>
+			{% if profile.has_questions %}
+				<div class="form-group field-questions">
+					<label for="questions" class="control-label">Questions for volunteers*</label>
+					<textarea name="questions" id="questions" class="form-control"/>{{profile.questions}}</textarea>
+				</div>
+			{% endif %}
 			<div class="form-group field-image">
 				<label for="image" class="control-label">Image*</label>
 				<input type="file" name="image" value="" id="image" class="file">
 				<p class="help-block">The file should be a PNG file with 300x300 dimensions</p>
 			</div>
-			<div class="form-group field-status">
-				<label for="status" class="control-label">Status*</label>
-				<div class="radio">
-				  <label><input type="radio" name="status" value="{{profile.STATUS_DRAFT}}" {% if profile.status == profile.STATUS_DRAFT %} checked="checked" {%endif%}>Draft</label>
+			{% if profile.has_status %}
+				<div class="form-group field-status">
+					<label for="status" class="control-label">Status*</label>
+					<div class="radio">
+					  <label><input type="radio" name="status" value="{{profile.STATUS_DRAFT}}" {% if profile.status == profile.STATUS_DRAFT %} checked="checked" {%endif%}>Draft</label>
+					</div>
+					<div class="radio">
+					  <label><input type="radio" name="status" value="{{profile.STATUS_TESTING}}" {% if profile.status == profile.STATUS_TESTING %} checked="checked" {%endif%}>Testing</label>
+					</div>
+					<div class="radio">
+					  <label><input type="radio" name="status" value="{{profile.STATUS_LIVE}}" {% if profile.status == profile.STATUS_LIVE %} checked="checked" {%endif%}>Live</label>
+					</div>
+					<p class="help-block">The status of the server.
+						<ul>
+							<li>Drafts won't be listed in the server listings, but can be viewed directly via the URL.</li>
+							<li>Testing is for 'beta' servers, where you are not sure that everything is set up correctly but want players.</li>
+							<li>It puts up a warning about it. Live has no warning, and you are listed, for you know, when you are done ;)</li>
+						</ul>
+					</p>
 				</div>
-				<div class="radio">
-				  <label><input type="radio" name="status" value="{{profile.STATUS_TESTING}}" {% if profile.status == profile.STATUS_TESTING %} checked="checked" {%endif%}>Testing</label>
-				</div>
-				<div class="radio">
-				  <label><input type="radio" name="status" value="{{profile.STATUS_LIVE}}" {% if profile.status == profile.STATUS_LIVE %} checked="checked" {%endif%}>Live</label>
-				</div>
-				<p class="help-block">The status of the server.
-					<ul>
-						<li>Drafts won't be listed in the server listings, but can be viewed directly via the URL.</li>
-						<li>Testing is for 'beta' servers, where you are not sure that everything is set up correctly but want players.</li>
-						<li>It puts up a warning about it. Live has no warning, and you are listed, for you know, when you are done ;)</li>
-					</ul>
-				</p>
-			</div>
+			{% endif %}
 <!--Here comes some GG power! -->
 <script>
 $(document).ready(function() {
@@ -55,9 +58,9 @@ $(".rocketchannelX").click(function() {$(this).parent().parent().remove()})
 <div class="form-group field-rocket">
 <label for="rocket" class="control-label">Rocket.Chat*</label>
 				<div class="radio" id="rocketenabledwrapper">
-				  <label id="rocketenabledlabel"><input id="rocketenabled" type="checkbox" name="rocketenabled" value="True" {% for channel in channels %} {% if channel.rocketenabled == True %} checked="checked" {%endif%} {% endfor %}>Enable Rocket.Chat for your server.</input></label>
+				  <label id="rocketenabledlabel"><input id="rocketenabled" type="checkbox" name="rocketenabled" value="True" {% for channel in channels %} {% if channel.rocketenabled == True %} checked="checked" {%endif%} {% endfor %}>Enable Rocket.Chat for your {{ profilemodel.modelname }}.</input></label>
 	</div>
-	<p class="help-block">Current channels assigned to server:
+	<p class="help-block">Current channels assigned to {{ profilemodel.modelname }}:
 					 
 					<div id="rocketwrapper">
 						

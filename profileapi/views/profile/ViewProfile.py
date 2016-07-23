@@ -2,7 +2,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render
 
 from page.models import Page
-from server.models import Server
 from profileapi.models import Volunteer
 from profileapi.helpers.ProfileView import ProfileView
 

@@ -20,9 +20,8 @@ class EditApplicant(ProfileView):
 		vals = {}
 
 		# Sanity check that we have editing rights
-		if not request.user.is_administrator:# This view is used when a user wants to send in an application to become a volunteer
-			if self.context["volunteer"].sec_accept:
-				errors.push("You don't have access to this command")
+		if not request.user.has_perm("volunteer_edit", applicant.volunteer_for):
+			errors.push("You don't have access to this command")
 		else:
 			# Edit the values requested:
 			if "role" in request.POST:
@@ -30,26 +29,25 @@ class EditApplicant(ProfileView):
 
 			if "sec_accept" in request.POST:
 				if request.POST["sec_accept"] == "true":
-					assign_perm('profileapi.volunteer_edit', applicant.member, applicant.volunteer_for)
-
+					assign_perm('volunteer_edit', applicant.member, applicant.volunteer_for)
 				else:
-					remove_perm('profileapi.volunteer_edit', applicant.member, applicant.volunteer_for)
+					remove_perm('volunteer_edit', applicant.member, applicant.volunteer_for)
 
 			if "sec_edit" in request.POST:
 				if request.POST["sec_edit"] == "true":
-					assign_perm('profileapi.add_page', applicant.member, applicant.volunteer_for)
-					assign_perm('profileapi.edit_page', applicant.member, applicant.volunteer_for)
-					assign_perm('profileapi.edit', applicant.member, applicant.volunteer_for)
+					assign_perm('add_page', applicant.member, applicant.volunteer_for)
+					assign_perm('edit_page', applicant.member, applicant.volunteer_for)
+					assign_perm('edit', applicant.member, applicant.volunteer_for)
 				else:
-					remove_perm('profileapi.add_page', applicant.member, applicant.volunteer_for)
-					remove_perm('profileapi.edit_page', applicant.member, applicant.volunteer_for)
-					assign_perm('profileapi.edit', applicant.member, applicant.volunteer_for)
+					remove_perm('add_page', applicant.member, applicant.volunteer_for)
+					remove_perm('edit_page', applicant.member, applicant.volunteer_for)
+					remove_perm('edit', applicant.member, applicant.volunteer_for)
 
 			if "sec_moderator" in request.POST:
 				if request.POST["sec_moderator"] == "true":
-					assign_perm('profileapi.moderate', applicant.member, applicant.volunteer_for)
+					assign_perm('moderate', applicant.member, applicant.volunteer_for)
 				else:
-					remove_perm('profileapi.moderate', applicant.member, applicant.volunteer_for)
+					remove_perm('moderate', applicant.member, applicant.volunteer_for)
 
 			if "status" in request.POST:
 				applicant.status = request.POST["status"]

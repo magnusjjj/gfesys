@@ -25,6 +25,8 @@ def context(request):
 		context["section"] = "members"
 	if app_name == "spirit":
 		context["section"] = "forums"
+	if app_name == "gfegroups":
+		context["section"] = "gfegroups"
 	if app_name == "page":
 		context["section"] = "page"
 		

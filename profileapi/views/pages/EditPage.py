@@ -18,7 +18,7 @@ class EditPage(ProfileView):
 			self.context["profile"] = page.parent
 
 			# Security sanity check that we have edit rights
-			if request.user.has_perm("profileapi.edit_page", page):
+			if request.user.has_perm("edit_page", page):
 				return render(request,'profileapi/addpage.html', self.context)
 
 	def post(self, request, page_id):
@@ -33,6 +33,6 @@ class EditPage(ProfileView):
 			strip = StripSettings()
 
 			# Security sanity check that we have edit rights
-			if request.user.has_perm("profileapi.edit_page", page):
+			if request.user.has_perm("edit_page", page):
 				page = views.handle_save(request, page_id, self.context["profile"], strip)
 				return redirect(self.context["profile"])

@@ -16,7 +16,7 @@ class AddPage(ProfileView):
 		self.context["page"] = page
 
 		# Security sanity check that we have edit rights
-		if request.user.has_perm("profileapi.add_page", self.context["profile"]):
+		if request.user.has_perm("add_page", self.context["profile"]):
 			# Some sort of wierd error causes the request to point to the wrong place. What?
 			self.context["request"] = request
 			return render(request,'profileapi/addpage.html', self.context)
@@ -25,7 +25,7 @@ class AddPage(ProfileView):
 		self.context["profile"] = self.profilemodel.objects.get(pk=profile_id)
 
 		# Security sanity check that we have edit rights
-		if request.user.has_perm("profileapi.edit_page", self.context["profile"]):
+		if request.user.has_perm("edit_page", self.context["profile"]):
 			# Some sort of wierd error causes the request to point to the wrong place. What?
 			self.context["request"] = request
 			strip = StripSettings()

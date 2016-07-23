@@ -12,8 +12,6 @@
 import profileapi.views.pages.AddPage
 from django.conf.urls import patterns, url
 
-from profileapi.views.profile.UpdateProfile import UpdateProfile
-from profileapi.views.profile.ViewProfileList import ViewProfileList
 from profileapi.views.profile.EditProfile import EditProfile
 from profileapi.views.profile.ViewProfile import ViewProfile
 from profileapi.views.profile.UploadProfileImage import UploadProfileImage
@@ -37,7 +35,7 @@ urlpatterns = patterns('',
 					   url(r'^editapplicant$', EditApplicant.as_view(profilemodel=Server), name='editapplicant'),
 					   url(r'^viewanswers$', ViewAnswers.as_view(profilemodel=Server), name='viewanswers'),
 					   url(r'^uploadprofileimage/(?P<profile_id>\d+)/$', UploadProfileImage.as_view(profilemodel=Server), name='uploadprofileimage'),
-					   url(r'^updateprofile/(?P<profile_id>\d+)/$', UpdateProfile.as_view(profilemodel=Server), name='updateprofileinfo'),
+					   url(r'^updateprofile/(?P<profile_id>\d+)/$', EditProfile.as_view(profilemodel=Server), name='updateprofileinfo'),
 					   url(r'^addpage/(?P<profile_id>\d+)/$', AddPage.as_view(profilemodel=Server), name='addpage'),
 					   url(r'^deletepage/(?P<page_id>\d+)/$', DeletePage.as_view(profilemodel=Server), name='deletepage'),
 					   url(r'^editpage/(?P<page_id>\d+)/$', EditPage.as_view(profilemodel=Server), name='editpage'),

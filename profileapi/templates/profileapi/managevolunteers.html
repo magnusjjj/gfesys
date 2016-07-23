@@ -1,8 +1,9 @@
 {% extends "base.html" %}
-{% load staticfiles profileurl %}
+{% load staticfiles profileurl guardian_tags %}
 {% block content %}
 	  {% if profile %}
-			{% if volunteer.sec_accept or user.is_administrator %}
+			{% get_obj_perms user for profile as "permissions" %}
+			{% if "volunteer_edit" in permissions %}
 				<h1 class="page-header">{{ profile.name}}</h1>
 				<div class="row placeholders">
 					<div class="col-sm-2" href="{{profile.get_absolute_url}}">
@@ -13,12 +14,21 @@
 					</div>
 				</div>
 				<div class="row">
+					<div class="alert alert-danger">
+						Remember that the security checkboxes below WORK EVEN WHEN YOU HAVE NOT ACCEPTED THE USER.
+						If you tick a checkbox to allow a person to edit pages, that will work even when you have not
+						'accepted' the user. If you kick someone, uncheck the checkboxes :).
+					</div>
+				</div>
+				<div class="row">
 					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>Date</th>
-								<th>Name of applicant</th>
-								<th>Answers to questions</th>
+								<th>Name of {{profile.volunteername}}</th>
+								{% if profile.has_questions %}
+									<th>Answers to questions</th>
+								{% endif %}
 								<th colspan="3">Access rights</th>
 								<th>Role</th>
 								<th>Status</th>
@@ -26,28 +36,31 @@
 						</thead>
 						<tbody>
 							{% for a in applicants %}
+								{% get_obj_perms a.member for profile as "permissions" %}
 								<tr {% if not a.status = "OK" %} class="warning" {% endif %}>
 									<td>{{a.createdon}}</td>
 									<td>{{a.member}}</td>
-									<td><a href="#" class="viewanswers" data-applicantid="{{a.id}}">View answers</a></td>
+									{% if profile.has_questions %}
+										<td><a href="#" class="viewanswers" data-applicantid="{{a.id}}">View answers</a></td>
+									{% endif %}
 									<td>
 										<div class="checkbox">
 											<label>
-												<input type="checkbox" class="sec_accept" data-applicantid="{{a.id}}" {% if a.sec_accept %} checked="checked" {% endif %} name="sec_accept"/> Can edit profileinfo
+												<input type="checkbox" class="sec_edit" data-applicantid="{{a.id}}" {% if "edit" in permissions %} checked="checked" {% endif %} name="sec_edit"/> Can edit profileinfo
 											</label>
 										</div>
 									</td>
 									<td>
 										<div class="checkbox">
 											<label>
-												<input type="checkbox" class="sec_edit" data-applicantid="{{a.id}}" {% if a.sec_edit %} checked="checked" {% endif %} name="sec_edit"/> Can manage volunteers
+												<input type="checkbox" class="sec_accept" data-applicantid="{{a.id}}" {% if "volunteer_edit" in permissions %} checked="checked" {% endif %} name="sec_accept"/> Can manage volunteers
 											</label>
 										</div> 
 									</td>
 									<td>
 										<div class="checkbox">
 											<label>
-												<input type="checkbox" class="sec_moderator" data-applicantid="{{a.id}}" {% if a.sec_moderator %} checked="checked" {% endif %} name="sec_moderator"/> Moderator
+												<input type="checkbox" class="sec_moderator" data-applicantid="{{a.id}}" {% if "moderate" in permissions%} checked="checked" {% endif %} name="sec_moderator"/> Moderator
 											</label>
 										</div> 
 									</td>
@@ -100,38 +113,46 @@
 				
 				
 				<script type="text/javascript">
+				// So sorry. Or something ;). Copypasta code here because at some point i was bored. Can't be arsed to fix it now. <-- Tuxie, 2016
+			  $( function() {
+				$( ".sec_edit" ).tooltip();
+				$( ".sec_accept" ).tooltip();
+				$( ".sec_moderator" ).tooltip();
+				$( ".btn-group" ).tooltip();
+			  } );
+
 				$(function(){
 					csrftoken = $.cookie('csrftoken');
 					$('.rolechange').keyup(function(e){
 						outside = $(this);
 						if(e.keyCode == 13)
 						{
-							$(this).attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
+							$(this).attr('title', 'Saving...').tooltip('open');
 							$.ajax({
 								url: "{% profileurl 'editapplicant' %}",
 								type: "POST",
 								headers: {"X-CSRFToken": csrftoken},
 								data: {"applicant_id": $(this).data("applicantid"), "role": $(this).val()}
 							}).done(function(data){
-								outside.attr('title', 'Saved!').tooltip('fixTitle').tooltip('show');
+								outside.attr('title', 'Saved!').tooltip('open');
 							}, 'json');
 						}
 					}).blur(function(e){
 						$(this).tooltip("destroy");
 					}).focus(function(e){
-						$(this).tooltip({title: "When you want to save, just press enter.", trigger: "manual"}).tooltip("show");
+						$(this).tooltip({title: "When you want to save, just press enter.", trigger: "manual"}).tooltip("open");
 					});
 				
 					$('.sec_edit').change(function(e){
 						outside = $(this);
-						$(this).attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
+						$(this).attr('title', 'Saving...').tooltip('open');
 						$.ajax({
 							url: "{% profileurl 'editapplicant' %}",
 							type: "POST",
 							headers: {"X-CSRFToken": csrftoken},
 							data: {"applicant_id": $(this).data("applicantid"), "sec_edit": $(this).is(':checked')}
 						}).done(function(data){
-							outside.attr('title', 'Saved!').tooltip('fixTitle').tooltip('show');
+							outside.attr('title', 'Saved!').tooltip('open');
 						}, 'json');
 					}).blur(function(e){
 						$(this).tooltip("destroy");
@@ -140,14 +161,14 @@
 					$('.sec_accept').change(function(e){
 						outside = $(this);
 						
-						$(this).attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
+						$(this).attr('title', 'Saving...').tooltip('open');
 						$.ajax({
 							url: "{% profileurl 'editapplicant' %}",
 							type: "POST",
 							headers: {"X-CSRFToken": csrftoken},
 							data: {"applicant_id": $(this).data("applicantid"), "sec_accept": $(this).is(':checked')}
 						}).done(function(data){
-							outside.attr('title', 'Saved!').tooltip('fixTitle').tooltip('show');
+							outside.attr('title', 'Saved!').tooltip('open');
 						}, 'json');
 					}).blur(function(e){
 						$(this).tooltip("destroy");
@@ -156,14 +177,14 @@
 					$('.sec_moderator').change(function(e){
 						outside = $(this);
 						
-						$(this).attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
+						$(this).attr('title', 'Saving...').tooltip('open');
 						$.ajax({
 							url: "{% profileurl 'editapplicant' %}",
 							type: "POST",
 							headers: {"X-CSRFToken": csrftoken},
 							data: {"applicant_id": $(this).data("applicantid"), "sec_moderator": $(this).is(':checked')}
 						}).done(function(data){
-							outside.attr('title', 'Saved!').tooltip('fixTitle').tooltip('show');
+							outside.attr('title', 'Saved!').tooltip('open');
 						}, 'json');
 					}).blur(function(e){
 						$(this).tooltip("destroy");
@@ -171,14 +192,14 @@
 				
 					$(".dropdown-menu a").click(function(){
 						outside = $(this).parent().parent().parent();
-						outside.attr('title', 'Saving...').tooltip('fixTitle').tooltip('show');
+						outside.attr('title', 'Saving...').tooltip('open');
 						$.ajax({
 							url: "{% profileurl 'editapplicant' %}",
 							type: "POST",
 							headers: {"X-CSRFToken": csrftoken},
 							data: {"applicant_id": $(this).data("applicantid"), "status": $(this).data("status")}
 						}).done(function(data){
-							outside.attr('title', 'Saved!').tooltip('fixTitle').tooltip('show');
+							outside.attr('title', 'Saved!').tooltip('open');
 							outside.parent().parent().find(".status_box").text(data.statusdesc);
 						}, 'json');
 					});

@@ -1,22 +1,20 @@
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import render
 
-from server.models import Server
 from profileapi.models import Volunteer
-from django.views.generic import View
 from profileapi.helpers.ProfileView import ProfileView
 
 # This view is used when a user wants to send in an application to become a volunteer
 class ViewVolunteerFor(ProfileView):
 	def get(self, request, profile_id):
 		# Get the server in question
-		self.context["profile"] = Server.objects.get(pk=profile_id)
+		self.context["profile"] = self.profilemodel.objects.get(pk=profile_id)
 		# Render it
 		return render(request,'profileapi/volunteer.html', self.context)
 
 	def post(self, request, profile_id):
 		# Get the server in question
-		self.context["server"] = Server.objects.get(pk=profile_id)
+		self.context["server"] = self.profilemodel.objects.get(pk=profile_id)
 		# Display a shiny message
 		self.context["hasposted"] = True
 

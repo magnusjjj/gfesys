@@ -15,7 +15,7 @@ class ViewAnswers(ProfileView):
 		vals = {}
 
 		# Sanity check that we have edit rights
-		if not request.user.has_perm("profileapi.volunteer_edit", applicant.volunteer_for):
+		if not request.user.has_perm("volunteer_edit", applicant.volunteer_for):
 			errors.push("You don't have access to this command")
 		else:
 			# Just format the response a little bit

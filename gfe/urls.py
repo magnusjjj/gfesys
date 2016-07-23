@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^$', include('server.urls')),
     url(r'^forum', include('spirit.urls')),
     url(r'^servers/', include('server.urls', namespace='server')),
+	url(r'^groups/', include('gfegroups.urls', namespace='gfegroups', app_name="gfegroups")),
     url(r'^members/', include('member.urls', app_name="member")),
     url(r'^admin/', include(admin.site.urls)),
 	surl(

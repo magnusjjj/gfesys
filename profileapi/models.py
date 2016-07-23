@@ -6,6 +6,19 @@ from django.contrib.contenttypes.models import ContentType
 from member.models import Member
 
 class ProfileTemplate(models.Model):
+	modelname = "ProfileTemplate. Set this, ffs, in your model."
+	has_questions = False
+	has_status = False
+	volunteername = "Membername. Set this, ffs, in your model."
+	joinbuttonname = "Join this, mothatrucker"
+
+	@staticmethod
+	def allow_add(user):
+		if user.is_administrator:
+			return True
+		else:
+			return False
+
 	def __str__(self):
 		return self.name
 
@@ -21,6 +34,16 @@ class ProfileTemplate(models.Model):
 	image_height = models.IntegerField()
 	image_width = models.IntegerField()
 
+	class Meta:
+		permissions = (
+			('volunteer_edit', 'Manage volunteers'),
+			('add_page', 'Add page'),
+			('edit_page', 'Edit page'),
+			('edit', 'Edit'),
+			('moderate', 'Moderate'),
+			('view_drafts', 'Viev draft profiles'),
+			('can_add', 'Can add profiles'),
+		)
 
 class rocketchat(models.Model):
 	chatroom_for_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
@@ -39,7 +62,7 @@ class Volunteer(models.Model):
 	role = models.CharField(max_length=200)
 
 	def __str__(self):
-		return self.server.name + '/' + self.member.firstname + ' ' + self.member.surname
+		return str(self.member)
 
 	STATUSCODES = (
 		("OK", "Accepted"),
@@ -54,19 +77,11 @@ class Volunteer(models.Model):
 	createdon = models.DateTimeField('Created on', auto_now_add=True)
 
 	@staticmethod
-	def patch_user_moderator(user, server):
-		is_server_moderator = False
-		try:
-			# And return if we find admin rights on the current user
-			volun = Volunteer.objects.all().filter(member=user, server=server, status="OK")[0]
-			if volun.sec_moderator:
-				is_server_moderator = True
-		except:
-			pass
-
-		if is_server_moderator:
+	def patch_user_moderator(user, profile):
+		# And return if we find admin rights on the current user
+		if user.has_perm('moderate', profile):
 			user.is_moderator = True
-			return user
+		return user
 
 	class Meta:
-		ordering = ["-sec_accept", "-sec_edit", "role"]
+		ordering = ["role"]

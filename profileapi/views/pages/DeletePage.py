@@ -16,6 +16,6 @@ class DeletePage(ProfileView):
 			self.context["profile"] = page.parent
 
 			# Security sanity check that we have edit rights
-			if request.user.has_perm("profileapi.delete_page", page):
+			if request.user.has_perm("delete_page", page):
 				page.delete()
 				return redirect(page.parent)

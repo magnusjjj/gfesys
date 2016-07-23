@@ -15,28 +15,20 @@ from profileapi.models import ProfileTemplate
 # https://docs.djangoproject.com/en/1.8/topics/db/models/
 # https://docs.djangoproject.com/en/dev/ref/contrib/contenttypes/
 
-class Server(ProfileTemplate):
-	questions = models.TextField()
-	has_questions = True
-	has_status = True
-	joinbuttonname = "Volunteer for this server!"
-	volunteername = "Volunteer"
-	
-	STATUS_LIVE = 1
-	STATUS_TESTING = 2
-	STATUS_DRAFT = 3
-	
-	STATUS_CHOICES = (
-		(STATUS_LIVE, 'Live'),
-		(STATUS_TESTING, 'Testing'),
-		(STATUS_DRAFT, 'Draft'),
-	)
-	
+class GfeGroup(ProfileTemplate):
+	modelname = "Group"
+	joinbuttonname = "Join this Group!"
+	volunteername = "Member"
+
 	def get_absolute_url(self):
-		return reverse('server:profile:detail', args=[str(self.slug)])
+		return reverse('gfegroups:profile:detail', args=[str(self.slug)])
 
-	status = models.IntegerField(choices=STATUS_CHOICES, default=3)
-
+	@staticmethod
+	def allow_add(user):
+		if user.is_anonymous():
+			return False
+		else:
+			return True
 
 	class Meta:
 		permissions = (

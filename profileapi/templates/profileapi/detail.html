@@ -1,23 +1,26 @@
 {% extends "base.html" %}
-{% load spirit_tags i18n profileurl %}
+{% load spirit_tags i18n profileurl guardian_tags %}
 {% block content %}
+{% get_obj_perms user for profile as "permissions" %}
   {% if profile %}
 	<h1 class="page-header">{{ profile.name}}
-		{% if volunteer and volunteer.sec_accept or user.is_administrator %}<a href="{% profileurl "edit" profile.pk %}" class="btn btn-default">Edit</a>{% endif %}
-		{% if volunteer and volunteer.sec_accept or user.is_administrator %}<a href="{% profileurl "managevolunteers" profile.pk %}" class="btn btn-default">Manage Volunteers</a>{% endif %}
-		{% if not volunteer %}<a href="{% profileurl "volunteer" profile.pk%}" class="btn btn-default">Volunteer for this profile</a>{% endif %}
+		{% if "edit" in permissions %}<a href="{% profileurl "edit" profile.pk %}" class="btn btn-default">Edit</a>{% endif %}
+		{% if "volunteer_edit" in permissions %}<a href="{% profileurl "managevolunteers" profile.pk %}" class="btn btn-default">Manage {{profile.volunteername}}s</a>{% endif %}
+		{% if not volunteer %}<a href="{% profileurl "volunteer" profile.pk%}" class="btn btn-default">{{profile.joinbuttonname}}</a>{% endif %}
 	</h1>
-	{% if profile.status == profile.STATUS_DRAFT %}
-	<br/>
-	<div class="icon">
-		<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;This profile is marked as a *draft*. This means it won't be listed in the profile listing just yet.</div>
-	</div>
-	{% endif %}
-	{% if profile.status == profile.STATUS_TESTING %}
-	<br/>
-	<div class="icon">
-		<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;This profile is marked as testing. This means it might not be fully set up yet, but is accepting and welcoming to players. Expect some bugs, but friendlyness.</div>
-	</div>
+	{% if profile.has_status %}
+		{% if profile.status == profile.STATUS_DRAFT %}
+		<br/>
+		<div class="icon">
+			<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;This profile is marked as a *draft*. This means it won't be listed in the profile listing just yet.</div>
+		</div>
+		{% endif %}
+		{% if profile.status == profile.STATUS_TESTING %}
+		<br/>
+		<div class="icon">
+			<div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;This profile is marked as testing. This means it might not be fully set up yet, but is accepting and welcoming to players. Expect some bugs, but friendlyness.</div>
+		</div>
+		{% endif %}
 	{% endif %}
 	<div class="row placeholders">
 		<div class="col-sm-2" href="/profiles/{{ profile.id }}/">
@@ -36,16 +39,16 @@
 				{% for page in pages %}
 					<li role="presentation"{% if page.slug == page_active %} class="active"{% endif %}><a href="#{{page.slug}}" aria-controls="{{page.slug}}" role="tab" data-toggle="tab">{{ page.name }}</a></li>
 				{% endfor %}
-				<li role="presentation"><a href="#volunteers" aria-controls="volunteers" role="tab" data-toggle="tab">Volunteers</a></li>
-				{% if volunteer and volunteer.sec_edit or user.is_administrator %}<li role="presentation"><a href="{% profileurl "addpage" profile.id %}"><span class="glyphicon glyphicon-plus"></span></a></li>{% endif %}
+				<li role="presentation"><a href="#volunteers" aria-controls="volunteers" role="tab" data-toggle="tab">{{profile.volunteername}}s</a></li>
+				{% if "edit" in permissions %}<li role="presentation"><a href="{% profileurl "addpage" profile.id %}"><span class="glyphicon glyphicon-plus"></span></a></li>{% endif %}
 			  </ul>
 			
 			  <!-- Tab panes -->
 			  <div class="tab-content">
 				{% for page in pages %}
 				<div role="tabpanel" class="tab-pane {% if page.slug == page_active %}active{% endif %}" id="{{page.slug}}">
-					{% if volunteer and volunteer.sec_edit or user.is_administrator %}<a class="btn btn-primary" href="{% profileurl "editpage" page.pk %}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>{% endif %}
-					{% if volunteer and volunteer.sec_edit or user.is_administrator %}<a class="btn btn-danger" style="float: right;" href="{% profileurl "deletepage" page.pk %}"><span class="glyphicon glyphicon-remove"></span> Delete</a>{% endif %}
+					{% if "edit" in permissions %}<a class="btn btn-primary" href="{% profileurl "editpage" page.pk %}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>{% endif %}
+					{% if "edit" in permissions %}<a class="btn btn-danger" style="float: right;" href="{% profileurl "deletepage" page.pk %}"><span class="glyphicon glyphicon-remove"></span> Delete</a>{% endif %}
 					{{page.content|safe}}
 				</div>
 				{% endfor %}
@@ -57,7 +60,7 @@
 						<tbody>
 							{% for volunteer in volunteers %}
 							<tr>
-								<td>{{volunteer.role}}</td><td>{{volunteer.member.firstname}} {{volunteer.member.surname}}</td>
+								<td>{{volunteer.role}}</td><td>{{volunteer.member}}</td>
 							</tr>
 							{% endfor %}
 						</tbody>

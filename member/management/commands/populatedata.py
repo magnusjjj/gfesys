@@ -191,10 +191,10 @@ class Command(BaseCommand):
 				vol = Volunteer(member=random.choice(self.members),
 					volunteer_for=random.choice(servers),
 					answer=self.Faker.text(),
-					role=self.Faker.word(),
+					role=self.Faker.word() + self.Faker.word(),
 					status=random.choice(statuscodes),
-					sec_edit=self.Faker.boolean(),
-					sec_accept=self.Faker.boolean()
+					#sec_edit=self.Faker.boolean(),
+					#sec_accept=self.Faker.boolean()
 				)
 				vol.save()
 				
