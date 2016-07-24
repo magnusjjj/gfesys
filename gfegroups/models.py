@@ -10,25 +10,36 @@ from django.db import models
 
 from profileapi.models import ProfileTemplate
 
-# This file is a description of the interface between the database and django.
-# We don't do anything fancy in here, so the regular django manual should be sufficient~
-# https://docs.djangoproject.com/en/1.8/topics/db/models/
-# https://docs.djangoproject.com/en/dev/ref/contrib/contenttypes/
+
 
 class GfeGroup(ProfileTemplate):
+	# modelname, joinbuttonname, and volunteername are all translations that you use in the templates.
+	#For instance, if you in the template do a 'This is  a list of all our {{profile.modelname}}s',
+	#that will type out 'This is a list of all our Groups'
 	modelname = "Group"
 	joinbuttonname = "Join this Group!"
 	volunteername = "Member"
 
+	# This function says what url to return if we do {{ profile.get_absolute_url }} in the template
 	def get_absolute_url(self):
 		return reverse('gfegroups:profile:detail', args=[str(self.slug)])
 
+	# This function, right here, says whether or not a user has the right to *create* a new group.
+	# Current policy is to allow anybody that is logged in to create new groups.
+	# This is where you might, at a future date, add something like a limit on the amount of groups a user is allowed
+	# to create.
 	@staticmethod
 	def allow_add(user):
 		if user.is_anonymous():
 			return False
 		else:
 			return True
+
+	# For some reason, we need to add this list of permissions on every submodel of ProfileTemplate. Go figure.
+	# Basically, its a list of permissions that you can have that relates to this model.
+	# For instance, you can have the permission 'volunteer_edit' on a group, and that lets you edit
+	# the group members permissions.
+	# Todo: Make a.. meta class to inherit from? :P
 
 	class Meta:
 		permissions = (

@@ -9,6 +9,12 @@
 # and we don't do anything freakier than what is explained in the tutorials. Promise <3
 # https://docs.djangoproject.com/en/1.8/topics/http/urls/
 
+# We do something slightly different though.
+# profilemodel=GfeGroup
+# Every url that imports functionality from the profileapi needs that. It sends along what type of model to expect.
+# Nothing really fancier than that :).
+# We also include gfegroups.profileurls seperately. Oooh. So whack.
+
 from django.conf.urls import patterns, url, include
 from profileapi.views.profile.ViewProfileList import ViewProfileList
 

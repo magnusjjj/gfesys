@@ -4,13 +4,19 @@
 # Changelog:
 # 2015-04-14 - Magnus Johnsson - Added the license header
 
+#todo: Refactor this, since its pretty much copypasta server/profileurls.py
+
 # This file handles what url's are mapped to what view.
-# This is much better explained in the Django manual,
-# and we don't do anything freakier than what is explained in the tutorials. Promise <3
+# This is explained pretty well in the django manual:
 # https://docs.djangoproject.com/en/1.8/topics/http/urls/
 
-import profileapi.views.pages.AddPage
-from django.conf.urls import patterns, url
+# We do something slightly different though.
+# profilemodel=GfeGroup
+# Every url that imports functionality from the profileapi needs that. It sends along what type of model to expect.
+# Nothing really fancier than that :).
+
+# Check out this list of imports baby. Ain't this a beauty.
+from django.conf.urls import patterns,url
 
 from profileapi.views.profile.EditProfile import EditProfile
 from profileapi.views.profile.ViewProfile import ViewProfile

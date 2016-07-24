@@ -7,7 +7,7 @@
 from django.core.urlresolvers import resolve
 
 
-# This file is kindof a proxy deal, that sets some variables
+# This file messes with the template context, setting up things
 # we need all over the system, like the current user, 
 # or which menu item is selected
 
@@ -18,7 +18,9 @@ def context(request):
 	
 	# Check which menu item to show as selected
 	app_name = res.app_name
-	
+
+	# Todo: Uh... do we really need a long string of if's here?
+
 	if app_name == "server":
 		context["section"] = "servers"
 	if app_name == "member":
