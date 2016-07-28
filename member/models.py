@@ -48,7 +48,7 @@ class Member(spirit.models.user.AbstractUser):
 	socialsecuritynumber = models.CharField(max_length=200)
 	
 	joinedon = models.DateTimeField('Joined on', auto_now_add=True)
-	refreshedon = models.DateTimeField('Refreshed on')
+	refreshedon = models.DateTimeField('Refreshed on', null=True)
 	
 	image = models.ImageField(max_length=500, width_field='image_width', height_field='image_height', upload_to='members')
 	image_height = models.IntegerField(default=0)
