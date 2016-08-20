@@ -73,7 +73,7 @@
 			{% for server in servers %}
 				<div class="col-md-3 gfe-list" style="">
 					<div class="thumbnail">
-						<img src="{{server.image.url}}" class="img-responsive" alt="{{ server.name}}">
+						<img src="{{server.get_image_url}}" class="img-responsive" alt="{{ server.name}}">
 						{% if server.status == server.STATUS_DRAFT %}
 						<br/>
 						<div class="icon">

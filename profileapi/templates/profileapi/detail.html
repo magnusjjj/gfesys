@@ -24,7 +24,7 @@
 	{% endif %}
 	<div class="row placeholders">
 		<div class="col-sm-2" href="/profiles/{{ profile.id }}/">
-		  <img src="{{profile.image.url}}" class="img-responsive" alt="{{ profile.name}}">
+		  <img src="{{profile.get_image_url}}" class="img-responsive" alt="{{ profile.name}}">
 		</div>
 		<div class="col-sm-2" href="/profiles/{{ profile.id }}/">
 		  <span class="text-muted">{{profile.description}}</span>

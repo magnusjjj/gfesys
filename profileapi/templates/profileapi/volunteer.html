@@ -5,7 +5,7 @@
 	<h1 class="page-header">Volunteer for {{ profile.name}}</h1>
 	<div class="row placeholders">
 		<div class="col-sm-2" href="{{ profile.get_absolute_url }}">
-		  <img src="{{profile.image.url}}" class="img-responsive" alt="{{ profile.name}}">
+		  <img src="{{profile.get_image_url}}" class="img-responsive" alt="{{ profile.name}}">
 		</div>
 		<div class="col-sm-2" href="{{ profile.get_absolute_url }}/">
 		  <span class="text-muted">{{profile.description}}</span>

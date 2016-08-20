@@ -64,7 +64,10 @@ class EditProfile(ProfileView):
 			if 'image' in request.FILES:
 				self.context["profile"].image = request.FILES['image']
 			else:
-				raise ValueError('You NEED to upload an image!')
+				self.context["profile"].image_height = 0
+				self.context["profile"].image_width = 0
+
+			#	raise ValueError('You NEED to upload an image!')
 
 			# Save the object
 			self.context["profile"].save()

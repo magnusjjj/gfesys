@@ -30,7 +30,7 @@
 			{% for profile in profiles %}
 				<div class="col-md-3 gfe-list" style="">
 					<div class="thumbnail">
-						<img src="{{profile.image.url}}" class="img-responsive" alt="{{ profile.name}}">
+						<img src="{{profile.get_image_url}}" class="img-responsive" alt="{{ profile.name}}">
 						<div class="caption">
 							<h3 style="min-height: 3em">{{ profile.name}}</h3>
 							<p style="min-height: 5.5em">{{profile.description}}</p>
