@@ -17,7 +17,9 @@ import os
 class Installer:
 	def pip_install(self):
 		# Install all the python dependencies :)
-		os.system("pip install -r requirements.txt")
+		os.system("python -m pip install --upgrade	pip")
+		os.system("python -m easy_install setuptools==25.1.0")
+		os.system("pip install --upgrade -r requirements.txt")
 
 	def installer_console_tutorial(self):
 		# We generate the settings file. This function *looks* big and scary, but is really super duper simple. Watch:
@@ -112,13 +114,13 @@ EMAILFROM = '""" + EMAILFROM.encode("string_escape") + """'"""
 			os.system(sys.executable + " manage.py populatedata")
 		print("All done!\n")
 
-
 print("What do you want to do? ")
 print("1) Install requirements ")
 print("2) Create a config file")
 print("3) Do post config")
 print("Anything else exits")
 command = sys.stdin.readline().strip()
+
 installer = Installer()
 if command == "1":
 	installer.pip_install()
