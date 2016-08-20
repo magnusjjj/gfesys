@@ -34,7 +34,7 @@ class ProfileTemplate(models.Model):
 	image_height = models.IntegerField()
 	image_width = models.IntegerField()
 
-	defaultimage = "default"
+	defaultimage = "/static/profileapi/unknown.png"
 
 	def get_image_url(self):
 		if((self.image_height != 0) and (self.image_width != 0)):
