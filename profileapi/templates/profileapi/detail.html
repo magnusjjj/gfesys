@@ -6,7 +6,7 @@
 	<h1 class="page-header">{{ profile.name}}
 		{% if "edit" in permissions %}<a href="{% profileurl "edit" profile.pk %}" class="btn btn-default">Edit</a>{% endif %}
 		{% if "volunteer_edit" in permissions %}<a href="{% profileurl "managevolunteers" profile.pk %}" class="btn btn-default">Manage {{profile.volunteername}}s</a>{% endif %}
-		{% if not volunteer %}<a href="{% profileurl "volunteer" profile.pk%}" class="btn btn-default">{{profile.joinbuttonname}}</a>{% endif %}
+		{% if not is_volunteer %}<a href="{% profileurl "volunteer" profile.pk%}" class="btn btn-default">{{profile.joinbuttonname}}</a>{% endif %}
 	</h1>
 	{% if profile.has_status %}
 		{% if profile.status == profile.STATUS_DRAFT %}

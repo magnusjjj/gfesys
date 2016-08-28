@@ -5,7 +5,7 @@ from page.models import Page
 from profileapi.models import Volunteer
 from profileapi.helpers.ProfileView import ProfileView
 
-# This view is for viewing a specific server
+# This view is for viewing a specific profile
 
 class ViewProfile(ProfileView):
 	profilemodel = None
@@ -31,6 +31,15 @@ class ViewProfile(ProfileView):
 		self.context["volunteers"] = Volunteer.objects.all().filter(volunteer_for_object_id=self.context["profile"].pk,
 								volunteer_for_content_type=ContentType.objects.get_for_model(self.context["profile"]),
 								status="OK")
+		try:
+			Volunteer.objects.get(volunteer_for_object_id=self.context["profile"].pk,
+										   volunteer_for_content_type=ContentType.objects.get_for_model(
+											self.context["profile"]),
+										   status="OK", member=request.user)
+			self.context["is_volunteer"] = True
+		except:
+			self.context["is_volunteer"] = False
+
 
 		self.context["has_volunteer_edit"] = request.user.has_perm("volunteer_edit", self.context["profile"])
 		self.context["has_page_edit"] = request.user.has_perm("edit_page",self.context["profile"])

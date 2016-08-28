@@ -37,9 +37,9 @@ class ProfileTemplate(models.Model):
 	defaultimage = "/static/profileapi/unknown.png"
 
 	def get_image_url(self):
-		if((self.image_height != 0) and (self.image_width != 0)):
+		try:
 			return self.image.url
-		else:
+		except:
 			return self.defaultimage
 
 	class Meta:
