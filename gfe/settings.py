@@ -55,6 +55,7 @@ STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 PIPELINE_JS = {
 	'main': {
 		'source_filenames': ("servers/js/jquery.min.js",
+		'spirit/scripts/store.js',
 		'servers/js/bootstrap.min.js',
 		'servers/js/jquery.cookie.js',
 		'spirit/scripts/vendors/highlightjs/highlight.min.js',
@@ -62,11 +63,10 @@ PIPELINE_JS = {
 		'spirit/scripts/tab.js',
 		'spirit/scripts/postify.js',
 		'spirit/scripts/social_share.js',
-		'spirit/scripts/vendors/atwho/jquery.caret.min.js', # if logged in
+		'spirit/scripts/vendors/atwho/jquery.caret.min.js',
 		'spirit/scripts/vendors/atwho/jquery.atwho.min.js',
 		'spirit/scripts/vendors/marked/marked.min.js',
 		'spirit/scripts/vendors/waypoints/waypoints.min.js'
-		'spirit/scripts/store.js',
 		'spirit/scripts/editor_image_upload.js',
 		'spirit/scripts/editor.js',
 		'spirit/scripts/emoji_list.js',
@@ -74,7 +74,7 @@ PIPELINE_JS = {
 		'spirit/scripts/bookmark.js',
 		'spirit/scripts/notification.js',
 		'spirit/scripts/move_comments.js',
-		'servers/js/docs.min.js',), #if is moderator
+		'servers/js/docs.min.js',),
 		'output_filename': 'js/main.js'
 	}
 }
