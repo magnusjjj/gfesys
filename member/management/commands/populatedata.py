@@ -48,43 +48,47 @@ class Command(BaseCommand):
 	Faker = None
 	
 	def create_random_member(self, is_admin=False):
-		first_name = self.Faker.first_name()
-		last_name = self.Faker.last_name()
-		username=self.Faker.user_name()
-		email = self.Faker.email()
-		phone = self.Faker.phone_number()
-		password = ''.join(random.SystemRandom().choice(string.uppercase + string.digits) for _ in xrange(10))
-		date = self.Faker.date()
-		city = self.Faker.city()
-		postcode = self.Faker.postcode()
-		adress = self.Faker.street_address()
-		mem = Member(username=email,
-			first_name=first_name,
-			last_name=last_name,
-			email=email,
-			nick=username,
-			birthdate=date,
-			phone=phone,
-			mobile='',
-			street=adress,
-			city=city,
-			country_id="AF",
-			zip=postcode,
-			careof='',
-			socialsecuritynumber='',
-			refreshedon=datetime.now(pytz.timezone("GMT")),
-			is_opt_in=self.Faker.boolean(90),
-			password=make_password(password, None, 'md5'), # Hang on, md5? Yes. Django uses secure hashing by default, which without specifying a weak hashing algorithm makes this script take several minutes to run.
-			is_superuser=is_admin,
-			is_moderator=is_admin,
-			is_staff=is_admin
-		)
-		
-		#mem.set_password(dodemopassword)
-		mem.save()
-		self.members.append(mem)
-		return {"member": mem, "password": password }
-	
+		for i in range(0,10000):
+			try:
+				first_name = self.Faker.first_name()
+				last_name = self.Faker.last_name()
+				username=self.Faker.user_name()
+				email = self.Faker.email()
+				phone = self.Faker.phone_number()
+				password = ''.join(random.SystemRandom().choice(string.uppercase + string.digits) for _ in xrange(10))
+				date = self.Faker.date()
+				city = self.Faker.city()
+				postcode = self.Faker.postcode()
+				adress = self.Faker.street_address()
+
+				mem = Member(username=username,
+					first_name=first_name,
+					last_name=last_name,
+					email=email,
+					nick=username+str(i),
+					birthdate=date,
+					phone=phone,
+					mobile='',
+					street=adress,
+					city=city,
+					country_id="AF",
+					zip=postcode,
+					careof='',
+					socialsecuritynumber='',
+					refreshedon=datetime.now(pytz.timezone("GMT")),
+					is_opt_in=self.Faker.boolean(90),
+					password=make_password(password, None, 'md5'), # Hang on, md5? Yes. Django uses secure hashing by default, which without specifying a weak hashing algorithm makes this script take several minutes to run.
+					is_superuser=is_admin,
+					is_moderator=is_admin,
+					is_staff=is_admin
+				)
+				#mem.set_password(dodemopassword)
+				mem.save()
+				self.members.append(mem)
+				return {"member": mem, "password": password }
+			except Exception as e:
+				print(e)
+		raise NameError("Too many tries! AUGH")
 	def handle(self, *args, **options):
 		#pr = cProfile.Profile()
 		#pr.enable()
