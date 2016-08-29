@@ -16,7 +16,7 @@ PROJECT_ROOT = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(PROJECT_ROOT, '../Spirit'))
 
 from spirit.settings import *
-from settings_local import *
+from .settings_local import *
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
