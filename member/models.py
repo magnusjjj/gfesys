@@ -48,7 +48,7 @@ class Member(spirit.models.user.AbstractUser):
 	socialsecuritynumber = models.CharField(max_length=200)
 	
 	joinedon = models.DateTimeField('Joined on', auto_now_add=True)
-	refreshedon = models.DateTimeField('Refreshed on')
+	refreshedon = models.DateTimeField('Refreshed on', null=True)
 	
 	image = models.ImageField(max_length=500, width_field='image_width', height_field='image_height', upload_to='members')
 	image_height = models.IntegerField(default=0)
@@ -59,3 +59,11 @@ class Member(spirit.models.user.AbstractUser):
 	gravatar_type = models.CharField(default='identicon', max_length=20, choices=GravatarTypes)
 	
 	membership_populated = models.BooleanField(default=True)
+
+	def get_full_name(self):
+		full_name = '' #  '%s %s' % (self.first_name, self.last_name)
+		return full_name.strip()
+
+	def get_short_name(self):
+		return ''
+

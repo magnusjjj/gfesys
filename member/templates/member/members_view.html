@@ -7,7 +7,7 @@
 	<div class="row placeholders">
 		<div class="col-sm-2">
 			{% if member.image %}
-				<img src="{{member.image.url}}" class="img-responsive" alt="{{ server.name}}">
+				<img src="{{member.get_image_url}}" class="img-responsive" alt="{{ server.name}}">
 			{% endif %}
 		</div>
 	</div>

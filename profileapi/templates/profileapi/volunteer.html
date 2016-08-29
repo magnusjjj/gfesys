@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load staticfiles profileurl %}
+{% block content %}
+  {% if profile %}
+	<h1 class="page-header">Volunteer for {{ profile.name}}</h1>
+	<div class="row placeholders">
+		<div class="col-sm-2" href="{{ profile.get_absolute_url }}">
+		  <img src="{{profile.get_image_url}}" class="img-responsive" alt="{{ profile.name}}">
+		</div>
+		<div class="col-sm-2" href="{{ profile.get_absolute_url }}/">
+		  <span class="text-muted">{{profile.description}}</span>
+		</div>
+	</div>
+	<div class="row">		
+		{% if not hasposted %}
+		<form role="form" src="{% profileurl "volunteer" profile.id %}" method="POST">
+		  {% csrf_token %}
+		  <div class="form-group">
+			<label for="answer" id="answer">This profile wants you to answer a couple of questions:</label>
+			<textarea name="answer" id="answer" rows="20" class="form-control">{{profile.questions}}</textarea>
+		  </div>
+		  <button type="submit" class="btn btn-primary">I want to volunteer!</button>
+		</form>
+		{% else %}
+			<div class="alert alert-success" role="alert">You have successfully applied to Volunteer for this profile!</div>
+		{% endif %}
+		
+	</div>
+  {% else %}
+	<p>Whoops! This profile does not exist.</p>
+  {% endif %}
+{% endblock %}
