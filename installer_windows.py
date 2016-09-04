@@ -124,8 +124,19 @@ EMAILFROM = '""" + EMAILFROM.encode("string_escape") + """'"""
 			os.system(sys.executable + " manage.py populatedata")
 		print("All done!\n")
 
-# Run the installer :)
+print("What do you want to do? ")
+print("1) Install requirements ")
+print("2) Create a config file")
+print("3) Do post config")
+print("Anything else exits")
+command = sys.stdin.readline().strip()
 installer = Installer()
-installer.pip_install()
-installer.installer_console_tutorial()
-installer.post_config()
+if command == "1":
+	installer.pip_install()
+if command == "2":
+	installer.installer_console_tutorial()
+if command == "3":
+	installer.post_config()
+
+
+

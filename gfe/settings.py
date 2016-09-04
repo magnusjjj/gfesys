@@ -21,11 +21,23 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
 
-INSTALLED_APPS = ('django.contrib.sites', 'sorl.thumbnail', 'django_extensions', 'server', 'member', 'page', 'pipeline', 'newsletter', 'oauth2_provider', 'corsheaders') + INSTALLED_APPS
+INSTALLED_APPS = ('django.contrib.sites',
+				'sorl.thumbnail',
+				'django_extensions',
+				'guardian',
+				'server',
+				'gfegroups',
+				'member',
+				'page',
+				'pipeline',
+				'newsletter',
+				'oauth2_provider',
+				'corsheaders',
+				'profileapi') + INSTALLED_APPS
 
 MIDDLEWARE_CLASSES = ('corsheaders.middleware.CorsMiddleware','oauth2_provider.middleware.OAuth2TokenMiddleware') + MIDDLEWARE_CLASSES
 
-AUTHENTICATION_BACKENDS =('oauth2_provider.backends.OAuth2Backend',) + ('django.contrib.auth.backends.ModelBackend',) + AUTHENTICATION_BACKENDS
+AUTHENTICATION_BACKENDS =('oauth2_provider.backends.OAuth2Backend','django.contrib.auth.backends.ModelBackend','guardian.backends.ObjectPermissionBackend') + AUTHENTICATION_BACKENDS
 
 TEMPLATE_CONTEXT_PROCESSORS += ("server.context.context",)
 
@@ -43,6 +55,7 @@ STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 PIPELINE_JS = {
 	'main': {
 		'source_filenames': ("servers/js/jquery.min.js",
+		'spirit/scripts/store.js',
 		'servers/js/bootstrap.min.js',
 		'servers/js/jquery.cookie.js',
 		'spirit/scripts/vendors/highlightjs/highlight.min.js',
@@ -50,11 +63,10 @@ PIPELINE_JS = {
 		'spirit/scripts/tab.js',
 		'spirit/scripts/postify.js',
 		'spirit/scripts/social_share.js',
-		'spirit/scripts/vendors/atwho/jquery.caret.min.js', # if logged in
+		'spirit/scripts/vendors/atwho/jquery.caret.min.js',
 		'spirit/scripts/vendors/atwho/jquery.atwho.min.js',
 		'spirit/scripts/vendors/marked/marked.min.js',
 		'spirit/scripts/vendors/waypoints/waypoints.min.js'
-		'spirit/scripts/store.js',
 		'spirit/scripts/editor_image_upload.js',
 		'spirit/scripts/editor.js',
 		'spirit/scripts/emoji_list.js',
@@ -62,7 +74,7 @@ PIPELINE_JS = {
 		'spirit/scripts/bookmark.js',
 		'spirit/scripts/notification.js',
 		'spirit/scripts/move_comments.js',
-		'servers/js/docs.min.js',), #if is moderator
+		'servers/js/docs.min.js',),
 		'output_filename': 'js/main.js'
 	}
 }
