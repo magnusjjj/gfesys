@@ -21,7 +21,7 @@
 		</form>
 		<form method="post" class="col-md-12 form-horizontal forgot_form" style="display: none;">
 			{% csrf_token %}
-			Forgot your password? Write your email here and we will send you a new password.
+			Forgot your password? Write your username here and we will send you a new password.
 			
 			<div class="alert alert-danger forgot_errorlist_box" style="display: none;">
 					<ul class="forgot_errorlist">
@@ -33,7 +33,7 @@
 			</div>
 			
 			<div class="form-group field-login">
-				<label for="login" class="control-label">Email</label>
+				<label for="login" class="control-label">Username</label>
 				<input type="text" name="login" value="" id="login" class="form-control"  />
 			</div>
 			<a class="btn btn-default forgot_button">Send email</a>
