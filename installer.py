@@ -17,9 +17,9 @@ import os
 class Installer:
 	def pip_install(self):
 		# Install all the python dependencies :)
-		os.system("python -m pip install --upgrade	pip")
-		os.system("python -m easy_install setuptools==25.1.0")
-		os.system("pip install --upgrade -r requirements.txt")
+		os.system(sys.executable + " -m pip install --upgrade pip")
+		os.system(sys.executable + " -m easy_install setuptools==25.1.0")
+		os.system(sys.executable + " -m pip install --upgrade -r requirements.txt")
 
 	def installer_console_tutorial(self):
 		# We generate the settings file. This function *looks* big and scary, but is really super duper simple. Watch:

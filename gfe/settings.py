@@ -52,45 +52,54 @@ AUTH_USER_MODEL = "member.Member"
 
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
-PIPELINE_JS = {
-	'main': {
-		'source_filenames': ("servers/js/jquery.min.js",
-		'spirit/scripts/store.js',
-		'servers/js/bootstrap.min.js',
-		'servers/js/jquery.cookie.js',
-		'spirit/scripts/vendors/highlightjs/highlight.min.js',
-		'spirit/scripts/util.js',
-		'spirit/scripts/tab.js',
-		'spirit/scripts/postify.js',
-		'spirit/scripts/social_share.js',
-		'spirit/scripts/vendors/atwho/jquery.caret.min.js',
-		'spirit/scripts/vendors/atwho/jquery.atwho.min.js',
-		'spirit/scripts/vendors/marked/marked.min.js',
-		'spirit/scripts/vendors/waypoints/waypoints.min.js'
-		'spirit/scripts/editor_image_upload.js',
-		'spirit/scripts/editor.js',
-		'spirit/scripts/emoji_list.js',
-		'spirit/scripts/like.js',
-		'spirit/scripts/bookmark.js',
-		'spirit/scripts/notification.js',
-		'spirit/scripts/move_comments.js',
-		'servers/js/docs.min.js',),
-		'output_filename': 'js/main.js'
+PIPELINE= {
+	'PIPELINE_ENABLED': False,
+	'JAVASCRIPT': {
+		'main': {
+			'source_filenames': ("servers/js/jquery.min.js",
+			'servers/js/bootstrap.min.js',
+			'servers/js/jquery.cookie.js',
+			'spirit/scripts/vendors/highlightjs/highlight.min.js',
+			'spirit/scripts/util.js',
+			'spirit/scripts/tab.js',
+			'spirit/scripts/postify.js',
+			'spirit/scripts/social_share.js',
+			'spirit/scripts/vendors/atwho/jquery.caret.min.js',
+			'spirit/scripts/vendors/atwho/jquery.atwho.min.js',
+			'spirit/scripts/vendors/marked/marked.min.js',
+			'spirit/scripts/vendors/waypoints/waypoints.min.js',
+			'spirit/scripts/store.js',
+			'spirit/scripts/editor_image_upload.js',
+			'spirit/scripts/editor.js',
+			'spirit/scripts/emoji_list.js',
+			'spirit/scripts/like.js',
+			'spirit/scripts/bookmark.js',
+			'spirit/scripts/notification.js',
+			'spirit/scripts/move_comments.js',
+			'servers/js/docs.min.js',),
+			'output_filename': 'js/main.js'
+		},
+		'OUTPUT_FILENAME': 'js/stats.js'
+	},
+	'STYLESHEETS': {
+		'main': {
+			'source_filenames': ('servers/css/bootstrap.min.css',
+				'servers/css/dashboard.css',
+				'spirit/stylesheets/vendors/font-awesome.min.css',
+				'spirit/stylesheets/vendors/github.min.css',
+				'spirit/stylesheets/vendors/jquery.atwho.min.css',
+				'spirit/stylesheets/styles.css'
+				),
+			'output_filename': 'css/main.css'
+		}
 	}
 }
 
-PIPELINE_CSS = {
-	'main': {
-		'source_filenames': ('servers/css/bootstrap.min.css',
-			'servers/css/dashboard.css',
-			'spirit/stylesheets/vendors/font-awesome.min.css',
-			'spirit/stylesheets/vendors/github.min.css',
-			'spirit/stylesheets/vendors/jquery.atwho.min.css',
-			'spirit/stylesheets/styles.css'
-			),
-		'output_filename': 'css/main.css'
-	}
-}
+#PIPELINE_YUGLIFY_BINARY = "/usr/bin/env yuglify"
+#PIPELINE_DISABLE_WRAPPER = True
+#PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
+#PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
+
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -98,10 +107,7 @@ STATICFILES_FINDERS = (
     'pipeline.finders.PipelineFinder',
 )
 
-PIPELINE_YUGLIFY_BINARY = "/usr/bin/env yuglify"
-PIPELINE_DISABLE_WRAPPER = True
-PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
-PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
+
 
 SITE_ID = 1
 TIMEZONE = 'Europe/Stockholm'

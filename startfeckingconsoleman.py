@@ -15,4 +15,4 @@ import os
 #this... seems to work, which it didnt before. DARK MAGIC AND CTHUHLU.
 #todo: make it work on anything else than windows :P
 del os.environ["PYTHONUNBUFFERED"]
-os.system('start cmd /K ')# + os.environ['VIRTUAL_ENV'] + '\scripts\activate.bat')
+os.system('start cmd /K ' + os.environ['VIRTUAL_ENV'] + '\scripts\activate.bat')
