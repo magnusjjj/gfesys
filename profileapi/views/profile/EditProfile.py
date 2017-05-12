@@ -90,22 +90,28 @@ class EditProfile(ProfileView):
 			rocketchannels = request.POST.getlist('rocketchannel')
 			rocketchat.objects.filter(chatroom_for_object_id=self.context["profile"].pk,
 									  chatroom_for_content_type=content_type).delete()
+			newlist = []
+			for i in rocketchannels:		
+				johnvar = i
+				newlist.append(johnvar)
 
+			johnfile = open("rocketnew.txt", "w")
+			johnfile.write(str(newlist))
+			johnfile.close()
+			newlist = []
 			for rocketchannel in rocketchannels:
 				m = rocketchat()
 				m.channelname = rocketchannel
+				newlist.append(m.channelname)
 				m.chatroom_for = self.context["profile"]
 				if request.POST.get("rocketenabled", False) == "True":
-					r = requests.post('http://chat.gfe.nu:1420/ChannelCreate',
-									  json={"ChannelName": rocketchannel, "ServerName": self.context["profile"].name,
-											"Enabled": "1"})
 					m.rocketenabled = 1
 				else:
 					m.rocketenabled = 0
-					r = requests.post('http://chat.gfe.nu:1420/ChannelCreate',
-									  json={"ChannelName": rocketchannel, "ServerName": self.context["profile"].name,
-											"Enabled": "0"})
 				m.save()
-			return redirect(profileurl.profileurl(self.context, 'edit', profile_id=self.context["profile"].id))
+			return redirect(profileurl.profileurl(self.context, 'edit', profile_id=self.context["profile"].id))	
+			dbfile = open("database.txt", "w")
+			dbfile.write(str(newlist))
+			dbfile.close()
 		else:
 			raise ValueError('You dont have access to this function. Boo!')

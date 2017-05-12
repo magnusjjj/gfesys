@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 ('careof', models.CharField(max_length=200)),
                 ('socialsecuritynumber', models.CharField(max_length=200)),
                 ('joinedon', models.DateTimeField(auto_now_add=True, verbose_name=b'Joined on')),
-                ('refreshedon', models.DateTimeField(verbose_name=b'Refreshed on')),
+                ('refreshedon', models.DateTimeField(null=True, verbose_name=b'Refreshed on')),
                 ('image', models.ImageField(height_field=b'image_height', width_field=b'image_width', max_length=500, upload_to=b'members')),
                 ('image_height', models.IntegerField(default=0)),
                 ('image_width', models.IntegerField(default=0)),

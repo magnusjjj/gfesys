@@ -46,12 +46,16 @@
 			{% endif %}
 <!--Here comes some GG power! -->
 <script>
+	function listen() {
+$(".rocketchannelX").click(function() {$(this).parent().val("_-_-_"); $(this).parent().parent().remove(); })
+	}
 $(document).ready(function() {
-	if ($('#rocketenabled').prop('checked') === true) {console.log("yeso")}
+		if ($('#rocketenabled').prop('checked') === true) {console.log("yeso")}
 	else {console.log("noh"); $(".rocketchannel").toggle(); $(".rocketchannelP").toggle()}
-	$(".Testerino").click(function() {$("#rocketwrapper").append('<div style="display: flex;"><input name="rocketchannel" type="text" class="rocketchannel form-control" value="{{channel.channelname}}" style="text-align: center; width: 200px;"> <span title="DELETE CHANNEL"><p class="rocketchannelP rocketchannelX">X</p></span></input></div>')})
-$("#rocketenabled").click(function() {$(".rocketchannel").toggle(); $(".rocketchannelP").toggle()})
-$(".rocketchannelX").click(function() {$(this).parent().parent().remove()})
+$(".Testerino").on("click", function() {$("#rocketwrapper").append('<div style="display: flex;"><input name="rocketchannel" type="text" class="rocketchannel form-control" value="{{channel.channelname}}" style="text-align: center; width: 200px;"> <span title="DELETE CHANNEL"><p class="rocketchannelP rocketchannelX">X</p></span></input></div>'); listen()})
+$("#rocketenabled").on("click", function() {$(".rocketchannel").toggle(); $(".rocketchannelP").toggle()})
+
+	
 })
 </script>
 <!--Okay that's enough shitty js-->
@@ -70,12 +74,7 @@ $(".rocketchannelX").click(function() {$(this).parent().parent().remove()})
 <p class="Testerino rocketchannelP" id="rocket+" style="width: 25px;">+</p>
 
 	</p>
-
-
 											</div>
-			<div>
-				<label for="rocketchat" class="control-label">Rocket.Chat config*</label>
-</div>
 			<div class="form-group">
 				<input type="submit" class="btn btn-primary" value="Save!"/>
 			</div>
