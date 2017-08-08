@@ -1,4 +1,4 @@
 [submodule "Spirit"]
 	path = Spirit
-	branch = gfe_now_3
+	branch = master
 	url = https://github.com/magnusjjj/Spirit.git
