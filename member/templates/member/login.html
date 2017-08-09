@@ -61,7 +61,7 @@
 			
 			// What happens when we press the login button :).
 			loginf = function() {
-				form = $(this).parent().parent().find("form");
+				form = $(this).parent().parent().parent().find("form");
 				
 				response = $.post("{% url 'login_post' %}", $(".login_form").serialize(), function(data)
 				{
@@ -87,7 +87,8 @@
 			btn.click(loginf);
 			$(".login_form input[type=password]").unbind().keypress(function(e) {
 				if(e.which == 13) {
-					loginf();
+					console.log("Uh, crap");
+					btn.click();
 				}
 			});
 			
