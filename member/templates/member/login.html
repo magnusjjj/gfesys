@@ -9,7 +9,7 @@
 		<form action="{% url 'register' %}" method="post" class="col-md-12 form-horizontal login_form">
 			{% csrf_token %}
 			<div class="form-group field-login">
-				<label for="login" class="control-label">Email</label>
+				<label for="login" class="control-label">Username/Email</label>
 				<input type="text" name="login" value="" id="login" class="form-control"  />
 			</div>
 			<div class="form-group field-password">
@@ -21,7 +21,7 @@
 		</form>
 		<form method="post" class="col-md-12 form-horizontal forgot_form" style="display: none;">
 			{% csrf_token %}
-			Forgot your password? Write your username here and we will send you a new password.
+			Forgot your password? Write your username or email adress here and we will send you a new password.
 			
 			<div class="alert alert-danger forgot_errorlist_box" style="display: none;">
 					<ul class="forgot_errorlist">
@@ -42,20 +42,34 @@
 	<div class="clearfix"></div>
 	<script type="text/javascript">
 		$(function(){
-			btn = $(".modal-footer").find(".btn-primary");
-			btn.unbind();
 			
+			function addmessagekun(message,errorbox,errorlist){
+
+				errorbox.show();
+				errormessage = $("<li></li>");
+				errormessage.html(message);
+				errorlist.append(errormessage);
+				errormessage.delay(5000).fadeOut(600, function(){
+					if(errorbox.find(":visible").length == 1){
+						errorbox.hide();
+					}
+				});
+			}
+			
+			btn = $(".modal-footer").find(".btn-primary");
+			btn.unbind(); // Reset the submit button, in case we switch from registration :).
+			
+			// What happens when we press the login button :).
 			loginf = function() {
 				form = $(this).parent().parent().find("form");
 				
 				response = $.post("{% url 'login_post' %}", $(".login_form").serialize(), function(data)
 				{
 					errorbox = form.parent().find(".login_errorlist_box").hide();
-					errorlist = form.parent().find(".login_errorlist").html("");
-					
+					//errorlist = form.parent().find(".login_errorlist").html("");
+					errorlist = form.parent().find(".login_errorlist");
 					for (i = 0; i < data.errors.length; i++) {
-						errorbox.show();
-						errorlist.append("<li>"+data.errors[i]+"</li>");
+						addmessagekun(data.errors[i], errorbox, errorlist);
 					}
 					
 					if(data.errors.length == 0)
@@ -84,25 +98,31 @@
 			});
 			
 			$(".forgot_button").click(function() {
+				errorbox = $(".forgot_errorlist_box").hide();
+				errorlist = $(".forgot_errorlist").html("");
 				$(".login_form").hide();
 				$(".forgot_form").show();
 				$(".modal-footer").hide();
-				response = $.post("{% url 'forgot_post' %}", $(".forgot_form").serialize(), function(data)
-				{
-					errorbox = $(".forgot_errorlist_box").hide();
-					errorlist = $(".forgot_errorlist").html("");
+				response = $.ajax({
+					type: "POST",
+					url: "{% url 'forgot_post' %}",
+					data: $(".forgot_form").serialize(),
+					success: function(data)	{
+						for (i = 0; i < data.errors.length; i++) {
+							addmessagekun(data.errors[i], errorbox, errorlist);
+						}
+						
+						if(data.errors.length == 0)
+						{
+							$(".forgot_success").show();
+						}
 					
-					for (i = 0; i < data.errors.length; i++) {
-						errorbox.show();
-						errorlist.append("<li>"+data.errors[i]+"</li>");
+					},
+					dataType: 'json',
+					error: function(xhr, status, error){
+						addmessagekun(status + ': ' + error, errorbox, errorlist);
 					}
-					
-					if(data.errors.length == 0)
-					{
-						$(".forgot_success").show();
-					}
-					
-				}, 'json');
+				});
 			});
 		});
 	</script>

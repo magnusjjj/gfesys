@@ -21,6 +21,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 from oauth2_provider.views.generic import ProtectedResourceView
 import django.contrib.auth
+from django.db.models import Q
 import json
 
 @require_http_methods(["POST"])
@@ -57,9 +58,9 @@ def forgot_post(request):
 	login = request.POST["login"]
 	themember = {}
 	try:
-		themember = Member.objects.get(username__iexact=login)
+		themember = Member.objects.get(Q(username__iexact=login) | Q(email__iexact=login))
 	except:
-		errors.append("Could not find a user with that email.")
+		errors.append("Could not find a user with that email or username.")
 		context["errors"] = errors
 		return JsonResponse(context)
 	
