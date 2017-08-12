@@ -20,7 +20,7 @@ class ViewAnswers(ProfileView):
 		else:
 			# Just format the response a little bit
 			vals["content"] = applicant.answer
-			vals["title"] = applicant.member.firstname + ' ' + applicant.member.surname + "'s answers"
+			vals["title"] = str(applicant) + "'s answers"
 
 		# And return a JSON response
 		vals["errors"] = errors
