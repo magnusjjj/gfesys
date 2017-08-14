@@ -5,7 +5,6 @@
 # 2015-04-14 - Magnus Johnsson - Added the license header
 
 from django import template
-from django.template import Context
 from page.models import Page
 register = template.Library()
 
@@ -26,7 +25,7 @@ class page_menuNode(template.Node):
 		if "page" in context:
 			newcontext["page"] = context["page"]
 		# Render it!
-		return t.render(Context(newcontext))
+		return t.render(newcontext)
 
 # The code below registers the templatetag to django.
 def do_page_menu(parser, token):

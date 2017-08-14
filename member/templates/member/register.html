@@ -5,7 +5,7 @@
 		<ul class="register_errorlist">
 		</ul>
 	</div>
-	<form action="{% url 'register' %}" method="post" class="col-md-12 form-horizontal">
+	<form action="{% url 'member:register' %}" method="post" class="col-md-12 form-horizontal">
 		{% csrf_token %}
 		
 		<div class="form-group field-email">
@@ -38,7 +38,7 @@
 			btn.unbind();
 			btn.click(function() {
 				form = $(this).parent().parent().find("form");
-				response = $.post("{% url 'register_post' %}", form.serialize(), function(data)
+				response = $.post("{% url 'member:register_post' %}", form.serialize(), function(data)
 				{
 					errorbox = form.parent().find(".register_errorlist_box").hide();
 					errorlist = form.parent().find(".register_errorlist").html("");
@@ -50,7 +50,7 @@
 					
 					if(data.errors.length == 0)
 					{
-						document.location = "{% url 'index' %}";
+						document.location = "{% url 'member:index' %}";
 					} else {
 						$("html, body").animate({ scrollTop: 0 }, "fast");
 					}

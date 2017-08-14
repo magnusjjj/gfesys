@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+encoding//Spirit/spirit/core/management/commands/spiritinstall.py=utf-8
+encoding//Spirit/spirit/core/management/commands/spiritupgrade.py=utf-8
+encoding//Spirit/spirit/topic/migrations/0002_auto_20150828_2003.py=utf-8
+encoding//Spirit/spirit/topic/poll/migrations/0003_auto_20161114_1452.py=utf-8
+encoding//Spirit/spirit/topic/poll/migrations/0004_auto_20161114_1454.py=utf-8
+encoding//Spirit/spirit/urls.py=utf-8
+encoding//Spirit/spirit/user/urls.py=utf-8

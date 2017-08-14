@@ -62,7 +62,7 @@ class Installer:
 SECRET_KEY = '""" + SECRET_KEY + """'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-TEMPLATE_DEBUG = True
+GFE_TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 DATABASES = {
 	'default': {
@@ -104,7 +104,6 @@ EMAILFROM = '""" + EMAILFROM.encode("string_escape") + """'"""
 		# Fix ownership of files
 		# os.system("chown " + str(os.stat("installer.py").st_uid) + " -R ./")
 		# os.system("chgrp " + str(os.stat("installer.py").st_gid) + " -R ./")
-		os.system(sys.executable + " manage.py createcachetable spirit_cache")
 		print(
 		"Do you want to fill the database with sample data? (write lowercase yes for yes, anything else is treated as no\n")
 		dofill = sys.stdin.readline().strip()

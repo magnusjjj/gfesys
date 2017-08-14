@@ -5,14 +5,14 @@
 # 2015-04-14 - Magnus Johnsson - Added the license header
 
 from django.core.management.base import BaseCommand, CommandError
-from spirit.models.category import Category
-from spirit.models.topic import Topic
-from spirit.models.comment import Comment
+from spirit.category.models import Category
+from spirit.topic.models import Topic
+from spirit.comment.models import Comment
 from member.models import Member
 from server.models import Server
 from profileapi.models import Volunteer
 from gfe.settings import *
-from faker import Factory
+from faker import Faker
 import random
 from datetime import datetime
 import pytz
@@ -47,6 +47,10 @@ class Command(BaseCommand):
 	
 	Faker = None
 	
+	def add_arguments(self, parser):
+		BaseCommand.add_arguments(self, parser)
+		parser.add_argument('do_populate_stuff', type=int)
+	
 	def create_random_member(self, is_admin=False):
 		for i in range(0,10000):
 			try:
@@ -77,9 +81,8 @@ class Command(BaseCommand):
 					socialsecuritynumber='',
 					refreshedon=datetime.now(pytz.timezone("GMT")),
 					is_opt_in=self.Faker.boolean(90),
-					password=make_password(password, None, 'md5'), # Hang on, md5? Yes. Django uses secure hashing by default, which without specifying a weak hashing algorithm makes this script take several minutes to run.
+					password=make_password(password), # Additonal note: md5 is disabled :E. Hang on, md5? Yes. Django uses secure hashing by default, which without specifying a weak hashing algorithm makes this script take several minutes to run.
 					is_superuser=is_admin,
-					is_moderator=is_admin,
 					is_staff=is_admin
 				)
 				#mem.set_password(dodemopassword)
@@ -89,21 +92,24 @@ class Command(BaseCommand):
 			except Exception as e:
 				print(e)
 		raise NameError("Too many tries! AUGH")
+	
 	def handle(self, *args, **options):
 		#pr = cProfile.Profile()
 		#pr.enable()
 		transaction.set_autocommit(False)
 		
-		self.Faker = Factory.create()
+		self.Faker = Faker()
 		
 		dodemo = False
 		dodemopassword = ''
 		
 		try:
-			dodemo = True if args[0] == '1' else False
+			dodemo = True if options["do_populate_stuff"] == 1 else False
+			print("Doing demo!")
 			dodemopassword = args[1]
+			print("Doing password!")
 		except:
-			pass
+			print("Not doing demo!")
 		
 		# Set up a default seed so developers can talk to eachother
 		self.Faker.seed(10000)
@@ -112,17 +118,19 @@ class Command(BaseCommand):
 		
 		self.stdout.write("Filling up the standard categories\n")
 		
-		cat = Category(title="Private",slug="private",description="The category for all private discussions", is_closed=0, is_removed=0, is_private=0)
-		cat.save()
-		transaction.commit()
-		if(cat.pk != ST_TOPIC_PRIVATE_CATEGORY_PK):
-			raise CommandError("The id for the private category does not match up with our default in the settings. Check ST_TOPIC_PRIVATE_CATEGORY_PK, should be %d but is %d " % (ST_TOPIC_PRIVATE_CATEGORY_PK, cat.pk))
+		# All of these fuckers are now done in a migration.
 		
-		cat = Category(title="Uncategorized",slug="uncategorized",description="The category for all uncategorized discussions", is_closed=0, is_removed=0, is_private=0)
-		cat.save()
-		transaction.commit()
-		if(cat.pk != ST_UNCATEGORIZED_CATEGORY_PK):
-			raise CommandError("The id for the uncategorized category does not match up with our default in the settings. Check ST_UNCATEGORIZED_CATEGORY_PK, should be %d but is %d " % (ST_UNCATEGORIZED_CATEGORY_PK, cat.pk))
+		#cat = Category(title="Private",slug="private",description="The category for all private discussions", is_closed=0, is_removed=0, is_private=0)
+		#cat.save()
+		#transaction.commit()
+		#if(cat.pk != ST_TOPIC_PRIVATE_CATEGORY_PK):
+		#	raise CommandError("The id for the private category does not match up with our default in the settings. Check ST_TOPIC_PRIVATE_CATEGORY_PK, should be %d but is %d " % (ST_TOPIC_PRIVATE_CATEGORY_PK, cat.pk))
+		
+		#cat = Category(title="Uncategorized",slug="uncategorized",description="The category for all uncategorized discussions", is_closed=0, is_removed=0, is_private=0)
+		#cat.save()
+		#transaction.commit()
+		#if(cat.pk != ST_UNCATEGORIZED_CATEGORY_PK):
+		#	raise CommandError("The id for the uncategorized category does not match up with our default in the settings. Check ST_UNCATEGORIZED_CATEGORY_PK, should be %d but is %d " % (ST_UNCATEGORIZED_CATEGORY_PK, cat.pk))
 
 		cat = Category(title="Other",slug="other",description="The category for external (server) discussions", is_closed=0, is_removed=0, is_private=0)
 		cat.save()

@@ -9,14 +9,14 @@
 # and we don't do anything freakier than what is explained in the tutorials. Promise <3
 # https://docs.djangoproject.com/en/1.8/topics/http/urls/
 
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 from server.views_normal.ViewIndex import ViewIndex
 from profileapi.views.profile.ViewProfileList import ViewProfileList
 
 from models import Server
 
-urlpatterns = patterns('',
+urlpatterns = [
 					url(r'^$', ViewIndex.as_view(profilemodel=Server), name='index'),
 					url(r'^$servers/', ViewProfileList.as_view(profilemodel=Server), name='serverlist'),
-					url('', include("server.profileurls", namespace="profile")),
-				)
+					url('', include("server.profileurls", namespace="server_profile")),
+				]

@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
@@ -9,15 +9,14 @@ from page import views
 from surlex.dj import surl
 from server import views as server_views
 
-urlpatterns = patterns('',
+urlpatterns = [
     # Examples:
     # url(r'^$', 'gfe.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^$', include('server.urls')),
     url(r'^forum', include('spirit.urls')),
     url(r'^servers/', include('server.urls', namespace='server')),
 	url(r'^groups/', include('gfegroups.urls', namespace='gfegroups', app_name="gfegroups")),
-    url(r'^members/', include('member.urls', app_name="member")),
+    url(r'^members/', include('member.urls', namespace='member', app_name="member")),
     url(r'^admin/', include(admin.site.urls)),
 	surl(
         '^newsletter/<newsletter_slug:s>/archive/<year:Y>/<month:m>/<day:d>/<slug:s>/$',
@@ -57,4 +56,5 @@ urlpatterns = patterns('',
 	
     url(r'^oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'', include('page.urls', app_name="page", namespace='page')),
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^', include('server.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

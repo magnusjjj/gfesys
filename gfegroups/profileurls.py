@@ -16,7 +16,7 @@
 # Nothing really fancier than that :).
 
 # Check out this list of imports baby. Ain't this a beauty.
-from django.conf.urls import patterns,url
+from django.conf.urls import url
 
 from profileapi.views.profile.EditProfile import EditProfile
 from profileapi.views.profile.ViewProfile import ViewProfile
@@ -33,7 +33,7 @@ from models import GfeGroup
 
 app_name = "gfegroups"
 
-urlpatterns = patterns('',
+urlpatterns = [
 					   url(r'^volunteer/(?P<profile_id>[0-9]+)/$', ViewVolunteerFor.as_view(profilemodel=GfeGroup), name='volunteer'),
 					   url(r'^edit/(?P<profile_id>\d+)/$', EditProfile.as_view(profilemodel=GfeGroup), name='edit'),
 					   url(r'^new', EditProfile.as_view(profilemodel=GfeGroup), name='new'),
@@ -47,4 +47,4 @@ urlpatterns = patterns('',
 					   url(r'^editpage/(?P<page_id>\d+)/$', EditPage.as_view(profilemodel=GfeGroup), name='editpage'),
 					   url(r'^(?P<slug>[a-zA-Z\-_0-9]+)/$', ViewProfile.as_view(profilemodel=GfeGroup), name='detail'),
 					   url(r'^(?P<slug>[a-zA-Z\-_0-9]+)/(?P<slug_page>[a-zA-Z\-_0-9]+)$', ViewProfile.as_view(profilemodel=GfeGroup), name='detail'),
-					   )
+					   ]

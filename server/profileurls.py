@@ -10,7 +10,7 @@
 # https://docs.djangoproject.com/en/1.8/topics/http/urls/
 
 import profileapi.views.pages.AddPage
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from profileapi.views.profile.EditProfile import EditProfile
 from profileapi.views.profile.ViewProfile import ViewProfile
@@ -27,7 +27,7 @@ from server.models import Server
 
 app_name = "server"
 
-urlpatterns = patterns('',
+urlpatterns = [
 					   url(r'^volunteer/(?P<profile_id>[0-9]+)/$', ViewVolunteerFor.as_view(profilemodel=Server), name='volunteer'),
 					   url(r'^edit/(?P<profile_id>\d+)/$', EditProfile.as_view(profilemodel=Server), name='edit'),
 					   url(r'^new', EditProfile.as_view(profilemodel=Server), name='new'),
@@ -41,4 +41,4 @@ urlpatterns = patterns('',
 					   url(r'^editpage/(?P<page_id>\d+)/$', EditPage.as_view(profilemodel=Server), name='editpage'),
 					   url(r'^(?P<slug>[a-zA-Z\-_0-9]+)/$', ViewProfile.as_view(profilemodel=Server), name='detail'),
 					   url(r'^(?P<slug>[a-zA-Z\-_0-9]+)/(?P<slug_page>[a-zA-Z\-_0-9]+)$', ViewProfile.as_view(profilemodel=Server), name='detail'),
-					   )
+					   ]

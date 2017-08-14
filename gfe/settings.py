@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
 
-INSTALLED_APPS = ('django.contrib.sites',
+INSTALLED_APPS = ['django.contrib.sites',
 				'sorl.thumbnail',
 				'django_extensions',
 				'guardian',
@@ -33,13 +33,40 @@ INSTALLED_APPS = ('django.contrib.sites',
 				'newsletter',
 				'oauth2_provider',
 				'corsheaders',
-				'profileapi') + INSTALLED_APPS
+				'profileapi'] + INSTALLED_APPS
 
-MIDDLEWARE_CLASSES = ('corsheaders.middleware.CorsMiddleware','oauth2_provider.middleware.OAuth2TokenMiddleware') + MIDDLEWARE_CLASSES
+MIDDLEWARE_CLASSES = ['corsheaders.middleware.CorsMiddleware','oauth2_provider.middleware.OAuth2TokenMiddleware'] + MIDDLEWARE_CLASSES
 
-AUTHENTICATION_BACKENDS =('oauth2_provider.backends.OAuth2Backend','django.contrib.auth.backends.ModelBackend','guardian.backends.ObjectPermissionBackend') + AUTHENTICATION_BACKENDS
+AUTHENTICATION_BACKENDS =['oauth2_provider.backends.OAuth2Backend','django.contrib.auth.backends.ModelBackend','guardian.backends.ObjectPermissionBackend'] + AUTHENTICATION_BACKENDS
 
-TEMPLATE_CONTEXT_PROCESSORS += ("server.context.context",)
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            # insert your TEMPLATE_DIRS here
+        ],
+		'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+                # list if you haven't customized them:
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+                "server.context.context",
+            ],
+			'debug': True if GFE_TEMPLATE_DEBUG else False,
+            #'loaders': [
+            #    # insert your TEMPLATE_LOADERS here
+            #],
+        },
+    },
+]
 
 ROOT_URLCONF = 'gfe.urls'
 

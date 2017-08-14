@@ -15,13 +15,13 @@
 # Nothing really fancier than that :).
 # We also include gfegroups.profileurls seperately. Oooh. So whack.
 
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 from profileapi.views.profile.ViewProfileList import ViewProfileList
 
 from models import GfeGroup
 
-urlpatterns = patterns('',
+urlpatterns = [
 					url(r'^$', ViewProfileList.as_view(profilemodel=GfeGroup), name='index'),
 					url(r'^$groups/', ViewProfileList.as_view(profilemodel=GfeGroup), name='grouplist'),
 					url('', include("gfegroups.profileurls", namespace="profile")),
-				)
+				]

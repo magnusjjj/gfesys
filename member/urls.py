@@ -4,7 +4,7 @@
 # Changelog:
 # 2015-04-14 - Magnus Johnsson - Added the license header
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 # This file handles what url's are mapped to what view.
 # This is much better explained in the Django manual,
@@ -13,7 +13,7 @@ from django.conf.urls import patterns, url
 
 from member.views_d import *
 
-urlpatterns = patterns('',
+urlpatterns = [
 	url(r'^register$', plain.register, name='register'),
 	url(r'^login$', plain.login, name='login'),
 	url(r'^logout$', api.logout, name='logout'),
@@ -24,4 +24,4 @@ urlpatterns = patterns('',
 	url(r'^me/$', api.me, name='me'),
 	url(r'^members/(?P<member_id>\d+)/$', community.members_view, name='member'),
 	url(r'^members', community.members_index, name='members_index'),
-)
+]

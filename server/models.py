@@ -49,7 +49,7 @@ class Server(ProfileTemplate):
 
 	# This function says what url to return if we do {{ profile.get_absolute_url }} in the template
 	def get_absolute_url(self):
-		return reverse('server:profile:detail', args=[str(self.slug)])
+		return reverse('server_profile:detail', args=[str(self.slug)])
 
 	# For some reason, we need to add this list of permissions on every submodel of ProfileTemplate. Go figure.
 	# Basically, its a list of permissions that you can have that relates to this model.

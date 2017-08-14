@@ -6,7 +6,7 @@
 			<ul class="login_errorlist">
 			</ul>
 		</div>
-		<form action="{% url 'register' %}" method="post" class="col-md-12 form-horizontal login_form">
+		<form action="{% url 'member:register' %}" method="post" class="col-md-12 form-horizontal login_form">
 			{% csrf_token %}
 			<div class="form-group field-login">
 				<label for="login" class="control-label">Username/Email</label>
@@ -63,7 +63,7 @@
 			loginf = function() {
 				form = $(this).parent().parent().parent().find("form");
 				
-				response = $.post("{% url 'login_post' %}", $(".login_form").serialize(), function(data)
+				response = $.post("{% url 'member:login_post' %}", $(".login_form").serialize(), function(data)
 				{
 					errorbox = form.parent().find(".login_errorlist_box").hide();
 					//errorlist = form.parent().find(".login_errorlist").html("");
@@ -106,7 +106,7 @@
 				$(".modal-footer").hide();
 				response = $.ajax({
 					type: "POST",
-					url: "{% url 'forgot_post' %}",
+					url: "{% url 'member:forgot_post' %}",
 					data: $(".forgot_form").serialize(),
 					success: function(data)	{
 						for (i = 0; i < data.errors.length; i++) {

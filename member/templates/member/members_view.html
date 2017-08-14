@@ -2,7 +2,7 @@
 {% block content %}
   {% if member %}
 	<h1 class="page-header">{{ member }}
-		{% if volunteer %}<a href="{% url "volunteer" server.id%}" class="btn btn-default">Volunteer for this Server</a>{% endif %}
+		{% if volunteer %}<a href="{% url "member:volunteer" server.id%}" class="btn btn-default">Volunteer for this Server</a>{% endif %}
 	</h1>
 	<div class="row placeholders">
 		<div class="col-sm-2">

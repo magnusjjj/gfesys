@@ -142,7 +142,7 @@
           <ul class="nav nav-sidebar">
             <li{% if not section or section == "servers" %} class="active"{% endif %}><a href="{% url "index" %}">Servers <span class="sr-only">(current)</span></a></li>
 		  	<li{% if section == "gfegroups"%} class="active"{% endif %}><a href="{% url "gfegroups:index" %}">Groups</a></li>
-		  	<li{% if section == "members"%} class="active"{% endif %}><a href="{% url "members_index" %}">Members</a></li>
+		  	<li{% if section == "members"%} class="active"{% endif %}><a href="{% url "member:members_index" %}">Members</a></li>
 		    <li{% if section == "forums"%} class="active"{% endif %}><a href="{% url "spirit:index" %}">Forums</a>{% if section == "forums"%}
 			{% if user.is_administrator %}
 				<ul class="nav" style="padding-left: 1em; font-size: 0.9em">
@@ -196,15 +196,15 @@
 			});
 		
 			$(".do_register").click(function(){
-				$("#modal").data("url", "{% url 'register' %}").modal();
+				$("#modal").data("url", "{% url 'member:register' %}").modal();
 			});
 			
 			$(".do_login").click(function(){
-				$("#modal").data("url", "{% url 'login' %}").modal();
+				$("#modal").data("url", "{% url 'member:login' %}").modal();
 			});
 			
 			$("#logout").click(function(){
-				$.get("{% url 'logout' %}", function(){
+				$.get("{% url 'member:logout' %}", function(){
 					document.location = "{% url 'index' %}"
 				});
 			});
